@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Register</title>
+</head>
+<body>
+    <div class="image-container">
+        <img src="images/logo.png" alt="Your Image">
+    </div>
+    <div class="container">
+        <div class="box form-box">
+            <header>Sign up</header>
+            <form action="" method="post">
+                <div class="field input">
+                    <label for="name">Username</label>
+                    <input type="text" name="username" autocomplete="off" id="username" required/>
+                </div>
+                <div class="field input">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" autocomplete="off" id="email" required/>
+                </div>
+                <div class="field input">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" autocomplete="off" id="password" required/>
+                </div>                
+                <div class="show-password">
+                    <input type="checkbox" id="showPassword" onclick="myFunction()">
+                    <label for="show-password">Show Password</label>
+                </div>                
+                <div class="field">
+                    <input type="submit" class="btn" name="submit" value="Sign Up" required/>
+                </div>
+                <div class="links">
+                    Already have an account? <a href="login.html">Login!</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>
