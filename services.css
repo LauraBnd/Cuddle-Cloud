@@ -1,0 +1,138 @@
+*{
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+body {
+    background-image: url('images/cloudy.png');
+    background-size: cover; 
+    background-position: center; 
+}
+.title {
+    font-size: 2vw;
+    margin-right: auto;
+    margin-left: 20vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 2vw;
+    color: #968dd2;;
+}
+.container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 5vw;
+    margin-top: 5vw;
+    margin-left: 10vw;
+}
+
+.box1,
+.box2,
+.box3,
+.box4,
+.box5,
+.box6 {
+    background-color: #fdf2df;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 1vw 1vw;
+    border-radius: 2vw;
+    margin-top: 3vw; 
+    max-width: 62vw;
+    text-align: center; 
+    font-size: 1.25vw;
+}
+
+.logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logo-container img {
+    width: 12vw; 
+    height: auto; 
+}
+
+.navigation {
+    position: fixed;
+    top: 1.2vw;
+    right: 1.5vw; 
+    display: flex;
+    align-items: center;
+    background-color: #E3DFFD; 
+    border-radius: 7vh;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.8vw; 
+    font-weight: 100;
+    padding: 1.5vw; 
+    background-color: #E3DFFD; 
+    border: none; 
+    border-radius: 4vh; 
+    cursor: pointer;
+}
+
+.navigation a:hover {
+    background-color: #E5D1FA;
+}
+
+.no1{
+    position:absolute;
+    top: 10vw;
+    left: 5vw;
+}
+.no1 img{
+    width:auto;
+    height: 14vw;
+}
+.no2{
+    position:absolute;
+    top: 23vw;
+    left: 5vw;
+}
+.no2 img{
+    width:auto;
+    height: 14vw;
+}
+.no3{
+    position:absolute;
+    top: 36vw;
+    left: 7vw;
+}
+.no3 img{
+    width:auto;
+    height: 14vw;
+}
+.no4{
+    position:absolute;
+    top: 48vw;
+    left: 6vw;
+}
+.no4 img{
+    width:auto;
+    height: 14vw;
+}
+.no5{
+    position:absolute;
+    top: 62vw;
+    left: 7vw;
+}
+.no5 img{
+    width:auto;
+    height: 14vw;
+}
+.no6{
+    position:absolute;
+    top: 75vw;
+    left: 7vw;
+}
+.no6 img{
+    width:auto;
+    height: 14vw;
+}
