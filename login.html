@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Login</title>
+ 
+</head>
+<body>
+    <div class="image-container">
+        <img src="images/logo.png" alt="Your Image">
+    </div>
+    <div class="container">
+        <div class="box form-box">
+            <header>Login</header>
+            <form action="" method="post">
+                <div class="field input">
+                    <label for="name">Username</label>
+                    <input type="text" name="username" id="username" required/>
+                </div>
+                <div class="field input">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" autocomplete="off" id="password" required/>
+                </div>                
+                <div class="show-password">
+                    <input type="checkbox" id="" onclick="myFunction()">
+                    <label for="show-password">Show Password</label>
+                </div>                
+                <div class="field">
+                    <input type="submit" class="btn" name="submit" value="Login" required/>
+                </div>
+                <div class="links">
+                    Don't have account? <a href="register.html">Sign Up Now!</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

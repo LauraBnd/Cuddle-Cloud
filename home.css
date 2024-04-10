@@ -1,0 +1,132 @@
+* {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+.aslogan{
+    
+    display: flex;
+    flex-direction: column;
+    padding: 25px 25px;
+    border-radius: 20px;
+    margin-top: -420px;
+    margin-left: 30px;
+    margin-right: 50px;
+    font-size: 25px;
+    
+}
+.click{
+    display: flex;
+    flex-direction: column;
+    padding: 25px 25px;
+    border-radius: 20px;
+    margin-top: -30px;
+    margin-left: 10px;
+    margin-right: 50px;
+    font-size: 25px;
+}
+.welcome{
+    display: flex;
+    max-width: 800px;
+    flex-direction: column;
+    padding: 25px 25px;
+    border-radius: 20px;
+    margin-top: -5px;
+    margin-left: 10px;
+    margin-right: 500px;
+    font-size: 25px;
+    align-items: center;
+    justify-content: center;
+}
+.logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logo-container img {
+    width: 170px; /* Adjust the size of the image */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+.textbox {
+    position: absolute;
+    top: 60%; /* Move the container to the vertical middle */
+    left: 50%; /* Move the container to the horizontal middle */
+    transform: translate(-50%, -50%); /* Center the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textbox img {
+    width: 1100px; /* Adjust the size of the image */
+    height: 900px; /* Maintain aspect ratio */
+}
+
+
+.navigation {
+    position: fixed;
+    top: 20px;
+    right: 40px; 
+    display: flex;
+    align-items: center;
+    background-color: #E3DFFD; 
+    border-radius: 15px;
+}
+
+.navigation a {
+    margin-left: 20px; /* Adjust the margin as needed */
+    text-decoration: none;
+    color: black;
+    font-size: 20px; /* Adjust font size as needed */
+    font-weight: 100;
+    padding: 20px 30px; /* Add padding to create button-like appearance */
+    background-color: #E3DFFD; /* Add background color */
+    border: none; /* Remove default border */
+    border-radius: 15px; 
+    cursor: pointer;
+}
+
+.navigation a:hover {
+    background-color: #E5D1FA; /* Change background color on hover */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    margin-top: 20px;
+    margin-left: -600px;
+    margin-right: 50px;
+  }
+.box{
+    background-color: #f2d8e4;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 25px 25px;
+    border-radius: 20px;
+    margin-top: -300px;
+    margin-left: 0px;
+    margin-right: 50px;
+    font-size: 40px;
+}
+
+.kidwave{
+    position:absolute;
+    top: 110px;
+    right: 50px;
+}
+.kidwave img{
+    width:auto;
+    height: 550px;
+}
+.centered {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
