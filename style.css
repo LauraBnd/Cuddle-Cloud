@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 90vh;
-    margin-top: -100px;
+    margin-top: -3vw;
   }
 
 .box{
@@ -20,7 +20,7 @@ body {
     flex-direction: column;
     border: 1px solid #ccc;
     padding: 25px 25px;
-    border-radius: 20px;
+    border-radius: 2vw;
 }
 .form-box{
     width: 450px;
@@ -85,7 +85,3 @@ body {
     max-width: 100%;
     max-height: 100%;
 }
-
-
-
-
