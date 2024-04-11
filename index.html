@@ -1,48 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    <title>Login</title>
- 
-</head>
-<body>
-    <div class="image-container">
-        <img src="images/logo.png" alt="Your Image">
-    </div>
-    <div class="container">
-        <div class="box form-box">
-            <header>Login</header>
-            <form action="" method="post">
-                <div class="field input">
-                    <label for="name">Username</label>
-                    <input type="text" name="username" id="username" required/>
-                </div>
-                <div class="field input">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" autocomplete="off" id="password" required/>
-                </div>                
-                <div class="show-password">
-                    <input type="checkbox" id="" onclick="myFunction()">
-                    <label for="show-password">Show Password</label>
-                </div>                
-                <div class="field">
-                    <input type="submit" class="btn" name="submit" value="Login" required/>
-                </div>
-                <div class="links">
-                    Don't have account? <a href="register.html">Sign Up Now!</a>
-                </div>
-                <div class="links">
-                    Don't wanna Login? <a href="index.html">Go back!</a>
-                </div>
-                <div class="links">
-                    <a href="admin.html">Login as admin!</a>
-                </div>
-            </form>
+    <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="stylesheet" href="home.css">
+        <script src="script.js" defer></script>
+         <title>Home</title>
+    </head>
 
+    <body>
+        <header>
+            <div class="logo-container">
+                <img src="images/logo.png" alt="Your Image">
+            </div>
+            <nav class="navigation">
+                <a href="index.html">Home</a>
+                <a href="contact.html">Contact us</a>
+                <a href="services.html">Services</a>
+                <a href="register.html">Sign Up!</a>
+            </nav>
+        </header>
+        <div class="container">
+            <div class="box">
+                "Where Every Memory Finds Its Cloud" 
+            </div>
         </div>
-    </div>
-</body>
+        <div class="aslogan">
+            Let Cuddle Cloud bring you the best childcare experience!
+        </div>
+        <div class="kidwave">
+            <img src="images/cuddle.png" alt="kidimage" style="width:100%;">
+          </div>
+          <div class="welcome">
+            Welcome to Cuddle Cloud, your personalized website for nurturing and cherishing the precious moments of your child's growth journey. Designed with families and couples in mind, Cuddle Cloud offers a seamless platform to manage all aspects of childcare, from feeding and sleep schedules to capturing heartwarming memories and milestones, while also keeping in touch with your close ones.
+          </div>
+          <div class="click">
+            <a href="services.html" style="color: black;">Click here to find out more!</a>
+          </div>
+        
+    </body>
 </html>
