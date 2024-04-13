@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Lato", sans-serif;
+    background: url('images/cloud.gif') no-repeat center center fixed;
+    background-size: cover;
+  }
+  .news-feed {
+    width: 50vw;
+    margin: 0 auto;
+  }
+  
+  .post {
+    margin-bottom: 3vh;
+    margin-top: 1vw;
+    margin-left: 5vw;
+    padding: 2vw 2vw;
+    background-color: #cb9bd0;;
+    border-radius: 2vw;
+  
+  }
+  
+  .post img {
+    width: 100%;
+    height: auto;
+    border-radius: 2vw;
+    padding-top: 1vw;
+  }
+  
+  .post video {
+    width: 100%;
+    border-radius: 2vw;
+    padding-top: 1vw;
+  }
+  
+  .caption {
+    font-size: 1.2vw;
+    margin-top: 1vw;
+  }
+  
+  .caption-textbox {
+    width: 50vw;
+    height: 5vw;
+    margin-top: 1vw;
+    border-radius: 1vw;
+    resize: none;
+    padding-bottom: 2vw;
+  }
+  .postbut {
+    background-color: hsl(284, 45%, 72%); /* Lilac color */
+    margin-top: 20vw;
+    color: black;
+    padding: 1vh 2vw; /* Adjusted padding */
+    margin-left: 1vw;
+    border: none;
+    border-radius: 1vw;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.5vw; /* Adjusted font size */
+    font-weight: bold; /* Added font weight */
+    text-decoration: none;
+  }
+  
+  /* Change background color of buttons on hover */
+  .postbut:hover {
+    background-color: hsl(284, 45%, 62%); /* Darker lilac on hover */
+  }
+  
