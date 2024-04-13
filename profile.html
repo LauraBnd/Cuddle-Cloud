@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="profile.css">
+    <script src="script.js" defer></script>
+    <title>Profile</title>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+        <img src="images/logo.png" alt="Your Image">
+    </div>
+    <nav class="navigation">
+        <a href="index.html">Sign out</a>
+    </nav>
+   </header>  
+   <div class="tab-container">
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen">My Profile</button>
+    <button class="tablinks" onclick="openCity(event, 'Feed')">Schedule</button>
+    <button class="tablinks" onclick="openCity(event, 'Medical')">Medical History</button>
+    <button class="tablinks" onclick="openCity(event, 'Galery')">Photo Gallery</button>
+    <button class="tablinks" onclick="openCity(event, 'Friends')">Friends</button>
+    <button class="tablinks" onclick="openCity(event, 'News')">News Feed</button>
+  </div>
+   </div>
+  
+  <div id="Profile" class="tabcontent">
+    <button class="popup" onclick="openPopup()">Account Info</button>
+
+<!-- The search popup -->
+<div id="searchPopup" class="popup2">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <h2>Change Account Info</h2>
+    <form>
+        <label for="myuser"><strong>Username</strong></label><br>
+        <input type="text" id="myuser" name="myuser"><br><br>
+        <label for="password">Password</label>
+        <input
+          type="text"
+          name="password"
+          autocomplete="off"
+          id="password"
+        >
+        <input type="submit" value="Change Info">
+    </form>
+</div>
+  <div class="container1">
+      <div class="box1">
+          <div class="profile-container">
+              <div class="profilepic">
+                  <img id="profile" src="images/profile.jpg" alt="Profile">
+              </div>
+              <div class="profile-text">
+                  <ul style="list-style-type: none;">
+                      <li><strong>Name: </strong> Dominic</li>
+                      <li><strong>Birthday: </strong> 27.05.2021</li>
+                      <li><strong>Age: </strong>2 year old</li>
+                      <li><strong>Description: </strong> Dominic is a bundle of energy, constantly on the move and rarely sitting still for long. He has chubby cheeks that dimple when he smiles, and his bright blue eyes sparkle with mischief. Despite his small stature, he has a sturdy build and is surprisingly strong for his age. He loves running around outdoors, feeling the grass beneath his feet and the wind in his hair.</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+
+  
+  <div id="Feed" class="tabcontent">
+    <button class="time-period-button" onclick="toggleTabMenu('Night')">Night</button>
+   <button class="time-period-button" onclick="toggleTabMenu('Day')">Day</button>
+
+    <table id="calendar">
+      <tr>
+        <th>Time</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+      </tr>
+    </table>
+    <div class="cont2">
+      <div class="boxy2">
+        <p><strong>Enter schedule details!</strong></p>
+          <form action="future.php">
+            <label for="datee"><strong>Choose the date:</strong></label>
+            <input type="date" id="datee" name="datee">
+            <p> </p>
+            <label for="dat"><strong>Choose the ending date (only if necessary):</strong></label>
+            <input type="date" id="dat" name="dat">
+            <p> </p>
+            <label for="activity"><strong>Activity Type (nap, feeding, school..)</strong></label>
+            <input type="text" name="activity" id="activity">
+            <p> </p>
+            <label for="locat"><strong>Location</strong></label>
+            <input type="text" name="locat" id="locat">
+            <p> </p>
+            <label for="details"><strong>Details</strong></label>
+            <input type="text" name="details" id="details">
+          </form>
+          
+          <div class="field">
+            <input
+              type="submit"
+              name="submit"
+              class="btn"
+              value="Submit"
+            >
+          </div>
+          
+      </div>
+  <div class="info">
+    <div class="info1">
+      <p><strong>First day with nanny</strong></p>
+      <ul style="list-style-type: none;">
+          <li><strong>Starting Date: </strong> 29.01.2024</li>
+          <li><strong>Details: </strong> Went to the park and got ice cream.</li>
+      </ul>
+    </div>
+    <div class="info2">
+      <p><strong>Grandma meeting</strong></p>
+        <ul style="list-style-type: none;">
+            <li><strong>Date: </strong> 13.09.2023</li>
+            <li><strong>Type: </strong> Play-time</li>
+            <li><strong>Location: </strong> Countryside</li>
+            <li><strong>Details: </strong> Played with grandma's labrador.</li>
+        </ul>
+    </div>
+    </div>
+    </div>
+ 
+  </div>
+     <div id="Medical" class="tabcontent">
+      <button class="postbut">Post Medical File</button>
+      <a href="medical.html" class="postbut">View Medical Files</a>
+      <div class="container1">
+        <div class="box1">
+            <div class="profile-container">
+                <div class="profile-text">
+                    <ul style="list-style-type: none;">
+                        <li><strong>Full Name: </strong> Dominic Sebastian Daddario</li>
+                        <li><strong>Birthday: </strong> 27.05.2021</li>
+                        <li><strong>Parent's Name: </strong> Cassandra Maria Daddario & Michael Daddario</li>
+                        <li><strong>Birthmark: </strong> A heart shaped mark on his left shoulder</li>
+                        <li><strong>Blood Type: </strong>A-</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+        <div class="cont2">
+          <div class="boxy2">
+            <p><strong>Enter sickness details!</strong></p>
+              <form action="future.php">
+                <label for="start"><strong>Choose the starting date:</strong></label>
+                <input type="date" id="start" name="start">
+                <p> </p>
+                <label for="end"><strong>Choose the ending date:</strong></label>
+                <input type="date" id="end" name="end">
+                <p> </p>
+                <label for="symptoms"><strong>Symptoms</strong></label>
+                <input type="text" name="symptoms" id="symptoms">
+                <p> </p>
+                <label for="Treatment"><strong>Treatment</strong></label>
+                <input type="text" name="Treatment" id="Treatment">
+                <p> </p>
+                <label for="detail"><strong>Details</strong></label>
+                <input type="text" name="detail" id="detail">
+              </form>
+              
+              <div class="field">
+                <input
+                  type="submit"
+                  name="submit"
+                  class="btn"
+                  value="Submit"
+                >
+              </div>
+              
+          </div>
+      <div class="info">
+        <div class="info1">
+          <p><strong>Mild Flu</strong></p>
+          <ul style="list-style-type: none;">
+              <li><strong>Starting Date: </strong> 26.11.2023</li>
+              <li><strong>Ending Date: </strong> 26.11.2023</li>
+              <li><strong>Symptoms: </strong> Fever, Coughing</li>
+              <li><strong>Treatment: </strong> Pills</li>
+          </ul>
+        </div>
+        <div class="info2">
+          <p><strong>Sunburn</strong></p>
+            <ul style="list-style-type: none;">
+                <li><strong>Starting Date: </strong> 13.07.2023</li>
+                <li><strong>Ending Date: </strong> 15.07.2023</li>
+                <li><strong>Symptoms: </strong> Fever, Itchiness</li>
+                <li><strong>Treatment: </strong> Lotion</li>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div>
+
+  <div id="Galery" class="tabcontent">
+    <button class="postbut">Post a Photo</button>
+    <div class="main">
+      <div class="row">
+        <div class="column">
+          <div class="content">
+            <img src="images/firstwalk.jpg" alt="walk" style="width:100%">
+            <h3>First Walk</h3>
+            <p>18.02.2024 - Dominic just made his first steps helped by his mama. After many crawls and tries to stand up, he finally did it!! Here's to many more steps in the future.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content">
+            <img src="images/eating.jpg" alt="Lights" style="width:100%">
+            <h3>Eating By Himself</h3>
+            <p>Dominic tried eating by himself for the first time! He didn't like at first, but at least he didn't stain the walls... Only a laundry basket to wash!</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content">
+            <img src="images/dogsleep.jpg" alt="Dogs" style="width:100%">
+            <h3>Pijama Party</h3>
+            <p>Look who decided to have a sleeping party!</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content">
+            <img src="images/picnic.jpeg" alt="Picnic" style="width:100%">
+            <h3>Best Weather For A Picnic!</h3>
+            <p>Dominic and Henry had a picnic outside. Trying to keep them off the phones while we still can!</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="content">
+        <img src="images/birthday.jpg" alt="Birthday" style="width:100%">
+        <h3>HAPPY BIRTHDAY!!</h3>
+        <p>Dominic just turned 2 years old!! Time really does fly when you have such an energic child.</p>
+      </div>
+      </div>
+      <div class="insta">
+        <img src="images/insta.png" alt="insta">
+        </div>
+  </div>
+  <div id="Friends" class="tabcontent">
+    <div class="popup" onclick="Open()">My friendship Code!
+      <span class="popuptext" id="myPopup">#H3LLO</span>
+    </div>
+    
+    <button class="popup" onclick="openPopup2()">Search for a friend</button>
+
+<!-- The search popup -->
+<div id="searchPopup2" class="popup2">
+    <span class="close" onclick="closePopup2()">&times;</span>
+    <h2>Search for a friend</h2>
+    <form>
+        <label for="searchInput"><strong>Enter friend's code:</strong></label><br>
+        <input type="text" id="searchInput" name="searchInput"><br><br>
+        <input type="submit" value="Search">
+    </form>
+</div>
+  
+    <div class="container1">
+      <div class="box1">
+          <div class="profile-container">
+              <div class="profilepic">
+                  <img id="friend1" src="images/firstwalk.jpg" alt="Profile">
+              </div>
+              <div class="profile-text">
+                  <ul style="list-style-type: none;">
+                      <li><strong>Name: </strong> Caleb</li>
+                      <li><strong>Age: </strong>1 year old</li>
+                      <li><strong>Description: </strong> Caleb is a child that loves exploring.</li>
+                        </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  <div class="container1">
+    <div class="box1">
+        <div class="profile-container">
+            <div class="profilepic">
+                <img id="friend2" src="images/olivia.jpg" alt="Profile">
+            </div>
+            <div class="profile-text">
+                <ul style="list-style-type: none;">
+                    <li><strong>Name: </strong> Olivia</li>
+                    <li><strong>Age: </strong>2 year old</li>
+                    <li><strong>Description: </strong> Olivia is a diva that loves getting her way.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+      </div>
+
+  <div id="News" class="tabcontent">
+    <div class="posting">
+      <button id="photo-btn">Add Photo</button>
+      <button id="video-btn">Add Video</button>
+      <textarea class="caption-textbox" placeholder="Write a caption..."></textarea>
+    </div>
+    <div class="news-feed">
+      <div class="post">
+        <video controls>
+            <source src="images/halloween.mp4" type="video/mp4">
+        </video>
+        <p class="caption">@Jennifer</p>
+        <p class="caption">Jennifer's first Halloween!!</p>
+    </div>
+      <div class="post">
+          <img src="images/firstwalk.jpg" alt="Random Photo">
+          <p class="caption">@Henry</p>
+          <p class="caption">Henry walked for the first time.</p>
+          
+      </div>
+      <div class="post">
+        <video controls>
+            <source src="images/sport.mp4" type="video/mp4">
+        </video>
+        <p class="caption">@Benjamin</p>
+        <p class="caption">Benjamin is an athlete</p>
+    </div>
+      <div class="post">
+          <img src="images/olivia.jpg" alt="Random Photo">
+          <p class="caption">@Olivia</p>
+          <p class="caption">Happy Birthday Olivia!</p>
+      </div>
+      <div class="post">
+          <video controls>
+              <source src="images/video.mp4" type="video/mp4">
+          </video>
+          <p class="caption">@Brooklyn</p>
+          <p class="caption">Brooklyn got her first dog!</p>
+      </div>
+  </div>
+  </div>
+    
+</body>
+</html>

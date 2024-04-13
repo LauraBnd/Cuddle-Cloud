@@ -1,0 +1,544 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Lato", sans-serif;
+    background: url('images/cloud.gif') no-repeat center center fixed;
+    background-size: cover;
+  }
+     
+  /* Style the tab */
+  .tab {
+    float:left;
+    margin-left:0;
+    background-color: hsl(325, 24%, 63%);
+    width: 15vw;
+    margin-top: 10vw;
+    border-radius: 2vw;
+    padding: 1vw 1vw;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    display: block;
+    background-color: hsl(325, 24%, 63%, 0.4);
+    color: black;
+    padding: 2vh;
+    width: 100%;
+    border: none;
+    border-radius: 1vw;
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.8vw;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: hsl(320, 82%, 89%, 0.1);
+  }
+  
+  /* Create an active/current "tab button" class */
+  .tab button.active {
+    background-color: hsl(324, 36%, 52%, 0.8);
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    float: left;
+    padding: 0px 3vw;
+    width: 70%;
+    border-left: none;
+    height: 20vh;
+    margin-top: 7vw;
+  }
+  .logo-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+  }
+  
+  .logo-container img {
+      width: 12vw; 
+      height: auto; 
+  }
+  
+  /* Profile Tab */
+  .profilepic {
+    width: 23vw; /* Adjust the width of the profile picture */
+    height: auto;
+    margin-right: 2vw;
+  }
+  
+  .profilepic img {
+    width: 100%; /* Set the width of the image to 100% of its container */
+    height: auto; /* Maintain aspect ratio */
+  }
+  .container1 {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0vw;
+    margin-top: 3vw; 
+  }
+  
+  .box1 {
+    background-color: hsl(38, 88%, 93%, 0.5);
+    border: 1px solid #ccc;
+    padding-bottom: 2vw;
+    padding-top: 3vh;
+    padding-left: 2vw; 
+    padding-right: 2vw; 
+    border-radius: 2vw;
+    max-width: 200vw;
+    text-align: left;
+    font-size: 1.25vw;
+    position: relative;
+    min-height: 10vw;
+  }
+  
+  .profile-container {
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+  }
+  
+  .profile-text {
+    flex: 1; 
+    margin-top: 1vw; 
+  }
+  
+  .navigation {
+      position: fixed;
+      top: 1.2vw;
+      right: 1.5vw; 
+      display: flex;
+      align-items: center;
+      background-color: #E3DFFD; 
+      border-radius: 7vh;
+  }
+  
+  .navigation a {
+      text-decoration: none;
+      color: black;
+      font-size: 1.8vw; 
+      font-weight: 100;
+      padding: 1.5vw; 
+      background-color: #E3DFFD; 
+      border: none; 
+      border-radius: 4vh; 
+      cursor: pointer;
+  }
+  
+  .navigation a:hover {
+      background-color: #E5D1FA;
+  }
+  
+  
+  /*Schedules*/
+  table {
+    border-collapse: collapse;
+    width: 70vw;
+    background-color:hsl(270, 75%, 94%, 0.5) ;
+  }
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1vw;
+  }
+  th {
+    background-color: #efe0ff;
+  }
+  input[type="text"] {
+    width: 100%;
+    border-radius: 1vw;
+  }
+  
+  /* Style the time period buttons */
+  .time-period-button {
+    background-color: hsl(284, 45%, 72%); /* Lilac color */
+    color: black;
+    padding: 1vh 2vw; /* Adjusted padding */
+    margin: 0.5vh 0; /* Added margin */
+    border: none;
+    border-radius: 1vw;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.5vw; /* Adjusted font size */
+    font-weight: bold; /* Added font weight */
+  }
+  
+  /* Change background color of buttons on hover */
+  .time-period-button:hover {
+    background-color: hsl(284, 45%, 62%); /* Darker lilac on hover */
+  }
+  
+  /* Create an active/current class */
+  .time-period-button.active {
+    background-color: hsl(284, 45%, 82%); /* Lighter lilac for active button */
+  }
+  
+  @media screen and (max-width: 600px) {
+    table {
+      width: 100%;
+    }
+    table, th, td {
+      display: block;
+    }
+    th, td {
+      border: none;
+      text-align: center;
+    }
+    /* Hide the table header cells */
+    th {
+      display: none;
+    }
+    /* Style the table rows */
+    tr {
+      border-bottom: 1px solid #ddd;
+      padding: 0.5vw 0;
+      margin-bottom: 1vw;
+    }
+    /* Style the table cells */
+    td {
+      display: block;
+      text-align: left;
+      padding-left: 20%;
+      margin-bottom: 0.5vw;
+    }
+    /* Adjust the input width */
+    .event-input {
+      width: 90%;
+      margin: auto;
+    }
+  }
+  /*Portofolio*/
+  .insta{
+    display: flex;
+    margin-left: -15vw;
+  }
+  
+  .insta img{
+    width: 20vw;
+    height: auto;
+  }
+  .postbut {
+    background-color: hsl(284, 45%, 72%); /* Lilac color */
+    color: black;
+    padding: 1vh 2vw; /* Adjusted padding */
+    margin-left: 1vw;
+    border: none;
+    border-radius: 1vw;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.5vw; /* Adjusted font size */
+    font-weight: bold; /* Added font weight */
+    text-decoration: none;
+  }
+  
+  /* Change background color of buttons on hover */
+  .postbut:hover {
+    background-color: hsl(284, 45%, 62%); /* Darker lilac on hover */
+  }
+  .main {
+    max-width: 800vw;
+    margin: auto;
+    font-size: 1.2vw;
+  }
+  
+  h1 {
+    font-size: 2vw;
+    word-break: break-all;
+  }
+  
+  .row {
+    margin: 0.5vw 0vw;
+  }
+  
+  /* Add padding BETWEEN each column  */
+  .row,
+  .row > .column {
+    padding: 0.5vw;
+  }
+  
+  /* Create four equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 25%;
+  }
+  
+  /* Clear floats after rows */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Content */
+  .content {
+    background-color: hsl(38, 88%, 93%, 0.5);
+    padding: 1vw;
+    border-radius: 1.5vw;
+    margin-bottom: 1vw;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .column {
+      width: 100%;
+    }
+  }
+  
+  /*News Feed*/
+  .news-feed {
+    width: 50vw;
+    margin: 0 auto;
+  }
+  
+  .post {
+    margin-bottom: 3vh;
+    margin-top: 1vw;
+    margin-left: 5vw;
+    padding: 2vw 2vw;
+    background-color: #a358ac;;
+    border-radius: 2vw;
+  
+  }
+  
+  .post img {
+    width: 100%;
+    height: auto;
+    border-radius: 2vw;
+    padding-top: 1vw;
+  }
+  
+  .post video {
+    width: 100%;
+    border-radius: 2vw;
+    padding-top: 1vw;
+  }
+  
+  .caption {
+    font-size: 1.2vw;
+    margin-top: 1vw;
+  }
+  
+  .caption-textbox {
+    width: 50vw;
+    height: 5vw;
+    margin-top: 1vw;
+    border-radius: 1vw;
+    resize: none;
+    padding-bottom: 2vw;
+  }
+  
+  .posting {
+    width: 60vw;
+    margin-left: 5vw;
+    text-align: center;
+    padding-bottom: 2vw;
+    background-color: hsl(296, 39%, 85%, 0.8);
+    border-radius: 2vw;
+  }
+  
+  .posting button {
+    margin-left: 0vw;
+    margin-top: 1vw;
+    padding: 1.5vw 1.5vw;
+    font-size: 1.3vw;
+    border-radius: 1.4vw;
+    cursor: pointer;
+    background-color: #703c76;
+    color: #ffffff;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .posting button:hover {
+    background-color: #a888ab;
+  }
+  
+  /*Friends*/
+  .popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background-color: hsl(284, 45%, 72%); /* Lilac color */
+    color: black;
+    padding: 1vh 2vw; /* Adjusted padding */
+    margin-left: 1vw;
+    border: none;
+    border-radius: 1vw;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1.5vw; /* Adjusted font size */
+    font-weight: bold; /* Added font weight */
+  }
+  
+  /* The actual popup (appears on top) */
+  .popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 2vw;
+    padding: 1vw 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -5vw;
+  }
+  
+  /* Popup arrow */
+  .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -0.5vw;
+    border-width: 0.8vw;
+    border-style: solid;
+    border-color: #555555 transparent transparent transparent;
+  }
+  
+  /* Toggle this class when clicking on the popup container (hide and show the popup) */
+  .popup .show {
+    visibility: visible;
+    animation: fadeIn 1s
+  }
+  
+  .popup2 {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 5vw; 
+    left: 48vw; 
+    background-color: hsl(284, 55%, 85%);
+    border: 1px solid #888;
+    border-radius: 1vw;
+    padding: 2vw;
+    max-width: 40%; /* Adjust the width as needed */
+    overflow: auto;
+    z-index: 9999; /* Ensure the popup is on top */
+  }
+  /* Close button */
+  .close {
+    color: black;
+    float: right;
+    font-size: 2vw;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: rgb(72, 73, 70);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Form styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  form label {
+    margin-bottom: 1.5vw;
+  }
+  
+  input[type="submit"] {
+    background-color: hsla(40, 85%, 85%, 0.5);
+    border: none;
+    color: black;
+    padding: 1vw 2vw;
+    border-radius: 1.5vw;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  /*Medical*/
+  
+  .cont2 {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 6vw;
+  }
+  
+  .boxy2 {
+    background-color: hsl(38, 88%, 93%, 0.5 );
+    display: flex;
+    flex-direction: column;
+    border: 0.2vw solid #ccc;
+    padding: 1vw 2vw; /* Adjusted padding */
+    border-radius: 2vw;
+    margin-top: -4vw; 
+    max-width: 70vw; /* Adjusted max-width */
+    text-align: left; 
+    font-size: 1vw;
+    margin-right: 40vw;
+  }
+  
+  .boxy2 form input[type="text"] {
+    width: 100%; 
+    height: 3vw;
+    font-size: 1vw;
+    padding: 0 1vw;
+    border-radius: 1vw;
+    border: 0.2vw solid #ccc;
+    outline: none;
+    box-sizing: border-box; 
+  }
+  
+  .btn{
+    width: 7vw;
+    font-size: 1vw;
+  }
+  .boxy2 form label {
+    display: inline-block;
+  }
+  
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 5vw;
+    margin-top: -44vw;
+    margin-left: 15vw;
+  }
+  
+  .info1,
+  .info2 {
+    margin-left:2vw;
+    background-color: #fdf2df;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 1vw 1vw;
+    border-radius: 2vw;
+    margin-top: 3vw; 
+    max-width: 62vw;
+    text-align: left; 
+    font-size: 1.25vw;
+  }
+  #start,
+  #end,
+  #dat,
+  #datee {
+    width: 100%; /* Set initial width */
+  }
+  
+  /* Media queries for responsiveness */
+  @media only screen and (max-width: 600px) {
+    #start,
+    #end,
+    #dat,
+  #datee {
+      width: 50%; /* Adjust width for screens wider than 600px */
+    }
+  }
