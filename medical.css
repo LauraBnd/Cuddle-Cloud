@@ -48,23 +48,22 @@
     padding-bottom: 2vw;
   }
   .postbut {
-    background-color: hsl(284, 45%, 72%); /* Lilac color */
+    background-color: hsl(284, 45%, 72%); 
     margin-top: 20vw;
     color: black;
-    padding: 1vh 2vw; /* Adjusted padding */
+    padding: 1vh 2vw; 
     margin-left: 1vw;
     border: none;
     border-radius: 1vw;
     outline: none;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 1.5vw; /* Adjusted font size */
-    font-weight: bold; /* Added font weight */
+    font-size: 1.5vw; 
+    font-weight: bold; 
     text-decoration: none;
   }
   
-  /* Change background color of buttons on hover */
   .postbut:hover {
-    background-color: hsl(284, 45%, 62%); /* Darker lilac on hover */
+    background-color: hsl(284, 45%, 62%); 
   }
   
