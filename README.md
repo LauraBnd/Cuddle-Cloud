@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="scholarly.css">
-    <title>Documentation</title>
 </head>
 <body>
   <h1>Cuddle Cloud Childcare Manager Software Requirements Specification</h1>
