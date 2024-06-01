@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 // Manage the css to be used in .html files
 function manageStyleCSS(req, res) {
     const cssLocation = path.join(__dirname, '../public/css', path.basename(req.url));
