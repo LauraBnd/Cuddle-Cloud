@@ -1,0 +1,135 @@
+*{
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+body {
+    background-image: url('images/clo.jpg');
+    background-size: cover; 
+    background-position: center; 
+}
+
+.logo-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logo-container img {
+    width: 12vw; 
+    height: auto; 
+}
+
+.navigation {
+    position: fixed;
+    top: 1.2vw;
+    right: 1.5vw; 
+    display: flex;
+    align-items: center;
+    background-color: #929ddb; 
+    border-radius: 7vh;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.8vw; 
+    font-weight: 100;
+    padding: 1.5vw; 
+    background-color: #929ddb; 
+    border: none; 
+    border-radius: 4vh; 
+    cursor: pointer;
+}
+
+.navigation a:hover {
+    background-color: #b0b5d3;
+}
+
+.title {
+    font-size: 2vw;
+    margin-right: auto;
+    margin-left: 42vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 3vw;
+    color: #383c52;
+}
+.container2 {
+    background-color: rgb(249, 248, 236, 0.5);
+    width: 40%;
+    float: right;
+    margin-top: 10vh;
+    margin-bottom: 15vh;
+    margin-right: 5vw;
+    font-size: 2vw;
+    border-radius: 2vw;
+    padding-top: 2vw;
+    padding-left: 2vw;
+  }
+  .container1{
+    background-color: rgb(249, 248, 236, 0.5);
+    width: 40%;
+    float:left;
+    margin-top: 10vh;
+    margin-bottom: 7vh;
+    margin-left: 5vw;
+    font-size: 2vw;
+    border-radius: 2vw;
+    padding-top: 2vw;
+    padding-left: 2vw;
+  }
+
+
+
+.container1 header{
+    font-size: 2vw;
+    font-weight: 600;
+    padding-bottom: 3vh;
+ 
+}
+.container2 header{
+    font-size: 2vw;
+    font-weight: 600;
+    padding-bottom: 3vh;
+}
+.container1 .field,
+.container2 .field{
+    display:flex;
+    margin-bottom: 2vh;
+    flex-direction: column;
+    border-radius: 5vw;
+    margin-right: 2vw;
+}
+.container1 .input input
+.container2 .input input {
+    width: auto; 
+    height: 20vh;
+    font-size: 1vw;
+    padding-right: 2vw;
+    border-radius: 5vw;
+    border: 1px solid;
+    outline: none;
+    box-sizing: border-box; 
+}
+
+.btn {
+    width: auto; 
+    height: 35px;
+    border-radius: 5px;
+    background: #92dbd1;
+    color: black;
+    font-size: 1.2vw;
+    cursor: pointer;
+    transition: all .3s;
+    margin-top: 2vh;
+    padding: 0px 5vw;
+}
+
+.btn:hover{
+    opacity: 0.70;
+}
+.submit{
+    width: 100%;
+}
+
