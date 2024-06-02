@@ -4,8 +4,8 @@ const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require
 const { manageProfileRoute } = require('./routes/profile');
 const { manageServicesRoute } = require('./routes/services');
 const { manageContactRoute } = require('./routes/contact');
-const { manageRegistertRoute } = require('./routes/register');
-const { manageLoginRoute } = require('./routes/login');
+const { manageRegistertRoute, manageRegisterPost } = require('./routes/register');
+const { manageLoginRoute, manageLoginPosts } = require('./routes/login');
 const { adminPanel } = require('./routes/admin');
 const { manageForgotRoute } = require('./routes/forgot');
 const { manageMedicalRoute } = require('./routes/medical');
@@ -43,9 +43,15 @@ const server = http.createServer((req, res) => {
 // ##Manages the /register page
 } else if (urlParser.pathname === '/register' && req.method === 'GET') {
   manageRegistertRoute(req, res);
+  // ##Manages the /register posts when user registers
+} else if (urlParser.pathname === '/register' && req.method === 'POST') {
+  manageRegisterPost(req, res);
   // ##Manages the /login page
 } else if (urlParser.pathname === '/login' && req.method === 'GET') {
   manageLoginRoute(req, res);
+  // ##Manages the /login posts when user logins
+} else if (urlParser.pathname === '/login' && req.method === 'POST') {
+  manageLoginPosts(req, res);
 
   // ##Admin panel link!!!!
 } else if (urlParser.pathname === '/admin' && req.method === 'GET') {
