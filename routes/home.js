@@ -40,8 +40,22 @@ function manageImages(req, res) {
         res.end(data);
     });
 }
+function manageJSFiles(req, res) {
+    const jsLocation = path.join(__dirname, '../public/js', path.basename(req.url));
+    fs.readFile(jsLocation, (err, data) => {
+        if (err) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('JS file not found!');
+            return;
+        }
+        res.writeHead(200, { 'Content-Type': 'application/javascript' });
+        res.end(data);
+    });
+}
+
 module.exports = {
     manageHomeRoute,
     manageStyleCSS,
-    manageImages
+    manageImages,
+    manageJSFiles
 };

@@ -1,6 +1,6 @@
 const http = require('http');
 const url = require('url');
-const { manageHomeRoute, manageStyleCSS, manageImages } = require('./routes/home');
+const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./routes/home');
 const { manageProfileRoute } = require('./routes/profile');
 const { manageServicesRoute } = require('./routes/services');
 const { manageContactRoute } = require('./routes/contact');
@@ -8,6 +8,7 @@ const { manageRegistertRoute } = require('./routes/register');
 const { manageLoginRoute } = require('./routes/login');
 const { adminPanel } = require('./routes/admin');
 const { manageForgotRoute } = require('./routes/forgot');
+const { manageMedicalRoute } = require('./routes/medical');
 
 
 
@@ -23,6 +24,9 @@ const server = http.createServer((req, res) => {
 // ##Finds the iamges files location
   } else if (urlParser.pathname.startsWith('/images/') && req.method === 'GET') {
     manageImages(req, res);
+    // ##Finds the js files location
+  } else if (urlParser.pathname.startsWith('/js/') && req.method === 'GET') {
+    manageJSFiles(req, res);
 // ##Manages the /profile page
   } else if (urlParser.pathname === '/profile' && req.method === 'GET') {
     manageProfileRoute(req, res);
@@ -32,6 +36,10 @@ const server = http.createServer((req, res) => {
 // ##Manages the /contact page
 } else if (urlParser.pathname === '/contact' && req.method === 'GET') {
   manageContactRoute(req, res);
+// ##Manages the /medical page
+} else if (urlParser.pathname === '/medical' && req.method === 'GET') {
+  manageMedicalRoute(req, res);
+
 // ##Manages the /register page
 } else if (urlParser.pathname === '/register' && req.method === 'GET') {
   manageRegistertRoute(req, res);
