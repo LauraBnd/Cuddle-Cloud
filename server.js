@@ -3,6 +3,10 @@ const url = require('url');
 const { manageHomeRoute, manageStyleCSS } = require('./routes/home');
 const { manageProfileRoute } = require('./routes/profile');
 const { manageServicesRoute } = require('./routes/services');
+const { manageContactRoute } = require('./routes/contact');
+const { manageRegistertRoute } = require('./routes/register');
+const { manageLoginRoute } = require('./routes/login');
+const { adminPanel } = require('./routes/admin');
 
 
 // This manages the server
@@ -20,6 +24,19 @@ const server = http.createServer((req, res) => {
 // ##Manages the /services page
   } else if (urlParser.pathname === '/services' && req.method === 'GET') {
     manageServicesRoute(req, res);
+// ##Manages the /contact page
+} else if (urlParser.pathname === '/contact' && req.method === 'GET') {
+  manageContactRoute(req, res);
+// ##Manages the /register page
+} else if (urlParser.pathname === '/register' && req.method === 'GET') {
+  manageRegistertRoute(req, res);
+  // ##Manages the /login page
+} else if (urlParser.pathname === '/login' && req.method === 'GET') {
+  manageLoginRoute(req, res);
+
+  // ##Admin panel link!!!!
+} else if (urlParser.pathname === '/admin' && req.method === 'GET') {
+  adminPanel(req, res);
     } else {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('Home page was not found');
