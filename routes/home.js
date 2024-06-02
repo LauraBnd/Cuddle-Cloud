@@ -28,7 +28,20 @@ function manageHomeRoute (req, res) {
     });
 }
 
+// Manage the iamges to be displayed in the pages
+function manageImages(req, res) {
+    const imageLocation = path.join(__dirname, '../public/images', path.basename(req.url));
+    fs.readFile(imageLocation, (err, data) => {
+        if(err){
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('Image ERROR!');
+            return;
+        }res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        res.end(data);
+    });
+}
 module.exports = {
     manageHomeRoute,
-    manageStyleCSS
+    manageStyleCSS,
+    manageImages
 };

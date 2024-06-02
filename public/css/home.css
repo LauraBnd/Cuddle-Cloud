@@ -2,6 +2,12 @@
     font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
+body {
+    background-image: url('/images/cloudy.png');
+    background-size: cover; 
+    background-position: center; 
+}
+
 @media (min-width: 1440px) { 
     
 .aslogan{
