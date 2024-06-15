@@ -1,9 +1,23 @@
 const fs = require('fs');
-const { storeSessions, sessionIdGenerator } = require('../manageCookies');
+const { storeSessions, sessionIdGenerator, getCookiesSession, checkSession } = require('../manageCookies');
 const querystring = require('querystring');
 const bcrypt = require('bcrypt');
 const { db } = require('../db');
 function manageLoginRoute(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        userId = storeSessions[sessionId].userId;
+    }
+
+    if (userLogged) {
+        res.writeHead(302, { 'Location': '/profile' });
+        res.end();
+        return;
+    }
     fs.readFile('public/login.html', (err, data) => {
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
