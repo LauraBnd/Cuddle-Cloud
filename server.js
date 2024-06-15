@@ -9,6 +9,7 @@ const { manageLoginRoute, manageLoginPosts } = require('./routes/login');
 const { adminPanel } = require('./routes/admin');
 const { manageForgotRoute } = require('./routes/forgot');
 const { manageMedicalRoute } = require('./routes/medical');
+const  manageLogoutRoute  = require('./routes/logout'); // import logout function as seen here, "{manageLogoutRoute}" -- doesn't find the function ????
 
 
 
@@ -52,6 +53,11 @@ const server = http.createServer((req, res) => {
   // ##Manages the /login posts when user logins
 } else if (urlParser.pathname === '/login' && req.method === 'POST') {
   manageLoginPosts(req, res);
+
+  // ##Manages the "logout" funciton
+} else if (urlParser.pathname === '/logout' && req.method === 'POST') {
+  manageLogoutRoute(req, res);
+
 
   // ##Admin panel link!!!!
 } else if (urlParser.pathname === '/admin' && req.method === 'GET') {

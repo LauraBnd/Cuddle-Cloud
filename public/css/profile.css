@@ -102,30 +102,30 @@
   }
   
   .navigation {
-      position: fixed;
-      top: 1.2vw;
-      right: 1.5vw; 
-      display: flex;
-      align-items: center;
-      background-color: #E3DFFD; 
-      border-radius: 7vh;
-  }
-  
-  .navigation a {
-      text-decoration: none;
-      color: black;
-      font-size: 1.8vw; 
-      font-weight: 100;
-      padding: 1.5vw; 
-      background-color: #E3DFFD; 
-      border: none; 
-      border-radius: 4vh; 
-      cursor: pointer;
-  }
-  
-  .navigation a:hover {
-      background-color: #E5D1FA;
-  }
+    position: fixed;
+    top: 1.2vw;
+    right: 1.5vw; 
+    display: flex;
+    align-items: center;
+    background-color: #E3DFFD; 
+    border-radius: 7vh;
+}
+
+.navigation button {
+    text-decoration: none;
+    color: black;
+    font-size: 1.8vw; 
+    font-weight: 100;
+    padding: 1.5vw; 
+    background-color: #E3DFFD; 
+    border: none; 
+    border-radius: 4vh; 
+    cursor: pointer;
+}
+
+.navigation button:hover {
+    background-color: #E5D1FA;
+}
   
   
   table {
