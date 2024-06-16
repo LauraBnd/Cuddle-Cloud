@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./routes/home');
-const { manageProfileRoute } = require('./routes/profile');
+const { manageProfileRoute, manageProfileUpdate, manageUploadPost } = require('./routes/profile');
 const { manageServicesRoute } = require('./routes/services');
 const { manageContactRoute } = require('./routes/contact');
 const { manageRegistertRoute, manageRegisterPost } = require('./routes/register');
@@ -52,6 +52,11 @@ const server = http.createServer((req, res) => {
   // ##Manages the /login posts when user logins
 } else if (urlParser.pathname === '/login' && req.method === 'POST') {
   manageLoginPosts(req, res);
+
+  // ##Manages the "logout" funciton
+} else if (urlParser.pathname === '/logout' && req.method === 'POST') {
+  manageLogoutRoute(req, res);
+
 
   // ##Admin panel link!!!!
 } else if (urlParser.pathname === '/admin' && req.method === 'GET') {

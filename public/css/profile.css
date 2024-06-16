@@ -60,9 +60,19 @@
   }
   
   .profilepic {
+    display: flex;
     width: 23vw; 
     height: auto;
     margin-right: 2vw;
+
+  }
+
+  .profilepic .user-info {
+    margin-left: 15px;
+  }
+
+  .user-info p {
+    font-weight: 600;
   }
   
   .profilepic img {
@@ -80,7 +90,7 @@
     background-color: hsl(38, 88%, 93%, 0.5);
     border: 1px solid #ccc;
     padding-bottom: 2vw;
-    padding-top: 3vh;
+    /* padding-top: 3vh; */
     padding-left: 2vw; 
     padding-right: 2vw; 
     border-radius: 2vw;
@@ -141,9 +151,20 @@
   th {
     background-color: #efe0ff;
   }
-  input[type="text"] {
+  input[type="text"],input[type="number"] {
     width: 100%;
-    border-radius: 1vw;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    height: 25px;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  form label {
+    font-size: 15px;
+    font-weight: 600;
   }
   
   .time-period-button {
@@ -388,8 +409,8 @@
   .popup2 {
     display: none; 
     position: fixed;
-    top: 5vw; 
-    left: 48vw; 
+    top: 12vw; 
+    left: 40vw; 
     background-color: hsl(284, 55%, 85%);
     border: 1px solid #888;
     border-radius: 1vw;
@@ -413,7 +434,7 @@
   }
   
   form {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     align-items: center;
   }
