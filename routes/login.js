@@ -76,7 +76,7 @@ function manageLoginPosts(req, res) {
                     res.writeHead(302, {
                         'Content-Type': 'text/plain',
                         'Set-Cookie': `sessionId=${sessionId}; HttpOnly`,
-                        'Location': '/'
+                        'Location': '/profile'
                         
                     });
                     res.end('Login successful');

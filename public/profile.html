@@ -39,34 +39,48 @@
 
 <div id="searchPopup" class="popup2">
     <span class="close" onclick="closePopup()">&times;</span>
+
+
+
+    <!-- Change account info -->
     <h2>Change Account Info</h2>
-    <form>
-        <label for="myuser"><strong>Username</strong></label><br>
-        <input type="text" id="myuser" name="myuser"><br><br>
-        <label for="password">Password</label>
-        <input
-          type="text"
-          name="password"
-          autocomplete="off"
-          id="password"
-        >
-        <input type="submit" value="Change Info">
-    </form>
+<form action="/updateProfile" method="POST" enctype="multipart/form-data">
+    <label for="myuser"><strong>Username</strong></label><br>
+    <input type="text" id="myuser" name="myuser"><br><br>
+
+    <label for="password">Password</label>
+    <input type="text" name="password" autocomplete="off" id="password"><br><br>
+
+    <label for="profile_photo">Profile Photo</label>
+    <input type="file" id="profile_photo" name="profile_photo"><br><br>
+
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="birthday">Birthday</label>
+    <input type="date" id="birthday" name="birthday"><br><br>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age"><br><br>
+
+    <label for="description">Description</label>
+    <textarea id="description" name="description"></textarea><br><br>
+
+    <input type="submit" value="Change Info">
+</form>
+
+
+
 </div>
+
   <div class="container1">
       <div class="box1">
+        <h2>Profile Info</h2>
           <div class="profile-container">
               <div class="profilepic">
-                  <img id="profile" src="/images/profile.jpg" alt="Profile">
+                   <!-- PROFILE_INFO -->
               </div>
-              <div class="profile-text">
-                  <ul style="list-style-type: none;">
-                      <li><strong>Name: </strong> Dominic</li>
-                      <li><strong>Birthday: </strong> 27.05.2021</li>
-                      <li><strong>Age: </strong>2 year old</li>
-                      <li><strong>Description: </strong> Dominic is a bundle of energy, constantly on the move and rarely sitting still for long. He has chubby cheeks that dimple when he smiles, and his bright blue eyes sparkle with mischief. Despite his small stature, he has a sturdy build and is surprisingly strong for his age. He loves running around outdoors, feeling the grass beneath his feet and the wind in his hair.</li>
-                  </ul>
-              </div>
+
           </div>
       </div>
   </div>

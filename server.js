@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./routes/home');
-const { manageProfileRoute } = require('./routes/profile');
+const { manageProfileRoute, manageProfileUpdate, manageUploadPost } = require('./routes/profile');
 const { manageServicesRoute } = require('./routes/services');
 const { manageContactRoute } = require('./routes/contact');
 const { manageRegistertRoute, manageRegisterPost } = require('./routes/register');
@@ -53,8 +53,17 @@ const server = http.createServer((req, res) => {
   // ##Manages the /login posts when user logins
 } else if (urlParser.pathname === '/login' && req.method === 'POST') {
   manageLoginPosts(req, res);
+  
+  // ##Manages the "updateProfile" function
+} else if (urlParser.pathname === '/updateProfile' && req.method === 'POST') {
+  manageProfileUpdate(req, res);
+  
+  // ##Manages the "upload" function
+} else if (urlParser.pathname === '/upload' && req.method === 'POST') {
+  manageUploadPost(req, res);
 
-  // ##Manages the "logout" funciton
+
+  // ##Manages the "logout" function
 } else if (urlParser.pathname === '/logout' && req.method === 'POST') {
   manageLogoutRoute(req, res);
 
