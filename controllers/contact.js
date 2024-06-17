@@ -2,7 +2,7 @@ const fs = require('fs');
 
 function manageContactRoute(req, res) {
 
-    fs.readFile('public/contact.html', (err, data) => {
+    fs.readFile('views/contact.html', (err, data) => {
         if(err){
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Contact page cant be found!');

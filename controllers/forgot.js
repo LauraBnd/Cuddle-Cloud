@@ -1,10 +1,10 @@
 const fs = require('fs');
 
-function manageMedicalRoute(req, res) {
-    fs.readFile('public/medical.html', (err, data) => {
-        if (err) {
+function manageForgotRoute(req, res) {
+    fs.readFile('views/forgot.html', (err, data) => {
+        if(err){
             res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Error. Medical page is not available');
+            res.end('!!!FORGOT Page not found!!!');
             return;
         }
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -13,5 +13,5 @@ function manageMedicalRoute(req, res) {
 }
 
 module.exports = {
-    manageMedicalRoute
+    manageForgotRoute
 };

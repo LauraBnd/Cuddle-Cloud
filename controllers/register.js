@@ -1,10 +1,11 @@
 const fs = require('fs');
-const { db } = require('../db');
+const { db } = require('../models/db');
 const bcrypt = require('bcrypt');
 const querystring = require('querystring');
 const { storeSessions, sessionIdGenerator, getCookiesSession, checkSession } = require('../manageCookies');
 
 function manageRegistertRoute (req, res) {
+<<<<<<< HEAD:routes/register.js
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
     let userLogged = false;
@@ -20,6 +21,9 @@ function manageRegistertRoute (req, res) {
         return;
     }
     fs.readFile('public/register.html', (err, data) => {
+=======
+    fs.readFile('views/register.html', (err, data) => {
+>>>>>>> Laura:controllers/register.js
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Register page not found!!!');

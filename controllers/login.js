@@ -2,8 +2,9 @@ const fs = require('fs');
 const { storeSessions, sessionIdGenerator, getCookiesSession, checkSession } = require('../manageCookies');
 const querystring = require('querystring');
 const bcrypt = require('bcrypt');
-const { db } = require('../db');
+const { db } = require('../models/db');
 function manageLoginRoute(req, res) {
+<<<<<<< HEAD:routes/login.js
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
     let userLogged = false;
@@ -19,6 +20,9 @@ function manageLoginRoute(req, res) {
         return;
     }
     fs.readFile('public/login.html', (err, data) => {
+=======
+    fs.readFile('views/login.html', (err, data) => {
+>>>>>>> Laura:controllers/login.js
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Login page cant be found');
