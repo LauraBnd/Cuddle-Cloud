@@ -11,7 +11,6 @@ const manageLogoutRoute = require('./controllers/logout'); // import logout func
 const { adminPanel } = require('./controllers/admin');
 const { manageForgotRoute } = require('./controllers/forgot');
 const { manageMedicalRoute } = require('./controllers/medical');
-const  {manageLogoutRoute} = require('./controllers/logout');
 
 // ss
 
