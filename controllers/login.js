@@ -2,9 +2,9 @@ const fs = require('fs');
 const { storeSessions, sessionIdGenerator } = require('../manageCookies');
 const querystring = require('querystring');
 const bcrypt = require('bcrypt');
-const { db } = require('../db');
+const { db } = require('../models/db');
 function manageLoginRoute(req, res) {
-    fs.readFile('public/login.html', (err, data) => {
+    fs.readFile('views/login.html', (err, data) => {
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Login page cant be found');

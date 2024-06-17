@@ -2,7 +2,7 @@ const fs = require('fs');
 const { storeSessions, getCookiesSession, checkSession } = require('../manageCookies');
 const multer = require('multer');
 const path = require('path');
-const { db } = require('../db');
+const { db } = require('../models/db');
 const bcrypt = require('bcrypt');
 
 
@@ -67,7 +67,7 @@ function manageProfileRoute (req, res) {
                     </div>`;
             });
 
-            fs.readFile('public/profile.html', 'utf8', (err, data) => {
+            fs.readFile('views/profile.html', 'utf8', (err, data) => {
                 if (err) {
                     res.writeHead(500, { 'Content-Type': 'text/plain' });
                     res.end('Internal Server Error');

@@ -1,10 +1,10 @@
 const fs = require('fs');
-const { db } = require('../db');
+const { db } = require('../models/db');
 const bcrypt = require('bcrypt');
 const querystring = require('querystring');
 
 function manageRegistertRoute (req, res) {
-    fs.readFile('public/register.html', (err, data) => {
+    fs.readFile('views/register.html', (err, data) => {
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Register page not found!!!');

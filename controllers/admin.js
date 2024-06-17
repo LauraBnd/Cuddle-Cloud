@@ -20,7 +20,7 @@ function adminPanel(req, res) {
     }
 
 
-    fs.readFile('public/admin.html', (err, data) => {
+    fs.readFile('views/admin.html', (err, data) => {
         if (err){
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Admin page is not found!');

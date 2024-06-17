@@ -16,7 +16,7 @@ function manageStyleCSS(req, res) {
 }
 // Manage the .html files to work with nodejs
 function manageHomeRoute (req, res) {
-    fs.readFile('public/index.html', 'utf8', (err, data) => {
+    fs.readFile('views/index.html', 'utf8', (err, data) => {
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('There is a server error!!!');
