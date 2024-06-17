@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="js/profilescript.js" defer></script>
+    <title>Register</title>
+</head>
+<body>
+    <div class="image-container">
+        <img src="/images/logo.png" alt="Your Image">
+    </div>
+    <div class="container">
+        <div class="box form-box">
+            <header>Sign up</header>
+            <form action="/register" method="POST">
+                <div class="field input">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" autocomplete="off" id="username" required>
+                </div>
+                <div class="field input">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" autocomplete="off" id="email" required>
+                </div>
+                <div class="field input">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" autocomplete="off" id="password" required>
+                </div>                
+                <div class="show-password">
+                    <input type="checkbox" id="showPassword" onclick="myFunction()">
+                    <label for="showPassword">Show Password</label>
+                </div>                
+                <div class="field">
+                    <input type="submit" class="btn" name="submit" value="Sign Up" >
+                </div>
+                <div class="links">
+                    Already have an account? <a href="login">Login!</a>
+                </div>
+                <div class="links">
+                    Don't wanna Sign Up? <a href="/">Go back!</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,87 +1,67 @@
 const http = require('http');
 const url = require('url');
-const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./routes/home');
-const { manageProfileRoute, manageProfileUpdate, manageUploadPost } = require('./routes/profile');
-const { manageServicesRoute } = require('./routes/services');
-const { manageContactRoute } = require('./routes/contact');
-const { manageRegistertRoute, manageRegisterPost } = require('./routes/register');
-const { manageLoginRoute, manageLoginPosts } = require('./routes/login');
-const { adminPanel } = require('./routes/admin');
-const { manageForgotRoute } = require('./routes/forgot');
-const { manageMedicalRoute } = require('./routes/medical');
-const  manageLogoutRoute  = require('./routes/logout'); // import logout function as seen here, "{manageLogoutRoute}" -- doesn't find the function ????
+const { handleHome, handleStyles, handleImages, handleScripts } = require('./controllers/home');
+const { handleProfile, handleUpload, handleUpdateProfile  } = require('./controllers/profile');
+const { handleContact } = require('./controllers/contact');
+const { handleServices } = require('./controllers/services');
+const { handleForgot } = require('./controllers/forgot');
+const { handleMedical } = require('./controllers/medical');
+const { handleAdmin } = require('./controllers/admin');
+const { handleLoginPage, handleLogin } = require('./controllers/login');
+const { handleDashboard } = require('./controllers/dashboard');
+const { handleRegistrationPage, handleRegistration } = require('./controllers/register');
+const handleLogout = require('./controllers/logout');
 
 
 
-// This manages the server
+const hostname = '127.0.0.1';
+const port = 3000;
+
 const server = http.createServer((req, res) => {
-  const urlParser = url.parse(req.url);
-// ## Points to / that is index.html
-  if (urlParser.pathname === '/' && req.method === 'GET') {
-    manageHomeRoute(req, res);
-// ##Finds the css files location
-  } else if (urlParser.pathname.startsWith('/css/') && req.method === 'GET') {
-    manageStyleCSS(req, res);
-// ##Finds the iamges files location
-  } else if (urlParser.pathname.startsWith('/images/') && req.method === 'GET') {
-    manageImages(req, res);
-    // ##Finds the js files location
-  } else if (urlParser.pathname.startsWith('/js/') && req.method === 'GET') {
-    manageJSFiles(req, res);
-// ##Manages the /profile page
-  } else if (urlParser.pathname === '/profile' && req.method === 'GET') {
-    manageProfileRoute(req, res);
-// ##Manages the /services page
-  } else if (urlParser.pathname === '/services' && req.method === 'GET') {
-    manageServicesRoute(req, res);
-// ##Manages the /contact page
-} else if (urlParser.pathname === '/contact' && req.method === 'GET') {
-  manageContactRoute(req, res);
-// ##Manages the /medical page
-} else if (urlParser.pathname === '/medical' && req.method === 'GET') {
-  manageMedicalRoute(req, res);
+    const parsedUrl = url.parse(req.url);
 
-// ##Manages the /register page
-} else if (urlParser.pathname === '/register' && req.method === 'GET') {
-  manageRegistertRoute(req, res);
-  // ##Manages the /register posts when user registers
-} else if (urlParser.pathname === '/register' && req.method === 'POST') {
-  manageRegisterPost(req, res);
-  // ##Manages the /login page
-} else if (urlParser.pathname === '/login' && req.method === 'GET') {
-  manageLoginRoute(req, res);
-  // ##Manages the /login posts when user logins
-} else if (urlParser.pathname === '/login' && req.method === 'POST') {
-  manageLoginPosts(req, res);
-  
-  // ##Manages the "updateProfile" function
-} else if (urlParser.pathname === '/updateProfile' && req.method === 'POST') {
-  manageProfileUpdate(req, res);
-  
-  // ##Manages the "upload" function
-} else if (urlParser.pathname === '/upload' && req.method === 'POST') {
-  manageUploadPost(req, res);
-
-
-  // ##Manages the "logout" function
-} else if (urlParser.pathname === '/logout' && req.method === 'POST') {
-  manageLogoutRoute(req, res);
-
-
-  // ##Admin panel link!!!!
-} else if (urlParser.pathname === '/admin' && req.method === 'GET') {
-  adminPanel(req, res);
-    // ##Manages the /forgot page
-} else if (urlParser.pathname === '/forgot' && req.method === 'GET') {
-  manageForgotRoute(req, res);
+    if (parsedUrl.pathname === '/' && req.method === 'GET') {
+        handleHome(req, res);
+    } else if (parsedUrl.pathname.startsWith('/css/') && req.method === 'GET') {
+        handleStyles(req, res);
+    } else if (parsedUrl.pathname.startsWith('/images/') && req.method === 'GET') {
+        handleImages(req, res);
+    } else if (parsedUrl.pathname.startsWith('/js/') && req.method === 'GET') {
+        handleScripts(req, res);
+    } else if (parsedUrl.pathname === '/login' && req.method === 'GET') {
+        handleLoginPage(req, res);
+    } else if (parsedUrl.pathname === '/login' && req.method === 'POST') {
+        handleLogin(req, res);
+    } else if (parsedUrl.pathname === '/dashboard' && req.method === 'GET') {
+        handleDashboard(req, res);
+    } else if (parsedUrl.pathname === '/register' && req.method === 'GET') {
+        handleRegistrationPage(req, res);
+    } else if (parsedUrl.pathname === '/register' && req.method === 'POST') {
+        handleRegistration(req, res);
+    } else if (parsedUrl.pathname === '/logout' && req.method === 'POST') {
+        handleLogout(req, res);
+    } else if (parsedUrl.pathname === '/profile' && req.method === 'GET') {
+        handleProfile(req, res);
+    } else if (parsedUrl.pathname === '/upload' && req.method === 'POST') {
+        handleUpload(req, res);
+    } else if (parsedUrl.pathname === '/contact' && req.method === 'GET') {
+        handleContact(req, res);
+    } else if (parsedUrl.pathname === '/services' && req.method === 'GET') {
+        handleServices(req, res);
+    } else if (parsedUrl.pathname === '/forgot' && req.method === 'GET') {
+        handleForgot(req, res);
+    } else if (parsedUrl.pathname === '/admin' && req.method === 'GET') {
+        handleAdmin(req, res);
+    } else if (parsedUrl.pathname === '/medical' && req.method === 'GET') {
+        handleMedical(req, res);
+    } else if (parsedUrl.pathname === '/updateProfile' && req.method === 'POST') {
+        handleUpdateProfile(req, res);
     } else {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('Home page was not found');
-  }
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('Not Found');
+    }
 });
 
-
-server.listen(3000, '127.0.0.1', () => {
-  console.log('Listening on 127.0.0.1:3000');
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
-

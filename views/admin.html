@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="js/profileScript.js" defer></script>
+
+    <title>Admin</title>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="/images/logo.png" alt="Your Image">
+        </div>
+        <h1 class="title">~Welcome Admin!~</h1>
+        <nav class="navigation">
+            <form id="logout-form" action="/logout" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
+    <div class="container1">
+        <header>Freeze Account</header>
+        <form action="proceseaza.php" method="post">
+            <div class="field input">
+                <label for="username">Select Account</label>
+                <input type="text" name="username" id="username" required>
+            </div>  
+            <div class="field input">
+                <label for="reason">Reason for freezing</label>
+                <input type="text" name="reason" id="reason" required>
+            </div>              
+            <div class="field">
+                <input type="submit" class="btn" name="submit" value="Delete">
+            </div>
+        
+        </form>
+    </div>
+    <div class="container2">
+        <header>Delete Photo</header>
+        <form action="proceseaza.php" method="post">
+            <div class="field input">
+                <label for="username2">Select Account</label>
+                <input type="text" name="username2" id="username2" required>
+            </div>
+            <div class="field input">
+                <label for="picture">Select Picture</label>
+                <input type="text" name="picture" id="picture" required>
+            </div>                    
+            <div class="field">
+                <input type="submit" class="btn" name="submit" value="Delete">
+            </div>
+        
+        </form>
+    </div>
+
+
+    
+</body>
+</html>

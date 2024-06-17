@@ -28,7 +28,7 @@ body {
     border-radius: 7vh;
 }
 
-.navigation a {
+.navigation button {
     text-decoration: none;
     color: black;
     font-size: 1.8vw; 
@@ -40,7 +40,7 @@ body {
     cursor: pointer;
 }
 
-.navigation a:hover {
+.navigation button:hover {
     background-color: #b0b5d3;
 }
 
