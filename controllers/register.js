@@ -5,25 +5,7 @@ const querystring = require('querystring');
 const { storeSessions, sessionIdGenerator, getCookiesSession, checkSession } = require('../manageCookies');
 
 function manageRegistertRoute (req, res) {
-<<<<<<< HEAD:routes/register.js
-    const cookies = getCookiesSession(req);
-    const sessionId = cookies.sessionId;
-    let userLogged = false;
-
-    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
-        userLogged = true;
-        userId = storeSessions[sessionId].userId;
-    }
-
-    if (userLogged) {
-        res.writeHead(302, { 'Location': '/profile' });
-        res.end();
-        return;
-    }
-    fs.readFile('public/register.html', (err, data) => {
-=======
     fs.readFile('views/register.html', (err, data) => {
->>>>>>> Laura:controllers/register.js
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Register page not found!!!');

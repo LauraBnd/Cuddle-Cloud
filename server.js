@@ -1,31 +1,18 @@
 const http = require('http');
 const url = require('url');
-<<<<<<< HEAD
-const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./routes/home');
-const { manageProfileRoute, manageProfileUpdate, manageUploadPost } = require('./routes/profile');
-const { manageServicesRoute } = require('./routes/services');
-const { manageContactRoute } = require('./routes/contact');
-const { manageRegistertRoute, manageRegisterPost } = require('./routes/register');
-const { manageLoginRoute, manageLoginPosts } = require('./routes/login');
-const { adminPanel } = require('./routes/admin');
-const { manageForgotRoute } = require('./routes/forgot');
-const { manageMedicalRoute } = require('./routes/medical');
-const  manageLogoutRoute  = require('./routes/logout'); // import logout function as seen here, "{manageLogoutRoute}" -- doesn't find the function ????
-
-// aa
-=======
 const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./controllers/home');
 const { manageProfileRoute, manageProfileUpdate, manageUploadPost } = require('./controllers/profile');
 const { manageServicesRoute } = require('./controllers/services');
 const { manageContactRoute } = require('./controllers/contact');
 const { manageRegistertRoute, manageRegisterPost } = require('./controllers/register');
 const { manageLoginRoute, manageLoginPosts } = require('./controllers/login');
+const manageLogoutRoute = require('./controllers/logout'); // import logout function as seen here, "{manageLogoutRoute}" -- doesn't find the function ????
+
 const { adminPanel } = require('./controllers/admin');
 const { manageForgotRoute } = require('./controllers/forgot');
 const { manageMedicalRoute } = require('./controllers/medical');
 
 // ss
->>>>>>> Laura
 
 // This manages the server
 const server = http.createServer((req, res) => {
@@ -78,11 +65,6 @@ const server = http.createServer((req, res) => {
 
 
   // ##Manages the "logout" function
-} else if (urlParser.pathname === '/logout' && req.method === 'POST') {
-  manageLogoutRoute(req, res);
-
-
-  // ##Manages the "logout" funciton
 } else if (urlParser.pathname === '/logout' && req.method === 'POST') {
   manageLogoutRoute(req, res);
 
