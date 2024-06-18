@@ -88,70 +88,34 @@
 
   
   <div id="Feed" class="tabcontent">
-    <button class="time-period-button" onclick="toggleTabMenu('Night')">Night</button>
-   <button class="time-period-button" onclick="toggleTabMenu('Day')">Day</button>
+    <div class="sch">
+      <div class="sch2">
+    <form id="scheduleForm">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required>
 
-    <table id="calendar">
-      <tr>
-        <th>Time</th>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Sunday</th>
-      </tr>
-    </table>
-    <div class="cont2">
-      <div class="boxy2">
-        <p><strong>Enter schedule details!</strong></p>
-          <form action="future.php">
-            <label for="datee"><strong>Choose the date:</strong></label>
-            <input type="date" id="datee" name="datee">
-            <p> </p>
-            <label for="dat"><strong>Choose the ending date (only if necessary):</strong></label>
-            <input type="date" id="dat" name="dat">
-            <p> </p>
-            <label for="activity"><strong>Activity Type (nap, feeding, school..)</strong></label>
-            <input type="text" name="activity" id="activity">
-            <p> </p>
-            <label for="locat"><strong>Location</strong></label>
-            <input type="text" name="locat" id="locat">
-            <p> </p>
-            <label for="details"><strong>Details</strong></label>
-            <input type="text" name="details" id="details">
-          </form>
-          
-          <div class="field">
-            <input
-              type="submit"
-              name="submit"
-              class="btn"
-              value="Submit"
-            >
-          </div>
-          
+      <label for="day">Day:</label>
+      <input type="text" id="day" name="day" required>
+
+        <label for="hour">Hour:</label>
+        <input type="number" id="hour" name="hour" min="0" max="23" required>
+        
+        <label for="endTime">End Time:</label>
+        <input type="number" id="endTime" name="endTime" min="0" max="23" required>
+    
+        <label for="program">Program:</label>
+        <input type="text" id="program" name="program" required>
+    
+        <label for="details">Details:</label>
+        <input type="text" id="details" name="details" required>
+        
+        <button type="submit" class="btn1">Save Schedule</button>
+    </form>
+    
       </div>
-  <div class="info">
-    <div class="info1">
-      <p><strong>First day with nanny</strong></p>
-      <ul style="list-style-type: none;">
-          <li><strong>Starting Date: </strong> 29.01.2024</li>
-          <li><strong>Details: </strong> Went to the park and got ice cream.</li>
-      </ul>
     </div>
-    <div class="info2">
-      <p><strong>Grandma meeting</strong></p>
-        <ul style="list-style-type: none;">
-            <li><strong>Date: </strong> 13.09.2023</li>
-            <li><strong>Type: </strong> Play-time</li>
-            <li><strong>Location: </strong> Countryside</li>
-            <li><strong>Details: </strong> Played with grandma's labrador.</li>
-        </ul>
-    </div>
-    </div>
-    </div>
+    <div id="scheduleDisplay" class = "disp"></div>
+</div>
  
   </div>
      <div id="Medical" class="tabcontent">

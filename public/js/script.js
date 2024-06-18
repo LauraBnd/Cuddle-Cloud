@@ -27,7 +27,6 @@ function closePopup2() {
 }
 
 
-
   function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -43,47 +42,94 @@ function closePopup2() {
   }
   
   document.getElementById("defaultOpen").click();
-  window.onload = function() {
-    toggleTabMenu('Day');
-  };
-  function toggleTabMenu(timePeriod) {
-    var table = document.getElementById("calendar");
-    var rows = table.getElementsByTagName("tr");
-  
-    for (var i = 0; i < rows.length; i++) {
-      rows[i].style.display = "";
-    }
-  
-    if (timePeriod === "Night") {
-      for (var i = 11; i <= 24; i++) {
-        rows[i].style.display = "none";
-      }
-    } else if (timePeriod === "Day") {
-      for (var i = 1; i <= 10; i++) {
-        rows[i].style.display = "none";
-      }
-    }
-  }
-  
-  
-  
-  document.addEventListener("DOMContentLoaded", function() {
-    var table = document.getElementById("calendar");
-    var hours = 24; 
-  
-    for (var i = 0; i < hours; i++) {
-      var row = table.insertRow();
-      var timeCell = row.insertCell(0);
-      timeCell.textContent = i.toString().padStart(2, "0") + ":00";
-  
-      for (var j = 1; j <= 7; j++) {
-        var cell = row.insertCell(j);
-        var input = document.createElement("input");
-        input.type = "text";
-        input.className = "event-input";
-        cell.appendChild(input);
-      }
-    }
-  });
-  
-  
+
+  document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const date = document.getElementById('date').value;
+    const day = document.getElementById('day').value;
+    const hour = document.getElementById('hour').value;
+    const endTime = document.getElementById('endTime').value;
+    const program = document.getElementById('program').value;
+    const details = document.getElementById('details').value;
+    
+    fetch('/saveSchedule', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ date, day, hour, endTime, program, details })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadSchedule();
+        } else {
+            alert('Failed to save schedule: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        alert('Failed to save schedule: ' + error.message);
+    });
+});
+
+function loadSchedule() {
+  fetch('/getSchedule')
+      .then(response => response.json())
+      .then(data => {
+          const scheduleDisplay = document.getElementById('scheduleDisplay');
+          scheduleDisplay.innerHTML = '';
+
+          data.schedule.forEach(item => {
+              const scheduleItem = document.createElement('div');
+              scheduleItem.className = 'schedule-item';
+
+              const formattedDate = new Date(item.date).toISOString().split('T')[0];
+
+              const dateDayInfo = document.createElement('div');
+              dateDayInfo.className = 'date-day-info';
+              dateDayInfo.innerHTML = `
+                  <strong>Date:</strong> ${formattedDate}<br>
+                  <strong>Day:</strong> ${item.day}`;
+
+              const hourProgram = document.createElement('div');
+              hourProgram.className = 'hour-program';
+              hourProgram.innerHTML = `
+                  <strong>Hour:</strong> ${item.hour}<br>
+                  <strong>End Time:</strong> ${item.end_time}<br>
+                  <strong>Program:</strong> ${item.program}<br>
+                  <strong>Details:</strong> ${item.details}`;
+
+              const deleteButton = document.createElement('button');
+              deleteButton.className = 'delete-button';
+              deleteButton.textContent = 'Delete';
+              deleteButton.onclick = function() {
+                  deleteSchedule(item.id);
+              };
+
+              scheduleItem.appendChild(dateDayInfo);
+              scheduleItem.appendChild(hourProgram);
+              scheduleItem.appendChild(deleteButton);
+              scheduleDisplay.appendChild(scheduleItem);
+          });
+      });
+}
+
+function deleteSchedule(id) {
+    fetch(`/deleteSchedule/${id}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            loadSchedule();
+        } else {
+            alert('Failed to delete schedule: ' + (data.error || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        alert('Failed to delete schedule: ' + error.message);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', loadSchedule);
