@@ -3,6 +3,7 @@ const { storeSessions, sessionIdGenerator, getCookiesSession, checkSession } = r
 const querystring = require('querystring');
 const bcrypt = require('bcrypt');
 const { db } = require('../models/db');
+
 function manageLoginRoute(req, res) {
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
@@ -18,18 +19,17 @@ function manageLoginRoute(req, res) {
         res.end();
         return;
     }
+
     fs.readFile('views/login.html', (err, data) => {
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Login page cant be found');
+            res.end('Login page can\'t be found');
             return;
         }
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(data);
-})
+    });
 }
-
-
 
 function manageLoginPosts(req, res) {
     let body = '';
@@ -40,8 +40,6 @@ function manageLoginPosts(req, res) {
         const parsedBody = querystring.parse(body);
         const username = parsedBody.username;
         const password = parsedBody.password;
-        // console.log(username);
-        // console.log(password);
 
         const query = 'SELECT * FROM credentials WHERE username = ?';
         db.query(query, [username], (err, results) => {
@@ -73,11 +71,15 @@ function manageLoginPosts(req, res) {
                         timestamp: Date.now()
                     };
 
+                    let location = '/profile';
+                    if (user.username === 'Admin') {
+                        location = '/admin';
+                    }
+
                     res.writeHead(302, {
                         'Content-Type': 'text/plain',
                         'Set-Cookie': `sessionId=${sessionId}; HttpOnly`,
-                        'Location': '/profile'
-                        
+                        'Location': location
                     });
                     res.end('Login successful');
                 } else {
@@ -88,8 +90,6 @@ function manageLoginPosts(req, res) {
         });
     });
 }
-
-
 
 module.exports = {
     manageLoginRoute,
