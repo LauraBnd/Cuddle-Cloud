@@ -172,53 +172,109 @@ function manageProfileUpdate(req, res) {
 
         const { name, birthday, age, description, myuser, password } = req.body;
         const profilePhoto = req.file ? req.file.filename : null;
-        console.log(profilePhoto)
-        const updateProfileQuery = `
-            UPDATE user_profiles SET name = ?, birthday = ?, age = ?, description = ?${profilePhoto ? ', profile_photo = ?' : ''}
-            WHERE user_id = ?`;
-        const updateCredentialsQuery = `
-            UPDATE credentials SET username = ?${password ? ', password = ?' : ''}
-            WHERE id = ?`;
-        const profileParams = profilePhoto ? [name, birthday, age, description, profilePhoto, userId] : [name, birthday, age, description, userId];
 
-        const updateProfile = (hashedPassword) => {
-            db.query(updateProfileQuery, profileParams, (err) => {
-                if (err) {
-                    res.writeHead(500, { 'Content-Type': 'text/plain' });
-                    res.end('Database Error');
-                    return;
+        // Fetch current profile info
+        const fetchProfileQuery = 'SELECT * FROM user_profiles WHERE user_id = ?';
+        db.query(fetchProfileQuery, [userId], (err, currentProfile) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error');
+                return;
+            }
+
+            const currentProfileInfo = currentProfile[0];
+
+            // Prepare update profile query dynamically
+            let updateProfileQuery = 'UPDATE user_profiles SET ';
+            let profileParams = [];
+
+            if (name) {
+                updateProfileQuery += 'name = ?, ';
+                profileParams.push(name);
+            }
+            if (birthday) {
+                updateProfileQuery += 'birthday = ?, ';
+                profileParams.push(birthday);
+            }
+            if (age) {
+                updateProfileQuery += 'age = ?, ';
+                profileParams.push(age);
+            }
+            if (description) {
+                updateProfileQuery += 'description = ?, ';
+                profileParams.push(description);
+            }
+            if (profilePhoto) {
+                updateProfileQuery += 'profile_photo = ?, ';
+                profileParams.push(profilePhoto);
+            }
+
+            // Remove the last comma and space
+            updateProfileQuery = updateProfileQuery.slice(0, -2);
+            updateProfileQuery += ' WHERE user_id = ?';
+            profileParams.push(userId);
+
+            const updateCredentialsQuery = `
+                UPDATE credentials SET username = ?${password ? ', password = ?' : ''}
+                WHERE id = ?`;
+            
+            const updateProfile = (hashedPassword) => {
+                if (profileParams.length > 1) { // Ensure there's something to update
+                    db.query(updateProfileQuery, profileParams, (err) => {
+                        if (err) {
+                            res.writeHead(500, { 'Content-Type': 'text/plain' });
+                            res.end('Database Error');
+                            return;
+                        }
+
+                        const credentialsParams = password ? [myuser, hashedPassword, userId] : [myuser, userId];
+                        
+                        db.query(updateCredentialsQuery, credentialsParams, (err) => {
+                            if (err) {
+                                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                                res.end('Database Error');
+                                return;
+                            }
+                            res.writeHead(302, { 'Location': '/profile' });
+                            res.end();
+                        });
+                    });
+                } else {
+                    // If no profile data to update, only update credentials if necessary
+                    if (myuser || password) {
+                        const credentialsParams = password ? [myuser, hashedPassword, userId] : [myuser, userId];
+                        
+                        db.query(updateCredentialsQuery, credentialsParams, (err) => {
+                            if (err) {
+                                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                                res.end('Database Error');
+                                return;
+                            }
+                            res.writeHead(302, { 'Location': '/profile' });
+                            res.end();
+                        });
+                    } else {
+                        res.writeHead(302, { 'Location': '/profile' });
+                        res.end();
+                    }
                 }
+            };
 
-                const credentialsParams = password ? [myuser, hashedPassword, userId] : [myuser, userId];
-
-                db.query(updateCredentialsQuery, credentialsParams, (err) => {
+            if (password) {
+                bcrypt.hash(password, 10, (err, hashedPassword) => {
                     if (err) {
                         res.writeHead(500, { 'Content-Type': 'text/plain' });
-                        res.end('Database Error');
+                        res.end('Internal Server Error');
                         return;
                     }
-                    res.writeHead(302, { 'Location': '/profile' });
-                    res.end();
+                    updateProfile(hashedPassword);
                 });
-            });
-        };
-        if (password) {
-            bcrypt.hash(password, 10, (err, hashedPassword) => {
-                if (err) {
-                    res.writeHead(500, { 'Content-Type': 'text/plain' });
-                    res.end('Internal Server Error');
-                    return;
-                }
-                updateProfile(hashedPassword);
-            });
-        } else {
-            updateProfile();
-        }
+            } else {
+                updateProfile();
+            }
+        });
     });
 }
-
-
-
 
 module.exports = {
     manageProfileRoute,
