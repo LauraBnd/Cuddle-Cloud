@@ -242,6 +242,20 @@
     font-weight: bold; 
     text-decoration: none;
   }
+
+  #uploadForm #photoForm {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+  }
+  
+  #photoForm input {
+    margin: 5px;
+  }
+
+  #photoForm button {
+    margin: 5px;
+  }
   
   .postbut:hover {
     background-color: hsl(284, 45%, 62%); 
