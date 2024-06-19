@@ -133,3 +133,30 @@ function deleteSchedule(id) {
 }
 
 document.addEventListener('DOMContentLoaded', loadSchedule);
+
+function deleteImage(imageId) {
+    if (confirm("Are you sure you want to delete this image?")) {
+        fetch('/delete-image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ imageId: imageId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const imageElement = document.getElementById(`image-${imageId}`);
+                if (imageElement) {
+                    imageElement.remove();
+                }
+            } else {
+                alert("Error deleting image");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error deleting image");
+        });
+    }
+}

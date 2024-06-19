@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./controllers/home');
-const { manageProfileRoute, manageProfileUpdate, manageUploadPost } = require('./controllers/profile');
+const { manageProfileRoute, manageProfileUpdate, manageUploadPost, manageDeleteImage } = require('./controllers/profile');
 const { manageServicesRoute } = require('./controllers/services');
 const { manageContactRoute } = require('./controllers/contact');
 const { manageRegistertRoute, manageRegisterPost } = require('./controllers/register');
@@ -62,6 +62,8 @@ const server = http.createServer((req, res) => {
   // ##Manages the "upload" function
 } else if (urlParser.pathname === '/upload' && req.method === 'POST') {
   manageUploadPost(req, res);
+} else if (urlParser.pathname === '/delete-image' && req.method === 'POST') {
+  manageDeleteImage(req, res);
 
 
   // ##Manages the "logout" function

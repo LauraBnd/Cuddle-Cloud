@@ -37,7 +37,7 @@
   <div id="Profile" class="tabcontent">
     <button class="popup" onclick="openPopup()">Account Info</button>
 
-<div id="searchPopup" class="popup2">
+  <div id="searchPopup" class="popup2">
     <span class="close" onclick="closePopup()">&times;</span>
 
 
@@ -190,27 +190,28 @@
     </div>
 </div>
 <!-- Gallery tab ############################################################ -->
+<div id="Galery" class="tabcontent">
+  <button class="postbut" onclick="document.getElementById('uploadForm').style.display='block'">Post a Photo</button>
 
-  <div id="Galery" class="tabcontent">
-    <button class="postbut" onclick="document.getElementById('uploadForm').style.display='block'">Post a Photo</button>
-
-    <div id="uploadForm" style="display:none;">
-            <form id="photoForm" action="/upload" method="POST" enctype="multipart/form-data">
-          <input type="file" name="photo" required>
-          <input type="text" name="title" placeholder="Title" required>
-          <textarea name="description" placeholder="Description" required></textarea>
-          <button type="submit">Upload</button>
+  <div id="uploadForm" style="display:none;">
+    <div class="posting">
+      <form id="photoForm" action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="photo" required>
+        <input type="text" name="title" placeholder="Title">
+        <textarea name="description" placeholder="Description"></textarea>
+        <button type="submit">Upload</button>
       </form>
     </div>
-
-    <div class="main">
-          <div class="content">
-            <!-- IMAGE_GALLERY -->
-          </div>
-      </div>
   </div>
-  <!-- Gallery tab END ############################################################ -->
 
+  <div class="main">
+    <div class="content">
+      <!-- IMAGE_GALLERY -->
+    </div>
+  </div>
+</div>
+<!-- Gallery tab END ############################################################ -->
+ 
   <div id="Friends" class="tabcontent">
     <div class="popup" onclick="Open()">My friendship Code!
       <span class="popuptext" id="myPopup">#H3LLO</span>

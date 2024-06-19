@@ -5,7 +5,6 @@ const path = require('path');
 const { db } = require('../models/db');
 const bcrypt = require('bcrypt');
 
-
 // Configure multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -18,11 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-
-
-// ###################### This manages the /profile page ######################
-function manageProfileRoute (req, res) {
+function manageProfileRoute(req, res) {
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
     let userLogged = false;
@@ -38,7 +33,7 @@ function manageProfileRoute (req, res) {
     }
     
     const profileQuery = 'SELECT name, birthday, age, description, profile_photo FROM user_profiles WHERE user_id = ?';
-    const imagesQuery = 'SELECT filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
+    const imagesQuery = 'SELECT id, filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
 
     db.query(profileQuery, [userId], (err, profileResults) => {
         if (err) {
@@ -59,7 +54,7 @@ function manageProfileRoute (req, res) {
             let imageGallery = '';
             imageResults.forEach(image => {
                 imageGallery += `
-                    <div class="posted-image">
+                    <div class="posted-image" id="image-${image.id}">
                         <img src="/images/${image.filename}" alt="${image.title}">
                         <div class="posted-image-description">
                             <div class="upload-info">
@@ -67,6 +62,7 @@ function manageProfileRoute (req, res) {
                                 <p>${image.description}</p>
                             </div>
                             <p class="upload-date"><span>Uploaded at: </span>${image.upload_date}</p>
+                            <button class="delete-button" onclick="deleteImage(${image.id})">Delete</button>
                         </div>
                     </div>`;
             });
@@ -101,10 +97,6 @@ function manageProfileRoute (req, res) {
     });
 }
 
-
-
-
-// ###################### This manages the /upload POST type when user uploads a file ######################
 function manageUploadPost(req, res) {
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
@@ -132,7 +124,6 @@ function manageUploadPost(req, res) {
         const photo = req.file;
         const todayDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-
         if (photo) {
             const query = 'INSERT INTO images (user_id, filename, title, description, upload_date) VALUES (?, ?, ?, ?, ?)';
             db.query(query, [userId, photo.filename, title, description, todayDate], (err, result) => {
@@ -152,8 +143,6 @@ function manageUploadPost(req, res) {
     });
 }
 
-
-// ###################### This manages the profile update functions ######################
 function manageProfileUpdate(req, res) {
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
@@ -282,8 +271,82 @@ function manageProfileUpdate(req, res) {
     });
 }
 
+// Function to handle image deletion
+function manageDeleteImage(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        userId = storeSessions[sessionId].userId;
+    }
+
+    if (!userLogged) {
+        console.log('User not logged in or session expired');
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+    req.on('end', () => {
+        const { imageId } = JSON.parse(body);
+        console.log(`Received request to delete image with ID: ${imageId}`);
+
+        const fetchImageQuery = 'SELECT filename FROM images WHERE id = ? AND user_id = ?';
+        db.query(fetchImageQuery, [imageId, userId], (err, result) => {
+            if (err) {
+                console.error('Database error fetching image filename:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error');
+                return;
+            }
+
+            if (result.length === 0) {
+                console.log('Image not found or does not belong to the user');
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('Image not found');
+                return;
+            }
+
+            const filename = result[0].filename;
+            console.log(`Image filename to delete: ${filename}`);
+
+            const deleteImageQuery = 'DELETE FROM images WHERE id = ? AND user_id = ?';
+            db.query(deleteImageQuery, [imageId, userId], (err) => {
+                if (err) {
+                    console.error('Database error deleting image record:', err);
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end('Database Error');
+                    return;
+                }
+
+                // Delete the file from the file system
+                fs.unlink(path.join(__dirname, '../public/images', filename), (err) => {
+                    if (err) {
+                        console.error('File system error deleting image file:', err);
+                        res.writeHead(500, { 'Content-Type': 'text/plain' });
+                        res.end('Internal Server Error');
+                        return;
+                    }
+
+                    console.log('Image successfully deleted');
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true }));
+                });
+            });
+        });
+    });
+}
+
+
 module.exports = {
     manageProfileRoute,
     manageProfileUpdate,
     manageUploadPost,
+    manageDeleteImage,
 };

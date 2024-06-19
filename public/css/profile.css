@@ -384,12 +384,12 @@
   }
   
   .posting {
-    width: 60vw;
+    width: 50vw;
     margin-left: 5vw;
     text-align: center;
-    padding-bottom: 2vw;
-    background-color: hsl(296, 39%, 85%, 0.8);
+    padding-bottom: 1vw;
     border-radius: 2vw;
+    padding-top: 1vw;
   }
   
   .posting button {
@@ -408,6 +408,28 @@
   .posting button:hover {
     background-color: #a888ab;
   }
+
+  .posting form input[type="file"] {
+    background-color: #a271a7;
+    color: #ffffff;
+    padding: 1vw 1vw;
+    font-size: 1.5vw;
+    border-radius: 1vw;
+    width: 30vw;
+  }
+  .posting form input[type="text"] {
+    padding: 1vw 1vw;
+    font-size: 1.5vw;
+    border-radius: 1vw;
+    width: 30vw;
+  }
+  .posting form textarea {
+    padding: 1vw 1vw;
+    font-size: 1.5vw;
+    border-radius: 1vw;
+    width: 30vw;
+  }
+
   
   .popup {
     position: relative;
