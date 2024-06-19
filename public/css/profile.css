@@ -58,59 +58,53 @@
       width: 12vw; 
       height: auto; 
   }
-  
-  .profilepic {
-    display: flex;
-    width: 23vw; 
-    height: auto;
-    margin-right: 2vw;
-
-  }
-
-  .profilepic .user-info {
-    margin-left: 15px;
-  }
-
   .user-info p {
     font-weight: 600;
   }
   
-  .profilepic img {
-    width: 100%; 
-    height: auto;
-  }
   .container1 {
     display: flex;
     flex-direction: column;
-    margin-left: 0vw;
+    margin-left: 0;
     margin-top: 3vw; 
-  }
-  
-  .box1 {
+    width: 100%;
+}
+
+.box1 {
     background-color: hsl(38, 88%, 93%, 0.5);
     border: 1px solid #ccc;
-    padding-bottom: 2vw;
-    /* padding-top: 3vh; */
-    padding-left: 2vw; 
-    padding-right: 2vw; 
+    padding: 2vw;
     border-radius: 2vw;
-    max-width: 200vw;
+    width: 100%;
     text-align: left;
     font-size: 1.25vw;
     position: relative;
-    min-height: 10vw;
-  }
-  
-  .profile-container {
+}
+
+.profile-container {
     display: flex;
-    align-items: flex-start; 
-  }
-  
-  .profile-text {
-    flex: 1; 
-    margin-top: 1vw; 
-  }
-  
+    align-items: flex-start;
+    width: 100%;
+}
+
+.profilepic {
+    display: flex;
+    width: 100%; 
+    height: auto;
+    margin-right: 2vw;
+}
+
+.profilepic img {
+    width: 23vw; 
+    height: auto;
+}
+
+.profilepic .user-info {
+    flex: 1;
+    margin-left: 2vw;
+    word-wrap: break-word;
+}
+
   .navigation {
     position: fixed;
     top: 1.2vw;
