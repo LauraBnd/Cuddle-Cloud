@@ -189,51 +189,28 @@
         </div>
     </div>
 </div>
+<!-- Gallery tab ############################################################ -->
 
   <div id="Galery" class="tabcontent">
-    <button class="postbut">Post a Photo</button>
+    <button class="postbut" onclick="document.getElementById('uploadForm').style.display='block'">Post a Photo</button>
+
+    <div id="uploadForm" style="display:none;">
+            <form id="photoForm" action="/upload" method="POST" enctype="multipart/form-data">
+          <input type="file" name="photo" required>
+          <input type="text" name="title" placeholder="Title" required>
+          <textarea name="description" placeholder="Description" required></textarea>
+          <button type="submit">Upload</button>
+      </form>
+    </div>
+
     <div class="main">
-      <div class="row">
-        <div class="column">
           <div class="content">
-            <img src="/images/firstwalk.jpg" alt="walk" style="width:100%">
-            <h3>First Walk</h3>
-            <p>18.02.2024 - Dominic just made his first steps helped by his mama. After many crawls and tries to stand up, he finally did it!! Here's to many more steps in the future.</p>
+            <!-- IMAGE_GALLERY -->
           </div>
-        </div>
-        <div class="column">
-          <div class="content">
-            <img src="/images/eating.jpg" alt="Lights" style="width:100%">
-            <h3>Eating By Himself</h3>
-            <p>Dominic tried eating by himself for the first time! He didn't like at first, but at least he didn't stain the walls... Only a laundry basket to wash!</p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="content">
-            <img src="/images/dogsleep.jpg" alt="Dogs" style="width:100%">
-            <h3>Pijama Party</h3>
-            <p>Look who decided to have a sleeping party!</p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="content">
-            <img src="/images/picnic.jpeg" alt="Picnic" style="width:100%">
-            <h3>Best Weather For A Picnic!</h3>
-            <p>Dominic and Henry had a picnic outside. Trying to keep them off the phones while we still can!</p>
-          </div>
-        </div>
       </div>
-      
-      <div class="content">
-        <img src="/images/birthday.jpg" alt="Birthday" style="width:100%">
-        <h3>HAPPY BIRTHDAY!!</h3>
-        <p>Dominic just turned 2 years old!! Time really does fly when you have such an energic child.</p>
-      </div>
-      </div>
-      <div class="insta">
-        <img src="/images/insta.png" alt="insta">
-        </div>
   </div>
+  <!-- Gallery tab END ############################################################ -->
+
   <div id="Friends" class="tabcontent">
     <div class="popup" onclick="Open()">My friendship Code!
       <span class="popuptext" id="myPopup">#H3LLO</span>

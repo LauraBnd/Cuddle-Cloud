@@ -38,7 +38,7 @@ function manageProfileRoute (req, res) {
     }
     
     const profileQuery = 'SELECT name, birthday, age, description, profile_photo FROM user_profiles WHERE user_id = ?';
-    const imagesQuery = 'SELECT filename, title, description, upload_date FROM images WHERE user_id = ?';
+    const imagesQuery = 'SELECT filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
 
     db.query(profileQuery, [userId], (err, profileResults) => {
         if (err) {
@@ -59,11 +59,15 @@ function manageProfileRoute (req, res) {
             let imageGallery = '';
             imageResults.forEach(image => {
                 imageGallery += `
-                    <div class="content">
+                    <div class="posted-image">
                         <img src="/images/${image.filename}" alt="${image.title}">
-                        <h3>${image.title}</h3>
-                        <p>${image.description}</p>
-                        <p>${image.upload_date}</p>
+                        <div class="posted-image-description">
+                            <div class="upload-info">
+                                <h3>${image.title}</h3>
+                                <p>${image.description}</p>
+                            </div>
+                            <p class="upload-date"><span>Uploaded at: </span>${image.upload_date}</p>
+                        </div>
                     </div>`;
             });
 
@@ -126,10 +130,12 @@ function manageUploadPost(req, res) {
         const title = req.body.title;
         const description = req.body.description;
         const photo = req.file;
+        const todayDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
 
         if (photo) {
-            const query = 'INSERT INTO images (user_id, filename, title, description) VALUES (?, ?, ?, ?)';
-            db.query(query, [userId, photo.filename, title, description], (err, result) => {
+            const query = 'INSERT INTO images (user_id, filename, title, description, upload_date) VALUES (?, ?, ?, ?, ?)';
+            db.query(query, [userId, photo.filename, title, description, todayDate], (err, result) => {
                 if (err) {
                     res.writeHead(500, { 'Content-Type': 'text/plain' });
                     res.end('Database Error');

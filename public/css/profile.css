@@ -248,8 +248,8 @@
   }
   .main {
     max-width: 800vw;
-    margin: auto;
     font-size: 1.2vw;
+    margin: 50px 0;
   }
   
   h1 {
@@ -282,7 +282,44 @@
     padding: 1vw;
     border-radius: 1.5vw;
     margin-bottom: 1vw;
+    display: flex;
+    flex-direction: column;
   }
+
+  .content img {
+    max-width: 60%;
+  }
+
+  .posted-image {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+  }
+
+  .posted-image-description {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 20px;
+    justify-content: space-between;
+  }
+
+  .posted-image-description h3 {
+    margin: 0;
+  }
+
+  .posted-image-description p {
+    margin: 5px 0;
+  }
+
+  .posted-image-description .upload-date {
+    font-style: italic;
+
+  }
+  .posted-image-description .upload-date span {
+    font-style: normal;
+  }
+
+
   
   @media screen and (max-width: 1000px) {
     .column {

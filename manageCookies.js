@@ -31,7 +31,7 @@ const checkSession = (session) => {
 // Cleanup function to delete expired session keys
 const deleteSession = () => {
     for (const sessionId in storeSessions) {
-        if (isSessionExpired(storeSessions[sessionId])) {
+        if (checkSession(storeSessions[sessionId])) {
             console.log(`Session key "${sessionId}" deleted.`);
             delete storeSessions[sessionId];
         }
