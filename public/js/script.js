@@ -16,6 +16,15 @@ function openPopup() {
 }
 function closePopup() {
   document.getElementById("searchPopup").style.display = "none";
+  document.getElementById("myuser").value = ''; // Clear the input field
+  document.getElementById("password").value = ''; // Clear the input field
+  document.getElementById("profile_photo").value = ''; // Clear the input field
+  document.getElementById("name").value = ''; // Clear the input field
+  document.getElementById("birthday").value = ''; // Clear the input field
+  document.getElementById("age").value = ''; // Clear the input field
+  document.getElementById("description").value = ''; // Clear the input field
+
+  document.getElementById("result").innerHTML = ''; // Clear the result div
 }
 
 function openPopup2() {
@@ -24,6 +33,9 @@ function openPopup2() {
 
 function closePopup2() {
   document.getElementById("searchPopup2").style.display = "none";
+  document.getElementById("searchInput").value = ''; // Clear the input field
+  document.getElementById("result").innerHTML = ''; // Clear the result div
+  document.getElementById("searchPopup2").style.display = "none"; // Hide the popup
 }
 
 

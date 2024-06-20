@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const { db } = require('../models/db');
 const bcrypt = require('bcrypt');
+const url = require('url');
 
 // Configure multer storage
 const storage = multer.diskStorage({
@@ -344,9 +345,54 @@ function manageDeleteImage(req, res) {
 }
 
 
+function manageFriends(req, res) {
+    const urlParsed = url.parse(req.url, true);
+    const querydb = urlParsed.query.query;
+
+    if (querydb) {
+        const sql = `SELECT * FROM user_profiles WHERE name LIKE ?`;
+        db.query(sql, [`%${querydb}%`], (err, results) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error');
+                return;
+            }
+
+            let response = '<div>';
+            if (results.length > 0) {
+                results.forEach(row => {
+                    response += `
+                        <div class="friend-profile">
+                            <img src="/images/${row.profile_photo}">
+                            <div class="friend-info">
+                                <p><span>Name: </span>${row.name}</p>
+                                <p><span>Birthday: </span>${row.birthday}</p>
+                                <p><span>Age: </span>${row.age}</p>
+                                <p><span>Description: </span>${row.description}</p>
+                            </div>
+                        </div>`;
+                });
+            } else {
+                response += '<p>No results found</p>';
+            }
+            response += '</div>';
+
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(response);
+        });
+    } else {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end('');
+    }
+}
+
+
+
+
 module.exports = {
     manageProfileRoute,
     manageProfileUpdate,
     manageUploadPost,
     manageDeleteImage,
+    manageFriends
 };

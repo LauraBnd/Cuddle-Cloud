@@ -152,7 +152,7 @@
     border: none;
     height: 25px;
     font-size: 20px;
-    text-align: center;
+    /* text-align: center; */
     padding: 10px;
   }
 
@@ -468,23 +468,52 @@
     border-color: #555555 transparent transparent transparent;
   }
 
-  .popup .show {
-    visibility: visible;
-    animation: fadeIn 1s
-  }
-  
   .popup2 {
     display: none; 
     position: fixed;
     top: 12vw; 
-    left: 40vw; 
+    left: 25vw; 
     background-color: hsl(284, 55%, 85%);
     border: 1px solid #888;
     border-radius: 1vw;
-    padding: 2vw;
-    max-width: 40%; 
+    padding: 1vw;
+    width: 50%;
     overflow: auto;
     z-index: 9999; 
+  }
+
+  .popup2 h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .friend-profile {
+    border: 2px solid lightyellow;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .friend-profile .friend-info {
+    margin: 0 15px;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 20px;
+  }
+
+  .friend-profile img {
+    max-width: 10em;
+    border-radius: 8px;
+    border: 2px solid lightpink;
+  }
+
+  .friend-profile p {
+    margin: 2px;
+  }
+  .friend-profile span {
+    font-weight: 600;
   }
   .close {
     color: black;

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/profile.css">
     <script src="/js/script.js" defer></script>
+    <script src="/js/friendsScript.js" defer></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Profile</title>
 </head>
 <body>
@@ -211,11 +214,13 @@
   </div>
 </div>
 <!-- Gallery tab END ############################################################ -->
- 
+
+
+ <!-- Friends tab ############################################################ -->
   <div id="Friends" class="tabcontent">
-    <div class="popup" onclick="Open()">My friendship Code!
+    <!-- <div class="popup" onclick="Open()">My friendship Code!
       <span class="popuptext" id="myPopup">#H3LLO</span>
-    </div>
+    </div> -->
     
     <button class="popup" onclick="openPopup2()">Search for a friend</button>
 
@@ -223,12 +228,19 @@
     <span class="close" onclick="closePopup2()">&times;</span>
     <h2>Search for a friend</h2>
     <form>
-        <label for="searchInput"><strong>Enter friend's code:</strong></label><br>
+        <label for="searchInput">
         <input type="text" id="searchInput" name="searchInput"><br><br>
-        <input type="submit" value="Search">
+        <!-- <input type="submit" value="Search"> -->
     </form>
+    <div id="result"></div>
 </div>
   
+
+
+
+
+
+
     <div class="container1">
       <div class="box1">
           <div class="profile-container">
@@ -306,6 +318,7 @@
       </div>
   </div>
   </div>
-    
+    <!-- Friends tab END ############################################################ -->
+
 </body>
 </html>
