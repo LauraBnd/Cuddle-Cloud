@@ -515,6 +515,40 @@
   .friend-profile span {
     font-weight: 600;
   }
+
+  .retrieved-friend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 5px;
+    border: 2px solid lightcoral;
+  }
+
+  .retrieved-friend .req-photo {
+    max-width: 20%;
+  }
+
+  .retrieved-friend .req-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .req-photo img {
+    width: 100%;
+  }
+
+  .retrieved-friend p {
+    margin: 5px;
+  }
+
+  .retrieved-friend button {
+    margin: 10px;
+  }
+
+
+
   .close {
     color: black;
     float: right;

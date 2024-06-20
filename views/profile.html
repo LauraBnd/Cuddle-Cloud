@@ -45,36 +45,42 @@
 
 
 
-    <!-- Change account info -->
-    <h2>Change Account Info</h2>
-<form action="/updateProfile" method="POST" enctype="multipart/form-data">
-    <label for="myuser"><strong>Username - Required</strong></label><br>
-    <input type="text" id="myuser" name="myuser" required><br><br>
+        <!-- Change account info -->
+        <h2>Change Account Info</h2>
+    <form action="/updateProfile" method="POST" enctype="multipart/form-data">
+        <label for="myuser"><strong>Username - Required</strong></label><br>
+        <input type="text" id="myuser" name="myuser" required><br><br>
 
-    <label for="password">Password</label>
-    <input type="text" name="password" autocomplete="off" id="password"><br><br>
+        <label for="password">Password</label>
+        <input type="text" name="password" autocomplete="off" id="password"><br><br>
 
-    <label for="profile_photo">Profile Photo</label>
-    <input type="file" id="profile_photo" name="profile_photo"><br><br>
+        <label for="profile_photo">Profile Photo</label>
+        <input type="file" id="profile_photo" name="profile_photo"><br><br>
 
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name"><br><br>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name"><br><br>
 
-    <label for="birthday">Birthday</label>
-    <input type="date" id="birthday" name="birthday"><br><br>
+        <label for="birthday">Birthday</label>
+        <input type="date" id="birthday" name="birthday"><br><br>
 
-    <label for="age">Age</label>
-    <input type="number" id="age" name="age"><br><br>
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age"><br><br>
 
-    <label for="description">Description</label>
-    <textarea id="description" name="description"></textarea><br><br>
+        <label for="description">Description</label>
+        <textarea id="description" name="description"></textarea><br><br>
 
-    <input type="submit" value="Change Info">
-</form>
-
-
-
+        <input type="submit" value="Change Info">
+    </form>
 </div>
+
+  <button class="popup" onclick="openFriendRequests()">Friend requests</button>
+  <div id="friendRequests" class="popup2">
+    <span class="close" onclick="closeFriendRequests()">&times;</span>
+    <h2>Friend requests</h2>
+      <!-- FRIEND_REQUESTS -->
+    </div>
+
+
 
   <div class="container1">
       <div class="box1">
@@ -234,13 +240,6 @@
     </form>
     <div id="result"></div>
 </div>
-  
-
-
-
-
-
-
     <div class="container1">
       <div class="box1">
           <div class="profile-container">
@@ -274,8 +273,12 @@
         </div>
     </div>
 </div>
-
       </div>
+<!-- Friends tab END ############################################################ -->
+
+
+
+
 
   <div id="News" class="tabcontent">
     <div class="posting">
@@ -318,7 +321,6 @@
       </div>
   </div>
   </div>
-    <!-- Friends tab END ############################################################ -->
 
 </body>
 </html>

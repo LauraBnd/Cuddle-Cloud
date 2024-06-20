@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./controllers/home');
-const { manageProfileRoute, manageProfileUpdate, manageUploadPost, manageDeleteImage, manageFriends } = require('./controllers/profile');
+const { manageProfileRoute, manageProfileUpdate, manageUploadPost, manageDeleteImage, manageFriends, sendFriendRequest } = require('./controllers/profile');
 const { manageServicesRoute } = require('./controllers/services');
 const { manageContactRoute } = require('./controllers/contact');
 const { manageRegistertRoute, manageRegisterPost } = require('./controllers/register');
@@ -11,6 +11,7 @@ const { saveSchedule, getSchedule, deleteSchedule} = require('./controllers/cale
 const { adminPanel, adminGetUserImages, adminDeleteImage, adminDeleteAccount } = require('./controllers/admin');
 const { manageForgotRoute } = require('./controllers/forgot');
 const { manageMedicalRoute } = require('./controllers/medical');
+
 
 // ss
 
@@ -68,6 +69,10 @@ const server = http.createServer((req, res) => {
   // ##Manages the friends functions
 } else if (urlParser.pathname === '/search' && req.method === 'GET') {
   manageFriends(req, res);
+  // ##Manages "sendFriendRequest" function
+} else if (urlParser.pathname === '/sendFriendRequest' && req.method === 'POST') {
+  sendFriendRequest(req, res);
+
 
   // ##Manages the "logout" function
 } else if (urlParser.pathname === '/logout' && req.method === 'POST') {

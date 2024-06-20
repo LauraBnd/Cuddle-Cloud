@@ -1,4 +1,5 @@
 const fs = require('fs');
+const querystring = require('querystring');
 const { storeSessions, getCookiesSession, checkSession } = require('../manageCookies');
 const multer = require('multer');
 const path = require('path');
@@ -26,6 +27,7 @@ function manageProfileRoute(req, res) {
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
         userId = storeSessions[sessionId].userId;
+        console.log(userId)
     }
     if (!userLogged) {
         res.writeHead(302, { 'Location': '/login' });
@@ -35,20 +37,54 @@ function manageProfileRoute(req, res) {
     
     const profileQuery = 'SELECT name, birthday, age, description, profile_photo FROM user_profiles WHERE user_id = ?';
     const imagesQuery = 'SELECT id, filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
+    const friendsQuery = ` SELECT f.status, f.user_id1, f.user_id2, up.* FROM friendship f JOIN user_profiles up ON f.user_id2 = up.id WHERE up.user_id = ?`;
 
     db.query(profileQuery, [userId], (err, profileResults) => {
         if (err) {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Database Error');
+            res.end('Database Error Profile');
             return;
         }
 
         const profileInfo = profileResults.length > 0 ? profileResults[0] : null;
 
+        db.query(friendsQuery, [userId], (err, friendsResults) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error Friends');
+                return;
+            }
+
+            let friendsRequests = '';
+            friendsResults.forEach(friend => {
+                friendsRequests += `
+                    <div class="retrieved-friend">
+                        <div class="req-photo">
+                            <img src="/images/${friend.profile_photo}">
+                        </div>
+                        <div class="req-info">
+                            <p>${friend.id}</p>
+                            <p>${friend.name}</p>
+                            <p>${friend.age}</p>
+                            <p>${friend.status}</p>
+                        </div>
+
+                        <div class="req-buttons">
+                            <button onclick="acceptRequest(${friend.id})">Accept</button>
+                            <button onclick="declineRequest(${friend.id})">Decline</button>
+                        </div>
+
+                    </div>`;
+            });
+
+
+
+
+
         db.query(imagesQuery, [userId], (err, imageResults) => {
             if (err) {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Database Error');
+                res.end('Database Error Gallery');
                 return;
             }
 
@@ -67,6 +103,7 @@ function manageProfileRoute(req, res) {
                         </div>
                     </div>`;
             });
+
 
             fs.readFile('views/profile.html', 'utf8', (err, data) => {
                 if (err) {
@@ -90,10 +127,13 @@ function manageProfileRoute(req, res) {
                 }
 
                 data = data.replace('<!-- IMAGE_GALLERY -->', imageGallery);
+                data = data.replace('<!-- FRIEND_REQUESTS -->', friendsRequests);
+
 
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.end(data);
             });
+        });
         });
     });
 }
@@ -369,6 +409,7 @@ function manageFriends(req, res) {
                                 <p><span>Birthday: </span>${row.birthday}</p>
                                 <p><span>Age: </span>${row.age}</p>
                                 <p><span>Description: </span>${row.description}</p>
+                                <button onclick="sendFriendRequest(${row.id})">Send Friend Request</button>
                             </div>
                         </div>`;
                 });
@@ -388,11 +429,79 @@ function manageFriends(req, res) {
 
 
 
+function sendFriendRequest(req, res) {
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+    req.on('end', () => {
+        const { friendId } = querystring.parse(body);
+
+        if (!friendId) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end('Bad Request: Missing friendId');
+            return;
+        }
+
+        // console.log(`Received friend request for friend ID: ${friendId}`);
+
+        const sql = `INSERT INTO friendship (user_id1, user_id2, status) VALUES (?, ?, 'pending')`;
+        const userId1 = 21; // Replace with the actual user ID from the session
+
+        db.query(sql, [userId1, friendId], (err, result) => {
+            if (err) {
+                console.error('Database Error:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error');
+                return;
+            }
+
+            console.log('Friend request sent successfully');
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('Friend request sent successfully');
+        });
+    });
+}
+
+function acceptRequest (req, res) {
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+    req.on('end', () => {
+        const { friendId } = querystring.parse(body);
+
+        if (!friendId) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end('Bad Request: Missing friendId');
+            return;
+        }
+
+        console.log(`Received friend request for friend ID: ${friendId}`);
+
+        const sql = `INSERT INTO friendship (user_id1, user_id2, status) VALUES (?, ?, 'pending')`;
+        const userId1 = 21; // Replace with the actual user ID from the session
+
+        db.query(sql, [userId1, friendId], (err, result) => {
+            if (err) {
+                console.error('Database Error:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error');
+                return;
+            }
+
+            console.log('Friend request sent successfully');
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('Friend request sent successfully');
+        });
+    });
+}
 
 module.exports = {
     manageProfileRoute,
     manageProfileUpdate,
     manageUploadPost,
     manageDeleteImage,
-    manageFriends
+    manageFriends,
+    sendFriendRequest,
 };

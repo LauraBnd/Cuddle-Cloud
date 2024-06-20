@@ -39,6 +39,17 @@ function closePopup2() {
 }
 
 
+function openFriendRequests() {
+  document.getElementById("friendRequests").style.display = "block";
+
+}
+
+function closeFriendRequests() {
+    document.getElementById("friendRequests").style.display = "none"; // Hide the popup
+
+}
+
+
   function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
