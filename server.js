@@ -8,7 +8,7 @@ const { manageRegistertRoute, manageRegisterPost } = require('./controllers/regi
 const { manageLoginRoute, manageLoginPosts } = require('./controllers/login');
 const manageLogoutRoute = require('./controllers/logout'); // import logout function as seen here, "{manageLogoutRoute}" -- doesn't find the function ????
 const { saveSchedule, getSchedule, deleteSchedule} = require('./controllers/calendar');
-const { adminPanel } = require('./controllers/admin');
+const { adminPanel, adminGetUserImages, adminDeleteImage, adminDeleteAccount } = require('./controllers/admin');
 const { manageForgotRoute } = require('./controllers/forgot');
 const { manageMedicalRoute } = require('./controllers/medical');
 
@@ -79,6 +79,12 @@ const server = http.createServer((req, res) => {
   // ##Admin panel link!!!!
 } else if (urlParser.pathname === '/admin' && req.method === 'GET') {
   adminPanel(req, res);
+}else if (urlParser.pathname === '/admin/getUserImages' && req.method === 'POST') {
+  adminGetUserImages(req, res);
+}else if (urlParser.pathname === '/admin/deleteImage' && req.method === 'POST') {
+  adminDeleteImage(req, res);
+} else if (urlParser.pathname === '/admin/deleteAccount' && req.method === 'POST') {
+  adminDeleteAccount(req, res);
     // ##Manages the /forgot page
 } else if (urlParser.pathname === '/forgot' && req.method === 'GET') {
   manageForgotRoute(req, res);

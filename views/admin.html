@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/adminscript.js" defer></script>
     <title>Admin</title>
 </head>
 <body>
@@ -15,45 +16,39 @@
         <nav class="navigation">
             <form id="logout-form" action="/logout" method="POST">
                 <button type="submit">Sign out</button>
-              </form>
+            </form>
         </nav>
     </header>
-    <div class="container1">
-        <header>Freeze Account</header>
-        <form action="proceseaza.php" method="post">
-            <div class="field input">
-                <label for="username">Select Account</label>
-                <input type="text" name="username" id="username" required>
-            </div>  
-            <div class="field input">
-                <label for="reason">Reason for freezing</label>
-                <input type="text" name="reason" id="reason" required>
-            </div>              
-            <div class="field">
-                <input type="submit" class="btn" name="submit" value="Delete">
-            </div>
-        
-        </form>
-    </div>
-    <div class="container2">
-        <header>Delete Photo</header>
-        <form action="proceseaza.php" method="post">
-            <div class="field input">
-                <label for="username2">Select Account</label>
-                <input type="text" name="username2" id="username2" required>
-            </div>
-            <div class="field input">
-                <label for="picture">Select Picture</label>
-                <input type="text" name="picture" id="picture" required>
-            </div>                    
-            <div class="field">
-                <input type="submit" class="btn" name="submit" value="Delete">
-            </div>
-        
-        </form>
-    </div>
-
-
     
+    <div class="container1">
+        <header>Delete User Images</header>
+        <form id="get-images-form">
+            <div class="field input">
+                <label for="username">Enter Username</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="field">
+                <input type="submit" class="btn" value="Get Images">
+            </div>
+        </form>
+        <div class="main">
+            <div class="content">
+                <div id="image-gallery"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container2">
+        <header>Delete User Account</header>
+        <form id="delete-account-form">
+            <div class="field input">
+                <label for="username-delete">Enter Username</label>
+                <input type="text" name="username" id="username-delete" required>
+            </div>
+            <div class="field">
+                <input type="submit" class="btn" value="Delete Account">
+            </div>
+        </form>
+    </div>
 </body>
 </html>
