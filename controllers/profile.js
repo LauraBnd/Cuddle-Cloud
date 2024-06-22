@@ -40,10 +40,10 @@ function manageProfileRoute(req, res) {
                             f.status, 
                             f.user_id1, 
                             f.user_id2, 
-                            up.name,  -- Adjust this based on the actual column names in user_profiles
-                            up.birthday,  -- Adjust this based on the actual column names in user_profiles
-                            up.age,  -- Adjust this based on the actual column names in user_profiles
-                            up.profile_photo -- Adjust this based on the actual column names in user_profiles
+                            up.name,
+                            up.birthday,
+                            up.age,
+                            up.profile_photo 
                         FROM 
                             friendship f
                         JOIN 
@@ -78,20 +78,12 @@ function manageProfileRoute(req, res) {
                         <div class="req-info">
                             <p><span>Name: </span>${friend.name}</p>
                             <p><span>Age: </span>${friend.age}</p>
+                            <p><span>Description: </span>${friend.description}</p>
                             <p><span>Status: </span>${friend.status}</p>
-                        </div>
-
-                        <div class="req-buttons">
-                            <button class="accept-friend-request" data-friend-id="${friend.user_id2}">Accept</button>
-                            <button class="decline-friend-request" data-friend-id="${friend.user_id2}">Decline</button>
-
                         </div>
 
                     </div>`;
             });
-
-
-
 
 
         db.query(imagesQuery, [userId], (err, imageResults) => {
@@ -140,7 +132,7 @@ function manageProfileRoute(req, res) {
                 }
 
                 data = data.replace('<!-- IMAGE_GALLERY -->', imageGallery);
-                data = data.replace('<!-- FRIEND_REQUESTS -->', friendsRequests);
+                data = data.replace('<!-- FRIENDS_LIST -->', friendsRequests);
 
 
                 res.writeHead(200, { 'Content-Type': 'text/html' });
