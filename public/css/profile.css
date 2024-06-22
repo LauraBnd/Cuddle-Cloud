@@ -554,6 +554,11 @@
     float: right;
     font-size: 2vw;
     font-weight: bold;
+    z-index: 9999;
+  }
+
+  #friendRequests h2 {
+    z-index: 9999;
   }
   
   .close:hover,

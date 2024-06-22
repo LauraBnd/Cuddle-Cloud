@@ -27,7 +27,6 @@ function manageProfileRoute(req, res) {
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
         userId = storeSessions[sessionId].userId;
-        console.log(userId)
     }
     if (!userLogged) {
         res.writeHead(302, { 'Location': '/login' });
@@ -37,7 +36,21 @@ function manageProfileRoute(req, res) {
     
     const profileQuery = 'SELECT name, birthday, age, description, profile_photo FROM user_profiles WHERE user_id = ?';
     const imagesQuery = 'SELECT id, filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
-    const friendsQuery = ` SELECT f.status, f.user_id1, f.user_id2, up.* FROM friendship f JOIN user_profiles up ON f.user_id2 = up.id WHERE up.user_id = ?`;
+    const friendsQuery = `SELECT 
+                            f.status, 
+                            f.user_id1, 
+                            f.user_id2, 
+                            up.name,  -- Adjust this based on the actual column names in user_profiles
+                            up.birthday,  -- Adjust this based on the actual column names in user_profiles
+                            up.age,  -- Adjust this based on the actual column names in user_profiles
+                            up.profile_photo -- Adjust this based on the actual column names in user_profiles
+                        FROM 
+                            friendship f
+                        JOIN 
+                            user_profiles up ON f.user_id2 = up.id
+                        WHERE 
+                            f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?);
+                        `;
 
     db.query(profileQuery, [userId], (err, profileResults) => {
         if (err) {
@@ -63,15 +76,15 @@ function manageProfileRoute(req, res) {
                             <img src="/images/${friend.profile_photo}">
                         </div>
                         <div class="req-info">
-                            <p>${friend.id}</p>
-                            <p>${friend.name}</p>
-                            <p>${friend.age}</p>
-                            <p>${friend.status}</p>
+                            <p><span>Name: </span>${friend.name}</p>
+                            <p><span>Age: </span>${friend.age}</p>
+                            <p><span>Status: </span>${friend.status}</p>
                         </div>
 
                         <div class="req-buttons">
-                            <button onclick="acceptRequest(${friend.id})">Accept</button>
-                            <button onclick="declineRequest(${friend.id})">Decline</button>
+                            <button class="accept-friend-request" data-friend-id="${friend.user_id2}">Accept</button>
+                            <button class="decline-friend-request" data-friend-id="${friend.user_id2}">Decline</button>
+
                         </div>
 
                     </div>`;
@@ -409,7 +422,7 @@ function manageFriends(req, res) {
                                 <p><span>Birthday: </span>${row.birthday}</p>
                                 <p><span>Age: </span>${row.age}</p>
                                 <p><span>Description: </span>${row.description}</p>
-                                <button onclick="sendFriendRequest(${row.id})">Send Friend Request</button>
+                                <button class="send-friend-request" data-friend-id="${row.id}">Send Friend Request</button>
                             </div>
                         </div>`;
                 });
@@ -430,10 +443,28 @@ function manageFriends(req, res) {
 
 
 function sendFriendRequest(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let userId;
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        userId = storeSessions[sessionId].userId;
+    }
+
+    if (!userLogged) {
+        console.log('User not logged in or session expired');
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+    
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
     });
+
     req.on('end', () => {
         const { friendId } = querystring.parse(body);
 
@@ -443,12 +474,11 @@ function sendFriendRequest(req, res) {
             return;
         }
 
-        // console.log(`Received friend request for friend ID: ${friendId}`);
+        console.log(`User ID: ${userId}, Friend ID: ${friendId}`);
 
-        const sql = `INSERT INTO friendship (user_id1, user_id2, status) VALUES (?, ?, 'pending')`;
-        const userId1 = 21; // Replace with the actual user ID from the session
+        const sql = `INSERT INTO friendship (user_id1, user_id2, status) VALUES ((SELECT id from user_profiles WHERE user_id = ?), ?, 'pending')`;
 
-        db.query(sql, [userId1, friendId], (err, result) => {
+        db.query(sql, [userId, friendId], (err, result) => {
             if (err) {
                 console.error('Database Error:', err);
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -463,11 +493,29 @@ function sendFriendRequest(req, res) {
     });
 }
 
-function acceptRequest (req, res) {
+function acceptRequest(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let userId;
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        userId = storeSessions[sessionId].userId;
+    }
+
+    if (!userLogged) {
+        console.log('User not logged in or session expired');
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+    
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
     });
+
     req.on('end', () => {
         const { friendId } = querystring.parse(body);
 
@@ -477,12 +525,11 @@ function acceptRequest (req, res) {
             return;
         }
 
-        console.log(`Received friend request for friend ID: ${friendId}`);
+        console.log(`User ID: ${userId}, Friend ID: ${friendId}`);
 
-        const sql = `INSERT INTO friendship (user_id1, user_id2, status) VALUES (?, ?, 'pending')`;
-        const userId1 = 21; // Replace with the actual user ID from the session
+        const updateStatusQuery = 'UPDATE friendship SET status = "friends" WHERE user_id2 = ? AND user_id1 = (SELECT id from user_profiles WHERE user_id = ?)';
 
-        db.query(sql, [userId1, friendId], (err, result) => {
+        db.query(updateStatusQuery, [friendId, userId], (err, result) => {
             if (err) {
                 console.error('Database Error:', err);
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -490,12 +537,147 @@ function acceptRequest (req, res) {
                 return;
             }
 
-            console.log('Friend request sent successfully');
+            if (result.affectedRows === 0) {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('Friend request not found or already processed');
+                return;
+            }
+
+            console.log('Friend request accepted successfully');
             res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Friend request sent successfully');
+            res.end('Friend request accepted successfully');
         });
     });
 }
+
+
+
+function declineRequest(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let userId;
+    console.log(userId)
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        userId = storeSessions[sessionId].userId;
+    }
+
+    if (!userLogged) {
+        console.log('User not logged in or session expired');
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+
+    req.on('end', () => {
+        const { friendId } = querystring.parse(body);
+
+        if (!friendId) {
+            res.writeHead(400, { 'Content-Type': 'text/plain' });
+            res.end('Bad Request: Missing friendId');
+            return;
+        }
+
+        const deleteRequestQuery = 'DELETE FROM friendship WHERE user_id2 = ? AND user_id1 = (SELECT id from user_profiles WHERE user_id = ?)';
+
+        db.query(deleteRequestQuery, [friendId, userId], (err, result) => {
+            if (err) {
+                console.error('Database Error:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Database Error');
+                return;
+            }
+
+            if (result.affectedRows === 0) {
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('Friend request not found or already processed');
+                return;
+            }
+
+            console.log('Friend request declined successfully');
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('Friend request declined successfully');
+        });
+    });
+}
+
+
+function getFriendRequests(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let userId;
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        userId = storeSessions[sessionId].userId;
+    }
+
+    if (!userLogged) {
+        console.log('User not logged in or session expired');
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+
+    const query = `SELECT 
+                            f.status, 
+                            f.user_id1, 
+                            f.user_id2, 
+                            up.name,  -- Adjust this based on the actual column names in user_profiles
+                            up.birthday,  -- Adjust this based on the actual column names in user_profiles
+                            up.age,  -- Adjust this based on the actual column names in user_profiles
+                            up.profile_photo -- Adjust this based on the actual column names in user_profiles
+                        FROM 
+                            friendship f
+                        JOIN 
+                            user_profiles up ON f.user_id2 = up.id
+                        WHERE 
+                            f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?);
+                        `;
+
+    db.query(query, [userId], (err, results) => {
+        if (err) {
+            console.error('Database Error:', err);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Database Error');
+            return;
+        }
+
+        let response = '<div>';
+        if (results.length > 0) {
+            results.forEach(row => {
+                response += `
+                    <div class="friend-profile">
+                        <img src="/images/${row.profile_photo}">
+                        <div class="friend-info">
+                            <p><span>Name: </span>${row.name}</p>
+                            <p><span>Birthday: </span>${row.birthday}</p>
+                            <p><span>Age: </span>${row.age}</p>
+                            <p><span>Description: </span>${row.description}</p>
+                            <button class="accept-friend-request" data-friend-id="${row.user_id2}">Accept Friend Request</button>
+                            <button class="decline-friend-request" data-friend-id="${row.user_id2}">Decline Friend Request</button>
+                        </div>
+                    </div>`;
+            });
+        } else {
+            response += '<p>No pending friend requests.</p>';
+        }
+        response += '</div>';
+
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(response);
+    });
+}
+
+
 
 module.exports = {
     manageProfileRoute,
@@ -504,4 +686,7 @@ module.exports = {
     manageDeleteImage,
     manageFriends,
     sendFriendRequest,
+    acceptRequest,
+    declineRequest,
+    getFriendRequests,
 };

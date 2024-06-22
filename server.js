@@ -1,7 +1,7 @@
 const http = require('http');
 const url = require('url');
 const { manageHomeRoute, manageStyleCSS, manageImages, manageJSFiles } = require('./controllers/home');
-const { manageProfileRoute, manageProfileUpdate, manageUploadPost, manageDeleteImage, manageFriends, sendFriendRequest } = require('./controllers/profile');
+const { manageProfileRoute, manageProfileUpdate, manageUploadPost, manageDeleteImage, manageFriends, sendFriendRequest, acceptRequest, declineRequest, getFriendRequests } = require('./controllers/profile');
 const { manageServicesRoute } = require('./controllers/services');
 const { manageContactRoute } = require('./controllers/contact');
 const { manageRegistertRoute, manageRegisterPost } = require('./controllers/register');
@@ -69,10 +69,18 @@ const server = http.createServer((req, res) => {
   // ##Manages the friends functions
 } else if (urlParser.pathname === '/search' && req.method === 'GET') {
   manageFriends(req, res);
+    // ##Manages the friends functions
+} else if (urlParser.pathname === '/friendRequests' && req.method === 'GET') {
+  getFriendRequests(req, res);
   // ##Manages "sendFriendRequest" function
 } else if (urlParser.pathname === '/sendFriendRequest' && req.method === 'POST') {
   sendFriendRequest(req, res);
-
+  // ##Manages "acceptRequest" function
+} else if (urlParser.pathname === '/acceptRequest' && req.method === 'POST') {
+  acceptRequest(req, res);
+  // ##Manages "declineRequest" function
+} else if (urlParser.pathname === '/declineRequest' && req.method === 'POST') {
+  declineRequest(req, res);
 
   // ##Manages the "logout" function
 } else if (urlParser.pathname === '/logout' && req.method === 'POST') {
