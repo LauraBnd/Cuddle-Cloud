@@ -459,7 +459,7 @@ function sendFriendRequest(req, res) {
         res.end();
         return;
     }
-    
+
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
@@ -476,9 +476,15 @@ function sendFriendRequest(req, res) {
 
         console.log(`User ID: ${userId}, Friend ID: ${friendId}`);
 
-        const sql = `INSERT INTO friendship (user_id1, user_id2, status) VALUES ((SELECT id from user_profiles WHERE user_id = ?), ?, 'pending')`;
+        const checkSql = `
+            SELECT status 
+            FROM friendship 
+            WHERE 
+                (user_id1 = ? AND user_id2 = (SELECT id FROM user_profiles WHERE user_id = ?)) OR 
+                (user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?) AND user_id2 = ?)
+        `;
 
-        db.query(sql, [userId, friendId], (err, result) => {
+        db.query(checkSql, [ friendId, userId, userId, friendId], (err, results) => {
             if (err) {
                 console.error('Database Error:', err);
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -486,12 +492,34 @@ function sendFriendRequest(req, res) {
                 return;
             }
 
-            console.log('Friend request sent successfully');
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Friend request sent successfully');
+            if (results.length > 0 && (results[0].status === 'pending' || results[0].status === 'friends')) {
+                console.log('Friend request already exists or you are already friends.');
+                res.writeHead(400, { 'Content-Type': 'text/plain' });
+                res.end('Friend request already exists or you are already friends.');
+                return;
+            }
+
+            const insertSql = `
+                INSERT INTO friendship (user_id1, user_id2, status) 
+                VALUES (?, (SELECT id FROM user_profiles WHERE user_id = ?), 'pending')
+            `;
+
+            db.query(insertSql, [friendId, userId], (err, result) => {
+                if (err) {
+                    console.error('Database Error:', err);
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end('Database Error');
+                    return;
+                }
+
+                console.log('Friend request sent successfully');
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end('Friend request sent successfully');
+            });
         });
     });
 }
+
 
 function acceptRequest(req, res) {
     const cookies = getCookiesSession(req);
@@ -631,19 +659,20 @@ function getFriendRequests(req, res) {
                             f.status, 
                             f.user_id1, 
                             f.user_id2, 
-                            up.name,  -- Adjust this based on the actual column names in user_profiles
-                            up.birthday,  -- Adjust this based on the actual column names in user_profiles
-                            up.age,  -- Adjust this based on the actual column names in user_profiles
-                            up.profile_photo -- Adjust this based on the actual column names in user_profiles
+                            up.name,
+                            up.birthday,
+                            up.age,
+                            up.profile_photo
                         FROM 
                             friendship f
                         JOIN 
                             user_profiles up ON f.user_id2 = up.id
                         WHERE 
-                            f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?);
+                            f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?) AND status = 'pending';
                         `;
 
     db.query(query, [userId], (err, results) => {
+
         if (err) {
             console.error('Database Error:', err);
             res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -652,7 +681,7 @@ function getFriendRequests(req, res) {
         }
 
         let response = '<div>';
-        if (results.length > 0) {
+        if (results.length > 0 ) {
             results.forEach(row => {
                 response += `
                     <div class="friend-profile">
