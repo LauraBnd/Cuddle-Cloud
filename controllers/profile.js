@@ -38,32 +38,31 @@ function manageProfileRoute(req, res) {
     
     const imagesQuery = 'SELECT id, filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
 
-    const friendsQuery = `SELECT f.status, f.user_id1, f.user_id2, up.name, up.birthday, up.age, up.profile_photo 
-                        FROM friendship f
-                        JOIN user_profiles up ON f.user_id2 = up.id
-                        WHERE (f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?) OR f.user_id1 != (SELECT id FROM user_profiles WHERE user_id = ?));`;
+    const friendsQuery = 'SELECT up.* FROM user_profiles up JOIN friends f ON up.user_id = f.friend_id WHERE f.user_id = ?';
 
-    const newsFeedQuery = `SELECT 
-    i.up_id, 
-    i.filename, 
-    i.title, 
-    i.description, 
-    i.upload_date, 
-    f.user_id1, 
-    f.user_id2, 
-    f.status,
-    up.name AS friend_name,
-    up.profile_photo AS friend_profile_photo
-FROM 
-    images i
-JOIN 
-    user_profiles up ON i.up_id = up.id
-JOIN 
-    friendship f ON f.user_id2 = up.id
-WHERE 
-    f.status = 'friends'
-ORDER BY 
-    i.upload_date DESC;`;
+    const newsFeedQuery = `
+    SELECT 
+        i.filename, 
+        i.title, 
+        i.description AS image_description, 
+        i.upload_date, 
+        up.name, 
+        up.birthday, 
+        up.age, 
+        up.description, 
+        up.profile_photo
+    FROM 
+        images i
+    JOIN 
+        user_profiles up ON i.user_id = up.user_id
+    JOIN 
+        friends f ON i.user_id = f.friend_id
+    WHERE 
+        f.user_id = ?
+    ORDER BY 
+        i.upload_date DESC;
+`;
+
                 
 
     db.query(profileQuery, [userId], (err, profileResults) => {
@@ -75,8 +74,9 @@ ORDER BY
 
         const profileInfo = profileResults.length > 0 ? profileResults[0] : null;
 
-        db.query(friendsQuery, [userId, userId], (err, friendsResults) => {
+        db.query(friendsQuery, [userId], (err, friendsResults) => {
             if (err) {
+                console.log(err)
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('Database Error Friends');
                 return;
@@ -123,7 +123,7 @@ ORDER BY
                     </div>`;
             });
 
-            db.query(newsFeedQuery, [userId, userId], (err, results) => {
+            db.query(newsFeedQuery, [userId], (err, results) => {
                 if (err) {
                     console.error('Database Error:', err);
                     res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -139,7 +139,7 @@ ORDER BY
                                             <img src="/images/${row.filename}" alt="${row.title}">
                                             <div class="image-info">
                                                 <h3>${row.title}</h3>
-                                                <p>${row.description}</p>
+                                                <p>${row.image_description}</p>
                                                 <p><small>${row.upload_date}</small></p>
                                             </div>
                                         </div>
@@ -212,8 +212,8 @@ function manageUploadPost(req, res) {
         const todayDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
         if (photo) {
-            const query = 'INSERT INTO images (user_id, up_id, filename, title, description, upload_date) VALUES (?, (SELECT id FROM user_profiles WHERE user_id = ?), ?, ?, ?, ?)';
-            db.query(query, [userId, userId, photo.filename, title, description, todayDate], (err, result) => {
+            const query = 'INSERT INTO images (user_id, filename, title, description, upload_date) VALUES (?, ?, ?, ?, ?)';
+            db.query(query, [userId, photo.filename, title, description, todayDate], (err, result) => {
                 if (err) {
                     console.log(err);
                     res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -456,7 +456,7 @@ function manageFriends(req, res) {
                                 <p><span>Birthday: </span>${row.birthday}</p>
                                 <p><span>Age: </span>${row.age}</p>
                                 <p><span>Description: </span>${row.description}</p>
-                                <button class="send-friend-request" data-friend-id="${row.id}">Send Friend Request</button>
+                                <button class="send-friend-request" data-friend-id="${row.user_id}">Send Friend Request</button>
                             </div>
                         </div>`;
                 });
@@ -512,10 +512,10 @@ function sendFriendRequest(req, res) {
 
         const checkSql = `
             SELECT status 
-            FROM friendship 
+            FROM friend_requests 
             WHERE 
-                (user_id1 = ? AND user_id2 = (SELECT id FROM user_profiles WHERE user_id = ?)) OR 
-                (user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?) AND user_id2 = ?)
+                (sender_id = ? AND receiver_id = ?) OR 
+                (receiver_id = ? AND sender_id = ?)
         `;
 
         db.query(checkSql, [ friendId, userId, userId, friendId], (err, results) => {
@@ -534,11 +534,11 @@ function sendFriendRequest(req, res) {
             }
 
             const insertSql = `
-                INSERT INTO friendship (user_id1, user_id2, status) 
-                VALUES (?, (SELECT id FROM user_profiles WHERE user_id = ?), 'pending')
+                INSERT INTO friend_requests (sender_id, receiver_id) 
+                VALUES (?, ?)
             `;
 
-            db.query(insertSql, [friendId, userId], (err, result) => {
+            db.query(insertSql, [userId, friendId], (err, result) => {
                 if (err) {
                     console.error('Database Error:', err);
                     res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -589,25 +589,47 @@ function acceptRequest(req, res) {
 
         console.log(`User ID: ${userId}, Friend ID: ${friendId}`);
 
-        const updateStatusQuery = 'UPDATE friendship SET status = "friends" WHERE user_id2 = ? AND user_id1 = (SELECT id from user_profiles WHERE user_id = ?)';
+        const updateStatusQuery = `UPDATE friend_requests SET status = "accepted" WHERE receiver_id = ?`;
 
-        db.query(updateStatusQuery, [friendId, userId], (err, result) => {
-            if (err) {
-                console.error('Database Error:', err);
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Database Error');
-                return;
-            }
+        db.query(updateStatusQuery, [userId], (err, results) => {
+            // if (err) {
+            //     console.error('Database Error:', err);
+            //     res.writeHead(500, { 'Content-Type': 'text/plain' });
+            //     res.end('Database Error');
+            //     return;
+            // }
 
-            if (result.affectedRows === 0) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('Friend request not found or already processed');
-                return;
-            }
+            // if (result.affectedRows === 0) {
+            //     res.writeHead(404, { 'Content-Type': 'text/plain' });
+            //     res.end('Friend request not found or already processed');
+            //     return;
+            // }
 
-            console.log('Friend request accepted successfully');
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Friend request accepted successfully');
+            // console.log('Friend request accepted successfully');
+            // res.writeHead(200, { 'Content-Type': 'text/plain' });
+            // res.end('Friend request accepted successfully');
+            console.log(friendId)
+            const getRequestQuery = `SELECT sender_id, receiver_id, from friend_requests WHERE sender_id = ?`;
+
+            db.query(getRequestQuery, [friendId], (err, results) => {
+                // if (err) {
+                //     console.error('Database Error:', err);
+                //     res.writeHead(500, { 'Content-Type': 'text/plain' });
+                //     res.end('Database Error');
+                //     return;
+                // }
+                // const { sender_id, receiver_id } = results[0];
+
+                const insertFriendsQuery = 'INSERT INTO friends (user_id, friend_id) VALUES (?, ?), (?, ?)';
+                db.query(insertFriendsQuery, [friendId, userId, userId, friendId], (error, results) => {
+                                // if (err) {
+                //     console.error('Database Error:', err);
+                //     res.writeHead(500, { 'Content-Type': 'text/plain' });
+                //     res.end('Database Error');
+                //     return;
+                // }
+                });
+            });
         });
     });
 }
@@ -646,29 +668,35 @@ function declineRequest(req, res) {
             res.end('Bad Request: Missing friendId');
             return;
         }
+        console.log(`User ID: ${userId}, Friend ID: ${friendId}`);
 
-        const deleteRequestQuery = 'DELETE FROM friendship WHERE user_id2 = ? AND user_id1 = (SELECT id from user_profiles WHERE user_id = ?)';
+        const updateStatusQuery = `UPDATE friend_requests SET status = "declined" WHERE receiver_id = ?`;
 
-        db.query(deleteRequestQuery, [friendId, userId], (err, result) => {
-            if (err) {
-                console.error('Database Error:', err);
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Database Error');
-                return;
-            }
+        db.query(updateStatusQuery, [userId], (err, results) => {
+            // if (err) {
+            //     console.error('Database Error:', err);
+            //     res.writeHead(500, { 'Content-Type': 'text/plain' });
+            //     res.end('Database Error');
+            //     return;
+            // }
 
-            if (result.affectedRows === 0) {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('Friend request not found or already processed');
-                return;
-            }
+            // if (result.affectedRows === 0) {
+            //     res.writeHead(404, { 'Content-Type': 'text/plain' });
+            //     res.end('Friend request not found or already processed');
+            //     return;
+            // }
 
-            console.log('Friend request declined successfully');
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Friend request declined successfully');
+            // console.log('Friend request accepted successfully');
+            // res.writeHead(200, { 'Content-Type': 'text/plain' });
+            // res.end('Friend request accepted successfully');
+
         });
     });
 }
+
+
+
+
 
 
 function getFriendRequests(req, res) {
@@ -689,21 +717,8 @@ function getFriendRequests(req, res) {
         return;
     }
 
-    const query = `SELECT 
-                            f.status, 
-                            f.user_id1, 
-                            f.user_id2, 
-                            up.name,
-                            up.birthday,
-                            up.age,
-                            up.profile_photo
-                        FROM 
-                            friendship f
-                        JOIN 
-                            user_profiles up ON f.user_id2 = up.id
-                        WHERE 
-                            f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?) AND status = 'pending';
-                        `;
+    const query = `SELECT fr.*, up.* FROM friend_requests fr JOIN user_profiles up ON fr.sender_id = up.user_id
+                    WHERE fr.receiver_id = ? AND fr.status = 'pending';`;
 
     db.query(query, [userId], (err, results) => {
 
@@ -725,8 +740,8 @@ function getFriendRequests(req, res) {
                             <p><span>Birthday: </span>${row.birthday}</p>
                             <p><span>Age: </span>${row.age}</p>
                             <p><span>Description: </span>${row.description}</p>
-                            <button class="accept-friend-request" data-friend-id="${row.user_id2}">Accept Friend Request</button>
-                            <button class="decline-friend-request" data-friend-id="${row.user_id2}">Decline Friend Request</button>
+                            <button class="accept-friend-request" data-friend-id="${row.sender_id}">Accept Friend Request</button>
+                            <button class="decline-friend-request" data-friend-id="${row.sender_id}">Decline Friend Request</button>
                         </div>
                     </div>`;
             });
