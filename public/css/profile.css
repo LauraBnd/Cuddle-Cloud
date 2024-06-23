@@ -347,6 +347,26 @@
     border-radius: 2vw;
   
   }
+
+  .post .image-post {
+    border-bottom: 2px solid lightcyan;
+  }
+
+  .image-post .image-info h3 {
+    margin-bottom: 2px;
+  }
+
+  .image-post .image-info p {
+    margin-bottom: 2px;
+    text-indent: 20px;
+  }
+
+  .image-post .image-info p:last-child {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    text-indent: 0;
+
+  }
   
   .post img {
     width: 100%;

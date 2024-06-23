@@ -134,16 +134,14 @@ function manageProfileRoute(req, res) {
                 let newsFeed = '';
                     results.forEach(row => {
                         newsFeed += `
-                                    <div class="news-feed-item">
                                         <div class="image-post">
                                             <img src="/images/${row.filename}" alt="${row.title}">
                                             <div class="image-info">
                                                 <h3>${row.title}</h3>
                                                 <p>${row.image_description}</p>
-                                                <p><small>${row.upload_date}</small></p>
+                                                <p><small>Posted at: ${row.upload_date}</small></p>
                                             </div>
-                                        </div>
-                                    </div>`;
+                                        </div>`;
                     });
 
 
