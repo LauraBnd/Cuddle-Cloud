@@ -118,7 +118,7 @@ function loadSchedule() {
               const hourProgram = document.createElement('div');
               hourProgram.className = 'hour-program';
               hourProgram.innerHTML = `
-                  <strong>Hour:</strong> ${item.hour}<br>
+                  <strong>Starting Time:</strong> ${item.hour}<br>
                   <strong>End Time:</strong> ${item.end_time}<br>
                   <strong>Program:</strong> ${item.program}<br>
                   <strong>Details:</strong> ${item.details}`;
