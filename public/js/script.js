@@ -183,3 +183,237 @@ function deleteImage(imageId) {
         });
     }
 }
+
+document.getElementById('medicalForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const data = {
+        start: document.getElementById('start').value,
+        end: document.getElementById('end').value,
+        symptoms: document.getElementById('symptoms').value,
+        treatment: document.getElementById('Treatment').value,
+        details: document.getElementById('detail').value
+    };
+
+    fetch('/saveMedicalInfo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Medical information saved successfully!');
+            fetchMedicalRecords();
+        } else {
+            alert('Failed to save medical information: ' + data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
+function fetchMedicalRecords() {
+    fetch('/getMedicalInfo')
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const medicalDisplay = document.getElementById('medicalDisplay');
+            medicalDisplay.innerHTML = '';
+            data.medical.forEach(record => {
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'info1';
+                recordDiv.innerHTML = `
+                    <ul style="list-style-type: none;">
+                        <li><strong>Symptoms: </strong> ${record.symptoms}</li>
+                        <li><strong>Starting Date: </strong> ${formatDate(record.start_date)}</li>
+                        <li><strong>Ending Date: </strong> ${formatDate(record.end_date)}</li>
+                        <li><strong>Treatment: </strong> ${record.treatment}</li>
+                        <li><strong>Details: </strong> ${record.details}</li>
+                        <li><button onclick="deleteMedicalRecord(${record.id})">Delete</button></li>
+                    </ul>
+                `;
+                medicalDisplay.appendChild(recordDiv);
+            });
+        } else {
+            alert('Failed to fetch medical records: ' + data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function deleteMedicalRecord(id) {
+    fetch(`/deleteMedicalInfo/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Medical record deleted successfully!');
+            fetchMedicalRecords();
+        } else {
+            alert('Failed to delete medical record: ' + data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Fetch medical records on page load
+document.addEventListener('DOMContentLoaded', fetchMedicalRecords);
+
+function openFamilyInfoPopup() {
+  document.getElementById('familyInfoPopup').style.display = 'block';
+}
+
+function closeFamilyInfoPopup() {
+  document.getElementById('familyInfoPopup').style.display = 'none';
+}
+
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
+document.getElementById('familyInfoForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const data = {
+    full_name: formData.get('full_name'),
+    birthday: formData.get('birthday'),
+    parents_name: formData.get('parents_name'),
+    blood_type: formData.get('blood_type')
+  };
+
+  fetch('/saveFamilyInfo', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      alert('Family info saved successfully!');
+      closeFamilyInfoPopup();
+      displayFamilyInfo();
+    } else {
+      alert('Error saving family info: ' + result.error);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Error saving family info.');
+  });
+});
+
+function displayFamilyInfo() {
+  fetch('/getFamilyInfo')
+    .then(response => response.json())
+    .then(result => {
+      const familyInfoDisplay = document.getElementById('familyInfoDisplay');
+      familyInfoDisplay.innerHTML = ''; // Clear previous info
+      if (result.success && result.info) {
+        const info = result.info;
+        familyInfoDisplay.innerHTML = `
+          <p><strong>Full Name:</strong> ${info.full_name}</p>
+          <p><strong>Birthday:</strong> ${formatDate(info.birthday)}</p>
+          <p><strong>Parent's Name:</strong> ${info.parents_name}</p>
+          <p><strong>Blood Type:</strong> ${info.blood_type}</p>
+        `;
+        document.getElementById('full_name').value = info.full_name;
+        document.getElementById('birthday').value = info.birthday;
+        document.getElementById('parents_name').value = info.parents_name;
+        document.getElementById('blood_type').value = info.blood_type;
+      } else {
+        familyInfoDisplay.innerHTML = '<p>No family info available.</p>';
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      document.getElementById('familyInfoDisplay').innerHTML = '<p>Error retrieving family info.</p>';
+    });
+}
+
+// Fetch and display family info on page load
+displayFamilyInfo();
+
+function fetchMedicalImages() {
+  fetch('/getMedicalImages')
+      .then(response => response.json())
+      .then(images => {
+          const gallery = document.getElementById('medicalImageGallery');
+          gallery.innerHTML = '';
+          images.forEach(image => {
+              const imageDiv = document.createElement('div');
+              imageDiv.classList.add('posted-image');
+              imageDiv.innerHTML = `
+                  <img src="/images/medical/${image.filename}" alt="${image.title}">
+                  <div class="posted-image-description">
+                      <div class="upload-info">
+                          <h3>${image.title}</h3>
+                          <p>${image.description}</p>
+                      </div>
+                      <p class="upload-date"><span>Uploaded at: </span>${image.upload_date}</p>
+                      <button class="delete-button" onclick="deleteMedicalImage(${image.id})">Delete</button>
+                  </div>
+              `;
+              gallery.appendChild(imageDiv);
+          });
+      });
+}
+
+function deleteMedicalImage(imageId) {
+  fetch('/deleteMedicalImage', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ imageId })
+  })
+  .then(response => response.json())
+  .then(result => {
+      if (result.success) {
+          alert('Image deleted successfully');
+          fetchMedicalImages();
+      } else {
+          alert('Error deleting image: ' + result.error);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('Error deleting image.');
+  });
+}
+
+document.getElementById('medicalPhotoForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  fetch('/uploadMedicalPhoto', {
+      method: 'POST',
+      body: formData
+  })
+  .then(response => response.json())
+  .then(result => {
+      if (result.success) {
+          alert('Photo uploaded successfully');
+          event.target.reset();
+          fetchMedicalImages();
+      } else {
+          alert('Error uploading photo: ' + result.error);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('Error uploading photo.');
+  });
+});
+
+// Fetch medical images on page load
+fetchMedicalImages();

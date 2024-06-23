@@ -1,278 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/profile.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/profile.css" />
     <script src="/js/script.js" defer></script>
     <script src="/js/friendsScript.js" defer></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Profile</title>
-</head>
-<body>
-  <header>
-    <div class="logo-container">
-        <img src="/images/logo.png" alt="Your Image">
+  </head>
+  <body>
+    <header>
+      <div class="logo-container">
+        <img src="/images/logo.png" alt="Your Image" />
+      </div>
+
+      <nav class="navigation">
+        <form id="logout-form" action="/logout" method="POST">
+          <button type="submit">Sign out</button>
+        </form>
+      </nav>
+    </header>
+    <div class="tab-container">
+      <div class="tab">
+        <button
+          class="tablinks"
+          onclick="openCity(event, 'Profile')"
+          id="defaultOpen"
+        >
+          My Profile
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'Feed')">
+          Schedule
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'Medical')">
+          Medical History
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'Galery')">
+          Photo Gallery
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'Friends')">
+          Friends
+        </button>
+        <button
+          class="tablinks"
+          onclick="openCity(event, 'News')"
+          id="newsFeedButton"
+        >
+          News Feed
+        </button>
+      </div>
     </div>
 
-    
-    <nav class="navigation">
-      <form id="logout-form" action="/logout" method="POST">
-        <button type="submit">Sign out</button>
-      </form>
-    </nav>
+    <div id="Profile" class="tabcontent">
+      <button class="popup" onclick="openPopup()">Account Info</button>
 
-
-
-   </header>  
-   <div class="tab-container">
-  <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'Profile')" id="defaultOpen">My Profile</button>
-    <button class="tablinks" onclick="openCity(event, 'Feed')">Schedule</button>
-    <button class="tablinks" onclick="openCity(event, 'Medical')">Medical History</button>
-    <button class="tablinks" onclick="openCity(event, 'Galery')">Photo Gallery</button>
-    <button class="tablinks" onclick="openCity(event, 'Friends')">Friends</button>
-    <button class="tablinks" onclick="openCity(event, 'News')"  id="newsFeedButton">News Feed</button>
-  </div>
-   </div>
-  
-  <div id="Profile" class="tabcontent">
-    <button class="popup" onclick="openPopup()">Account Info</button>
-
-  <div id="searchPopup" class="popup2">
-    <span class="close" onclick="closePopup()">&times;</span>
-
-
+      <div id="searchPopup" class="popup2">
+        <span class="close" onclick="closePopup()">&times;</span>
 
         <!-- Change account info -->
         <h2>Change Account Info</h2>
-    <form action="/updateProfile" method="POST" enctype="multipart/form-data">
-        <label for="myuser"><strong>Username - Required</strong></label><br>
-        <input type="text" id="myuser" name="myuser" required><br><br>
+        <form
+          action="/updateProfile"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <label for="myuser"><strong>Username - Required</strong></label
+          ><br />
+          <input type="text" id="myuser" name="myuser" required /><br /><br />
 
-        <label for="password">Password</label>
-        <input type="text" name="password" autocomplete="off" id="password"><br><br>
+          <label for="password">Password</label>
+          <input
+            type="text"
+            name="password"
+            autocomplete="off"
+            id="password"
+          /><br /><br />
 
-        <label for="profile_photo">Profile Photo</label>
-        <input type="file" id="profile_photo" name="profile_photo"><br><br>
+          <label for="profile_photo">Profile Photo</label>
+          <input
+            type="file"
+            id="profile_photo"
+            name="profile_photo"
+          /><br /><br />
 
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name"><br><br>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" /><br /><br />
 
-        <label for="birthday">Birthday</label>
-        <input type="date" id="birthday" name="birthday"><br><br>
+          <label for="birthday">Birthday</label>
+          <input type="date" id="birthday" name="birthday" /><br /><br />
 
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age"><br><br>
+          <label for="age">Age</label>
+          <input type="number" id="age" name="age" /><br /><br />
 
-        <label for="description">Description</label>
-        <textarea id="description" name="description"></textarea><br><br>
+          <label for="description">Description</label>
+          <textarea id="description" name="description"></textarea><br /><br />
 
-        <input type="submit" value="Change Info">
-    </form>
-</div>
-
-<button id="showFriendRequestsButton"  class="popup"onclick="openFriendRequests()">Show friend requests</button>
-
-<div id="friendRequests" class="popup2">
-  <h2>Friend requests</h2>
-  <span class="close" onclick="closeFriendRequests()">X</span>
-  <h2>asdas</h2>
-</div>
-
-
-
-  <div class="container1">
-      <div class="box1">
-        <h2>Profile Info</h2>
-          <div class="profile-container">
-              <div class="profilepic">
-                   <!-- PROFILE_INFO -->
-              </div>
-
-          </div>
+          <input type="submit" value="Change Info" />
+        </form>
       </div>
-  </div>
-  </div>
 
-  
-  <div id="Feed" class="tabcontent">
-    <div class="sch">
-      <div class="sch2">
-    <form id="scheduleForm">
-      <label for="date">Date:</label>
-      <input type="date" id="date" name="date" required>
+      <button
+        id="showFriendRequestsButton"
+        class="popup"
+        onclick="openFriendRequests()"
+      >
+        Show friend requests
+      </button>
 
-      <label for="day">Day:</label>
-      <input type="text" id="day" name="day" required>
-
-        <label for="hour">Hour:</label>
-        <input type="number" id="hour" name="hour" min="0" max="23" required>
-        
-        <label for="endTime">End Time:</label>
-        <input type="number" id="endTime" name="endTime" min="0" max="23" required>
-    
-        <label for="program">Program:</label>
-        <input type="text" id="program" name="program" required>
-    
-        <label for="details">Details:</label>
-        <input type="text" id="details" name="details" required>
-        
-        <button type="submit" class="btn1">Save Schedule</button>
-    </form>
-    
+      <div id="friendRequests" class="popup2">
+        <h2>Friend requests</h2>
+        <span class="close" onclick="closeFriendRequests()">X</span>
+        <h2>asdas</h2>
       </div>
-    </div>
-    <div id="scheduleDisplay" class = "disp"></div>
-</div>
- 
-  </div>
-     <div id="Medical" class="tabcontent">
-      <button class="postbut">Post Medical File</button>
-      <a href="medical" class="postbut">View Medical Files</a>
+
       <div class="container1">
         <div class="box1">
-            <div class="profile-container">
-                <div class="profile-text">
-                    <ul style="list-style-type: none;">
-                        <li><strong>Full Name: </strong> Dominic Sebastian Daddario</li>
-                        <li><strong>Birthday: </strong> 27.05.2021</li>
-                        <li><strong>Parent's Name: </strong> Cassandra Maria Daddario & Michael Daddario</li>
-                        <li><strong>Birthmark: </strong> A heart shaped mark on his left shoulder</li>
-                        <li><strong>Blood Type: </strong>A-</li>
-                    </ul>
-                </div>
+          <h2>Profile Info</h2>
+          <div class="profile-container">
+            <div class="profilepic">
+              <!-- PROFILE_INFO -->
             </div>
-            </div>
-            
-        </div>
-        <div class="cont2">
-          <div class="boxy2">
-            <p><strong>Enter sickness details!</strong></p>
-              <form action="future.php">
-                <label for="start"><strong>Choose the starting date:</strong></label>
-                <input type="date" id="start" name="start">
-                <p> </p>
-                <label for="end"><strong>Choose the ending date:</strong></label>
-                <input type="date" id="end" name="end">
-                <p> </p>
-                <label for="symptoms"><strong>Symptoms</strong></label>
-                <input type="text" name="symptoms" id="symptoms">
-                <p> </p>
-                <label for="Treatment"><strong>Treatment</strong></label>
-                <input type="text" name="Treatment" id="Treatment">
-                <p> </p>
-                <label for="detail"><strong>Details</strong></label>
-                <input type="text" name="detail" id="detail">
-              </form>
-              
-              <div class="field">
-                <input
-                  type="submit"
-                  name="submit"
-                  class="btn"
-                  value="Submit"
-                >
-              </div>
-              
           </div>
-      <div class="info">
-        <div class="info1">
-          <p><strong>Mild Flu</strong></p>
-          <ul style="list-style-type: none;">
-              <li><strong>Starting Date: </strong> 26.11.2023</li>
-              <li><strong>Ending Date: </strong> 26.11.2023</li>
-              <li><strong>Symptoms: </strong> Fever, Coughing</li>
-              <li><strong>Treatment: </strong> Pills</li>
-          </ul>
         </div>
-        <div class="info2">
-          <p><strong>Sunburn</strong></p>
-            <ul style="list-style-type: none;">
-                <li><strong>Starting Date: </strong> 13.07.2023</li>
-                <li><strong>Ending Date: </strong> 15.07.2023</li>
-                <li><strong>Symptoms: </strong> Fever, Itchiness</li>
-                <li><strong>Treatment: </strong> Lotion</li>
-            </ul>
+      </div>
+    </div>
+
+    <div id="Feed" class="tabcontent">
+      <div class="sch">
+        <div class="sch2">
+          <form id="scheduleForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required />
+
+            <label for="day">Day:</label>
+            <input type="text" id="day" name="day" required />
+
+            <label for="hour">Hour:</label>
+            <input
+              type="number"
+              id="hour"
+              name="hour"
+              min="0"
+              max="23"
+              required
+            />
+
+            <label for="endTime">End Time:</label>
+            <input
+              type="number"
+              id="endTime"
+              name="endTime"
+              min="0"
+              max="23"
+              required
+            />
+
+            <label for="program">Program:</label>
+            <input type="text" id="program" name="program" required />
+
+            <label for="details">Details:</label>
+            <input type="text" id="details" name="details" required />
+
+            <button type="submit" class="btn1">Save Schedule</button>
+          </form>
         </div>
+      </div>
+      <div id="scheduleDisplay" class="disp"></div>
+    </div>
+    <!-- Medical tab ############################################################ -->
+    <div id="Medical" class="tabcontent">
+            <button class="popup" onclick="openFamilyInfoPopup()">Family Info</button>
+          
+            <div id="familyInfoPopup" class="popup2">
+              <span class="close" onclick="closeFamilyInfoPopup()">&times;</span>
+              <!-- Family info form -->
+              <h2>Family Info</h2>
+              <form id="familyInfoForm">
+                <label for="full_name"><strong>Full Name - Required</strong></label>
+                <input type="text" id="full_name" name="full_name" required /><br /><br />
+          
+                <label for="birthday">Birthday</label>
+                <input type="date" id="birthday" name="birthday" required /><br /><br />
+          
+                <label for="parents_name">Parent's Name</label>
+                <input type="text" id="parents_name" name="parents_name" required /><br /><br />
+          
+                <label for="blood_type">Blood Type</label>
+                <input type="text" id="blood_type" name="blood_type" /><br /><br />
+          
+                <button type="submit" class="btn">Submit</button>
+              </form>
+            </div>
+          <div class="container1">
+            <div class="box1">
+          <div class="family-info-display" id="familyInfoDisplay">
+            <!-- Family info will be displayed here -->
+          </div>
+         
+
         </div>
+      </div>
+      <div class="cont2">
+        <div class="boxy2">
+          <form id="medicalForm">
+            <label for="start"
+              ><strong>Choose the starting date:</strong></label
+            >
+            <input type="date" id="start" name="start" required />
+            <p></p>
+            <label for="end"><strong>Choose the ending date:</strong></label>
+            <input type="date" id="end" name="end" required />
+            <p></p>
+            <label for="symptoms"><strong>Symptoms</strong></label>
+            <input type="text" name="symptoms" id="symptoms" required />
+            <p></p>
+            <label for="Treatment"><strong>Treatment</strong></label>
+            <input type="text" name="Treatment" id="Treatment" required />
+            <p></p>
+            <label for="detail"><strong>Details</strong></label>
+            <input type="text" name="detail" id="detail" required />
+            <p></p>
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div>
+        <div id="medicalDisplay" class="info">
+          <!-- Medical records will be displayed here -->
+        </div>
+      </div>
     </div>
-</div>
-<!-- Gallery tab ############################################################ -->
-<div id="Galery" class="tabcontent">
-  <button class="postbut" onclick="document.getElementById('uploadForm').style.display='block'">Post a Photo</button>
+    <!-- Gallery tab ############################################################ -->
+    <div id="Galery" class="tabcontent">
+      <button
+        class="postbut"
+        onclick="document.getElementById('uploadForm').style.display='block'"
+      >
+        Post a Photo
+      </button>
 
-  <div id="uploadForm" style="display:none;">
-    <div class="posting">
-      <form id="photoForm" action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="photo" required>
-        <input type="text" name="title" placeholder="Title">
-        <textarea name="description" placeholder="Description"></textarea>
-        <button type="submit">Upload</button>
-      </form>
+      <div id="uploadForm" style="display: none">
+        <div class="posting">
+          <form
+            id="photoForm"
+            action="/upload"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <input type="file" name="photo" required />
+            <input type="text" name="title" placeholder="Title" />
+            <textarea name="description" placeholder="Description"></textarea>
+            <button type="submit">Upload</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="content">
+          <!-- IMAGE_GALLERY -->
+        </div>
+      </div>
     </div>
-  </div>
+    <!-- Gallery tab END ############################################################ -->
 
-  <div class="main">
-    <div class="content">
-      <!-- IMAGE_GALLERY -->
-    </div>
-  </div>
-</div>
-<!-- Gallery tab END ############################################################ -->
-
-
- <!-- Friends tab ############################################################ -->
-  <div id="Friends" class="tabcontent">
-    <!-- <div class="popup" onclick="Open()">My friendship Code!
+    <!-- Friends tab ############################################################ -->
+    <div id="Friends" class="tabcontent">
+      <!-- <div class="popup" onclick="Open()">My friendship Code!
       <span class="popuptext" id="myPopup">#H3LLO</span>
     </div> -->
-    
-    <button class="popup" onclick="openPopup2()">Search for a friend</button>
 
-<div id="searchPopup2" class="popup2">
-    <span class="close" onclick="closePopup2()">&times;</span>
-    <h2>Search for a friend</h2>
-    <form>
-        <label for="searchInput">
-        <input type="text" id="searchInput" name="searchInput"><br><br>
-        <!-- <input type="submit" value="Search"> -->
-    </form>
-    <div id="result"></div>
-</div>
-    
-  
-  <div class="container1">
-    <div class="box1">
-        <div class="profile-container">
-          <!-- FRIENDS_LIST -->
-        </div>
-    </div>
-</div>
+      <button class="popup" onclick="openPopup2()">Search for a friend</button>
+
+      <div id="searchPopup2" class="popup2">
+        <span class="close" onclick="closePopup2()">&times;</span>
+        <h2>Search for a friend</h2>
+        <form>
+          <label for="searchInput"></label>
+          <input type="text" id="searchInput" name="searchInput" /><br /><br />
+          <!-- <input type="submit" value="Search"> -->
+        </form>
+        <div id="result"></div>
       </div>
-<!-- Friends tab END ############################################################ -->
 
+      <div class="container1">
+        <div class="box1">
+          <div class="profile-container">
+            <!-- FRIENDS_LIST -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Friends tab END ############################################################ -->
 
-
-
-
-  <div id="News" class="tabcontent">
-    <!-- <div class="posting">
+    <div id="News" class="tabcontent">
+      <!-- <div class="posting">
       <button id="photo-btn">Add Photo</button>
       <button id="video-btn">Add Video</button>
       <textarea class="caption-textbox" placeholder="Write a caption..."></textarea>
     </div> -->
-    <div class="news-feed">
-
-      <div class="post">
-        <!-- NEWS_FEED -->
+      <div class="news-feed">
+        <div class="post">
+          <!-- NEWS_FEED -->
+        </div>
+      </div>
     </div>
-
-
-
-  </div>
-</div>
-
-</body>
+  </body>
 </html>

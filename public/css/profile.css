@@ -661,8 +661,9 @@
     align-items: center;
     flex-direction: column;
     min-height: 5vw;
-    margin-top: -44vw;
-    margin-left: 15vw;
+    margin-top: -35vw;
+    margin-left: 25vw;
+    min-width: 40vw;
   }
   
   .info1,

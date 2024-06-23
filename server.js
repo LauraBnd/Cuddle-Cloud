@@ -10,7 +10,8 @@ const manageLogoutRoute = require('./controllers/logout'); // import logout func
 const { saveSchedule, getSchedule, deleteSchedule} = require('./controllers/calendar');
 const { adminPanel, adminGetUserImages, adminDeleteImage, adminDeleteAccount } = require('./controllers/admin');
 const { manageForgotRoute } = require('./controllers/forgot');
-const { manageMedicalRoute } = require('./controllers/medical');
+const { saveMedicalInfo, getMedicalInfo, deleteMedicalInfo, saveFamilyInfo, getFamilyInfo } = require('./controllers/medicalinfo');
+
 
 
 // ss
@@ -39,9 +40,6 @@ const server = http.createServer((req, res) => {
 // ##Manages the /contact page
 } else if (urlParser.pathname === '/contact' && req.method === 'GET') {
   manageContactRoute(req, res);
-// ##Manages the /medical page
-} else if (urlParser.pathname === '/medical' && req.method === 'GET') {
-  manageMedicalRoute(req, res);
 
 // ##Manages the /register page
 } else if (urlParser.pathname === '/register' && req.method === 'GET') {
@@ -81,9 +79,22 @@ const server = http.createServer((req, res) => {
   // ##Manages "declineRequest" function
 } else if (urlParser.pathname === '/declineRequest' && req.method === 'POST') {
   declineRequest(req, res);
-
-
-
+} else if (urlParser.pathname === '/saveMedicalInfo' && req.method === 'POST') {
+  saveMedicalInfo(req, res);
+} else if (urlParser.pathname === '/getMedicalInfo' && req.method === 'GET') {
+  getMedicalInfo(req, res);
+} else if (urlParser.pathname.startsWith('/deleteMedicalInfo') && req.method === 'DELETE') {  
+  deleteMedicalInfo(req, res);
+} else if (urlParser.pathname === '/saveFamilyInfo' && req.method === 'POST') {
+  saveFamilyInfo(req, res);
+} else if (urlParser.pathname === '/getFamilyInfo' && req.method === 'GET') {
+  getFamilyInfo(req, res);
+} else if (urlParser.pathname === '/uploadMedicalPhoto' && req.method === 'POST') {
+  uploadMedicalPhoto(req, res);
+} else if (urlParser.pathname === '/getMedicalImages' && req.method === 'GET') {
+  getMedicalImages(req, res);
+} else if (urlParser.pathname.startsWith('/deleteMedicalImage') && req.method === 'DELETE') {
+  deleteMedicalImage(req, res);
   // ##Manages the "logout" function
 } else if (urlParser.pathname === '/logout' && req.method === 'POST') {
   manageLogoutRoute(req, res);
