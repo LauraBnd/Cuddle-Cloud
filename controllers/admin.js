@@ -7,13 +7,15 @@ function adminPanel(req, res) {
     const cookies = getCookiesSession(req);
     const sessionId = cookies.sessionId;
     let userLogged = false;
+    let username = '';
 
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
         userId = storeSessions[sessionId].userId;
+        username = storeSessions[sessionId].username; // Assuming you store the username in the session
     }
 
-    if (!userLogged) {
+    if (!userLogged || username !== 'Admin') {
         res.writeHead(302, { 'Location': '/login' });
         res.end();
         return;
@@ -30,7 +32,24 @@ function adminPanel(req, res) {
     });
 }
 
+// Ensure other admin functions also check for 'Admin' user
 function adminGetUserImages(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let username = '';
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+    }
+
+    if (!userLogged || username !== 'Admin') {
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
@@ -90,6 +109,22 @@ function adminGetUserImages(req, res) {
 }
 
 function adminDeleteImage(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let username = '';
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+    }
+
+    if (!userLogged || username !== 'Admin') {
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
@@ -144,6 +179,22 @@ function adminDeleteImage(req, res) {
 }
 
 function adminDeleteAccount(req, res) {
+    const cookies = getCookiesSession(req);
+    const sessionId = cookies.sessionId;
+    let userLogged = false;
+    let username = '';
+
+    if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
+        userLogged = true;
+        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+    }
+
+    if (!userLogged || username !== 'Admin') {
+        res.writeHead(302, { 'Location': '/login' });
+        res.end();
+        return;
+    }
+
     let body = '';
     req.on('data', chunk => {
         body += chunk.toString();
@@ -172,10 +223,11 @@ function adminDeleteAccount(req, res) {
             
             const deleteQueries = [
                 'DELETE FROM credentials WHERE id = ?',
-                'DELETE FROM friendships WHERE user_id1 = ? OR user_id2 = ?',
+                'DELETE FROM friends WHERE user_id = ? OR friend_id = ?',
                 'DELETE FROM images WHERE user_id = ?',
                 'DELETE FROM schedules WHERE profile_id = ?',
-                'DELETE FROM user_profiles WHERE user_id = ?'
+                'DELETE FROM user_profiles WHERE user_id = ?',
+                'DELETE FROM friend_requests WHERE receiver_id = ? OR sender_id = ?'
             ];
             
             const deleteTasks = deleteQueries.map(query => {
