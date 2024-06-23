@@ -139,3 +139,8 @@ function declineRequest(friendId) {
     // return false; // Prevent default behavior
 
 }
+
+
+
+
+

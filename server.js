@@ -82,6 +82,8 @@ const server = http.createServer((req, res) => {
 } else if (urlParser.pathname === '/declineRequest' && req.method === 'POST') {
   declineRequest(req, res);
 
+
+
   // ##Manages the "logout" function
 } else if (urlParser.pathname === '/logout' && req.method === 'POST') {
   manageLogoutRoute(req, res);

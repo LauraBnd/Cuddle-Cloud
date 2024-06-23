@@ -35,22 +35,36 @@ function manageProfileRoute(req, res) {
     }
     
     const profileQuery = 'SELECT name, birthday, age, description, profile_photo FROM user_profiles WHERE user_id = ?';
+    
     const imagesQuery = 'SELECT id, filename, title, description, upload_date FROM images WHERE user_id = ? ORDER BY upload_date DESC';
-    const friendsQuery = `SELECT 
-                            f.status, 
-                            f.user_id1, 
-                            f.user_id2, 
-                            up.name,
-                            up.birthday,
-                            up.age,
-                            up.profile_photo 
-                        FROM 
-                            friendship f
-                        JOIN 
-                            user_profiles up ON f.user_id2 = up.id
-                        WHERE 
-                            f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?);
-                        `;
+
+    const friendsQuery = `SELECT f.status, f.user_id1, f.user_id2, up.name, up.birthday, up.age, up.profile_photo 
+                        FROM friendship f
+                        JOIN user_profiles up ON f.user_id2 = up.id
+                        WHERE (f.user_id1 = (SELECT id FROM user_profiles WHERE user_id = ?) OR f.user_id1 != (SELECT id FROM user_profiles WHERE user_id = ?));`;
+
+    const newsFeedQuery = `SELECT 
+    i.up_id, 
+    i.filename, 
+    i.title, 
+    i.description, 
+    i.upload_date, 
+    f.user_id1, 
+    f.user_id2, 
+    f.status,
+    up.name AS friend_name,
+    up.profile_photo AS friend_profile_photo
+FROM 
+    images i
+JOIN 
+    user_profiles up ON i.up_id = up.id
+JOIN 
+    friendship f ON f.user_id2 = up.id
+WHERE 
+    f.status = 'friends'
+ORDER BY 
+    i.upload_date DESC;`;
+                
 
     db.query(profileQuery, [userId], (err, profileResults) => {
         if (err) {
@@ -61,7 +75,7 @@ function manageProfileRoute(req, res) {
 
         const profileInfo = profileResults.length > 0 ? profileResults[0] : null;
 
-        db.query(friendsQuery, [userId], (err, friendsResults) => {
+        db.query(friendsQuery, [userId, userId], (err, friendsResults) => {
             if (err) {
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end('Database Error Friends');
@@ -109,6 +123,30 @@ function manageProfileRoute(req, res) {
                     </div>`;
             });
 
+            db.query(newsFeedQuery, [userId, userId], (err, results) => {
+                if (err) {
+                    console.error('Database Error:', err);
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end('Database Error');
+                    return;
+                }
+                
+                let newsFeed = '';
+                    results.forEach(row => {
+                        newsFeed += `
+                                    <div class="news-feed-item">
+                                        <div class="image-post">
+                                            <img src="/images/${row.filename}" alt="${row.title}">
+                                            <div class="image-info">
+                                                <h3>${row.title}</h3>
+                                                <p>${row.description}</p>
+                                                <p><small>${row.upload_date}</small></p>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                    });
+
+
 
             fs.readFile('views/profile.html', 'utf8', (err, data) => {
                 if (err) {
@@ -133,6 +171,7 @@ function manageProfileRoute(req, res) {
 
                 data = data.replace('<!-- IMAGE_GALLERY -->', imageGallery);
                 data = data.replace('<!-- FRIENDS_LIST -->', friendsRequests);
+                data = data.replace('<!-- NEWS_FEED -->', newsFeed);
 
 
                 res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -140,6 +179,8 @@ function manageProfileRoute(req, res) {
             });
         });
         });
+        });
+
     });
 }
 
@@ -171,11 +212,12 @@ function manageUploadPost(req, res) {
         const todayDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
         if (photo) {
-            const query = 'INSERT INTO images (user_id, filename, title, description, upload_date) VALUES (?, ?, ?, ?, ?)';
-            db.query(query, [userId, photo.filename, title, description, todayDate], (err, result) => {
+            const query = 'INSERT INTO images (user_id, up_id, filename, title, description, upload_date) VALUES (?, (SELECT id FROM user_profiles WHERE user_id = ?), ?, ?, ?, ?)';
+            db.query(query, [userId, userId, photo.filename, title, description, todayDate], (err, result) => {
                 if (err) {
+                    console.log(err);
                     res.writeHead(500, { 'Content-Type': 'text/plain' });
-                    res.end('Database Error');
+                    res.end('Database Error Upload user image');
                     return;
                 }
 
@@ -697,6 +739,7 @@ function getFriendRequests(req, res) {
         res.end(response);
     });
 }
+
 
 
 
