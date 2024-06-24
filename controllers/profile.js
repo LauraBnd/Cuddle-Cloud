@@ -93,7 +93,6 @@ function manageProfileRoute(req, res) {
                             <p><span>Name: </span>${friend.name}</p>
                             <p><span>Age: </span>${friend.age}</p>
                             <p><span>Description: </span>${friend.description}</p>
-                            <p><span>Status: </span>${friend.status}</p>
                         </div>
 
                     </div>`;
@@ -139,7 +138,8 @@ function manageProfileRoute(req, res) {
                                             <div class="image-info">
                                                 <h3>${row.title}</h3>
                                                 <p>${row.image_description}</p>
-                                                <p><small>Posted at: ${row.upload_date}</small></p>
+                                                <p>Uploaded by: <span>${row.name}</span> at <span>${row.upload_date}</span></p>
+
                                             </div>
                                         </div>`;
                     });

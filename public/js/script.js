@@ -13,39 +13,43 @@ function Open() {
 
 function openPopup() {
   document.getElementById("searchPopup").style.display = "block";
+
 }
 function closePopup() {
   document.getElementById("searchPopup").style.display = "none";
-  document.getElementById("myuser").value = ''; // Clear the input field
-  document.getElementById("password").value = ''; // Clear the input field
-  document.getElementById("profile_photo").value = ''; // Clear the input field
-  document.getElementById("name").value = ''; // Clear the input field
-  document.getElementById("birthday").value = ''; // Clear the input field
-  document.getElementById("age").value = ''; // Clear the input field
-  document.getElementById("description").value = ''; // Clear the input field
+  document.getElementById("myuser").value = '';
+  document.getElementById("password").value = '';
+  document.getElementById("profile_photo").value = '';
+  document.getElementById("name").value = '';
+  document.getElementById("birthday").value = '';
+  document.getElementById("age").value = '';
+  document.getElementById("description").value = '';
 
-  document.getElementById("result").innerHTML = ''; // Clear the result div
+  document.getElementById("result").innerHTML = '';
 }
 
 function openPopup2() {
   document.getElementById("searchPopup2").style.display = "block";
+  document.getElementById("friendRequests").style.display = "none";
+
 }
 
 function closePopup2() {
   document.getElementById("searchPopup2").style.display = "none";
-  document.getElementById("searchInput").value = ''; // Clear the input field
-  document.getElementById("result").innerHTML = ''; // Clear the result div
-  document.getElementById("searchPopup2").style.display = "none"; // Hide the popup
+  document.getElementById("searchInput").value = '';
+  document.getElementById("result").innerHTML = '';
+  document.getElementById("searchPopup2").style.display = "none";
 }
 
 
 function openFriendRequests() {
   document.getElementById("friendRequests").style.display = "block";
+  document.getElementById("searchPopup2").style.display = "none";
 
 }
 
 function closeFriendRequests() {
-    document.getElementById("friendRequests").style.display = "none"; // Hide the popup
+    document.getElementById("friendRequests").style.display = "none";
 
 }
 

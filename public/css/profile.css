@@ -360,13 +360,23 @@
   .image-post .image-info p {
     margin-bottom: 2px;
     text-indent: 20px;
+    background-color: lightgray;
+    padding: 5px;
+    border-radius: 10px;
   }
 
   .image-post .image-info p:last-child {
     margin-top: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     text-indent: 0;
+    font-weight: 600;
+    background-color: transparent;
 
+  }
+
+  .image-post .image-info p:last-child span {
+    font-style: italic;
+    font-weight: 500;
   }
   
   .post img {
@@ -539,7 +549,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
     margin: 5px;
     border: 2px solid lightcoral;
@@ -566,7 +575,13 @@
   }
 
   .retrieved-friend p {
-    margin: 5px;
+    margin: 20px 15px;
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  .retrieved-friend p span {
+    font-weight: 600;
   }
 
   .retrieved-friend button {
