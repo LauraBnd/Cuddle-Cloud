@@ -116,9 +116,7 @@
 
 @media (min-width: 446px) and (max-width: 1439px){
     body {
-        background-image: url('/images/phones2.jpg');
-        background-size: cover; 
-        background-position: center; 
+        background-color: aliceblue;
     }
     .aslogan{
     
@@ -214,21 +212,18 @@
     
     .kidwave{
         position:absolute;
-        top: 8vh;
-        right: 4vw; 
+        top: 40vh;
+        left: 45vw; 
     }
     .kidwave img{
-        width: auto; 
-        height: 25vw; 
+        width: 1vw;
     }
 
 }
 
 @media (max-width: 446px){
     body {
-        background-image: url('/images/phones2.jpg') ;
-        background-size: cover; 
-        background-position: center; 
+background-color: aliceblue;
     }
     .aslogan{
     
@@ -324,12 +319,11 @@
     
     .kidwave{
         position:absolute;
-        top: 15vh;
-        right: 4vw; 
+        top: 25vh;
+        left: 20vw; 
     }
     .kidwave img{
-        width: auto;
-        height: 25vw; 
+        width: 1vw;
     }
 
 }

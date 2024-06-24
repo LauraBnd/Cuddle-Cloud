@@ -124,7 +124,22 @@ function saveFamilyInfo(req, res) {
         body += chunk.toString();
     });
     req.on('end', () => {
-        const { full_name, birthday, parents_name, blood_type } = JSON.parse(body);
+        const data = JSON.parse(body);
+        const updates = {};
+        
+        // Dynamically create the query based on the provided fields
+        const fields = ['full_name', 'birthday', 'parents_name', 'blood_type'];
+        fields.forEach(field => {
+            if (data[field]) {
+                updates[field] = data[field];
+            }
+        });
+
+        if (Object.keys(updates).length === 0) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: false, error: 'No fields to update' }));
+            return;
+        }
 
         // Check if family info already exists for the user
         db.query('SELECT * FROM family_info WHERE user_id = ?', [userId], (err, results) => {
@@ -137,8 +152,10 @@ function saveFamilyInfo(req, res) {
 
             if (results.length > 0) {
                 // Update existing family info
-                db.query('UPDATE family_info SET full_name = ?, birthday = ?, parents_name = ?, blood_type = ? WHERE user_id = ?', 
-                [full_name, birthday, parents_name, blood_type, userId], 
+                const updateFields = Object.keys(updates).map(field => `${field} = ?`).join(', ');
+                const updateValues = [...Object.values(updates), userId];
+                
+                db.query(`UPDATE family_info SET ${updateFields} WHERE user_id = ?`, updateValues, 
                 (err, results) => {
                     if (err) {
                         console.error('Error updating family info:', err);
@@ -151,8 +168,12 @@ function saveFamilyInfo(req, res) {
                 });
             } else {
                 // Insert new family info
-                db.query('INSERT INTO family_info (user_id, full_name, birthday, parents_name, blood_type) VALUES (?, ?, ?, ?, ?)', 
-                [userId, full_name, birthday, parents_name, blood_type], 
+                const insertFields = Object.keys(updates).join(', ');
+                const insertValues = Object.values(updates);
+                insertValues.push(userId);
+
+                db.query(`INSERT INTO family_info (${insertFields}, user_id) VALUES (${new Array(insertValues.length).fill('?').join(', ')})`, 
+                insertValues, 
                 (err, results) => {
                     if (err) {
                         console.error('Error saving family info:', err);
@@ -167,6 +188,7 @@ function saveFamilyInfo(req, res) {
         });
     });
 }
+
 
 function getFamilyInfo(req, res) {
     const cookies = getCookiesSession(req);

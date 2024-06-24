@@ -3,7 +3,8 @@
   }
   body {
     font-family: "Lato", sans-serif;
-    background: url('/images/cloud.gif') none center top fixed;
+    background: url('/images/cloud.gif') no-repeat center center fixed;
+    background-size: cover;
   }
      
   .tab {
