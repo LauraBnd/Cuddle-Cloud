@@ -2,14 +2,14 @@
     font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
-body {
-    background-image: url('/images/cloudy.png');
-    background-size: cover; 
-    background-position: center; 
-}
+
 
 @media (min-width: 1440px) { 
-    
+    body {
+        background-image: url('/images/cloudy.png');
+        background-size: cover; 
+        background-position: center; 
+    }
 .aslogan{
     
     display: flex;
@@ -115,6 +115,11 @@ body {
 
 
 @media (min-width: 446px) and (max-width: 1439px){
+    body {
+        background-image: url('/images/phones2.jpg');
+        background-size: cover; 
+        background-position: center; 
+    }
     .aslogan{
     
         display: flex;
@@ -220,6 +225,11 @@ body {
 }
 
 @media (max-width: 446px){
+    body {
+        background-image: url('/images/phones2.jpg') ;
+        background-size: cover; 
+        background-position: center; 
+    }
     .aslogan{
     
         display: flex;

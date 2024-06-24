@@ -12,7 +12,7 @@ function adminPanel(req, res) {
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
         userId = storeSessions[sessionId].userId;
-        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+        username = storeSessions[sessionId].username; 
     }
 
     if (!userLogged || username !== 'Admin') {

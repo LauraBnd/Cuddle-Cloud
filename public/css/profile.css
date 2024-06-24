@@ -3,8 +3,7 @@
   }
   body {
     font-family: "Lato", sans-serif;
-    background: url('/images/cloud.gif') no-repeat center center fixed;
-    background-size: cover;
+    background: url('/images/cloud.gif') none center top fixed;
   }
      
   .tab {
@@ -402,7 +401,7 @@
   .popup2 {
     display: none; 
     position: fixed;
-    top: 12vw; 
+    top: 7vw; 
     left: 25vw; 
     background-color: hsl(284, 55%, 85%);
     border: 1px solid #888;
@@ -453,7 +452,7 @@
     align-items: center;
     width: 100%;
     margin: 5px;
-    border: 2px solid lightcoral;
+    border: 0.5vw solid rgb(219, 128, 240);
     border-radius: 10px;
 
   }
