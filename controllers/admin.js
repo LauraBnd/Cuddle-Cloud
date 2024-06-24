@@ -41,7 +41,7 @@ function adminGetUserImages(req, res) {
 
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
-        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+        username = storeSessions[sessionId].username; 
     }
 
     if (!userLogged || username !== 'Admin') {
@@ -116,7 +116,7 @@ function adminDeleteImage(req, res) {
 
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
-        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+        username = storeSessions[sessionId].username; 
     }
 
     if (!userLogged || username !== 'Admin') {
@@ -186,7 +186,7 @@ function adminDeleteAccount(req, res) {
 
     if (sessionId && storeSessions[sessionId] && !checkSession(storeSessions[sessionId])) {
         userLogged = true;
-        username = storeSessions[sessionId].username; // Assuming you store the username in the session
+        username = storeSessions[sessionId].username; 
     }
 
     if (!userLogged || username !== 'Admin') {

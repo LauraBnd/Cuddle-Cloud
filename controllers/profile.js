@@ -265,7 +265,6 @@ function manageProfileUpdate(req, res) {
 
             const currentProfileInfo = currentProfile[0];
 
-            // Prepare update profile query dynamically
             let updateProfileQuery = 'UPDATE user_profiles SET ';
             let profileParams = [];
 
@@ -290,7 +289,6 @@ function manageProfileUpdate(req, res) {
                 profileParams.push(profilePhoto);
             }
 
-            // Remove the last comma and space
             updateProfileQuery = updateProfileQuery.slice(0, -2);
             updateProfileQuery += ' WHERE user_id = ?';
             profileParams.push(userId);
@@ -300,7 +298,7 @@ function manageProfileUpdate(req, res) {
                 WHERE id = ?`;
             
             const updateProfile = (hashedPassword) => {
-                if (profileParams.length > 1) { // Ensure there's something to update
+                if (profileParams.length > 1) { 
                     db.query(updateProfileQuery, profileParams, (err) => {
                         if (err) {
                             res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -321,7 +319,7 @@ function manageProfileUpdate(req, res) {
                         });
                     });
                 } else {
-                    // If no profile data to update, only update credentials if necessary
+                    
                     if (myuser || password) {
                         const credentialsParams = password ? [myuser, hashedPassword, userId] : [myuser, userId];
                         
@@ -411,7 +409,6 @@ function manageDeleteImage(req, res) {
                     return;
                 }
 
-                // Delete the file from the file system
                 fs.unlink(path.join(__dirname, '../public/images', filename), (err) => {
                     if (err) {
                         console.error('File system error deleting image file:', err);

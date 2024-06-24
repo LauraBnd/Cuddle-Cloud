@@ -127,7 +127,6 @@ function saveFamilyInfo(req, res) {
         const data = JSON.parse(body);
         const updates = {};
         
-        // Dynamically create the query based on the provided fields
         const fields = ['full_name', 'birthday', 'parents_name', 'blood_type'];
         fields.forEach(field => {
             if (data[field]) {
@@ -141,7 +140,6 @@ function saveFamilyInfo(req, res) {
             return;
         }
 
-        // Check if family info already exists for the user
         db.query('SELECT * FROM family_info WHERE user_id = ?', [userId], (err, results) => {
             if (err) {
                 console.error('Error checking family info:', err);
@@ -151,7 +149,6 @@ function saveFamilyInfo(req, res) {
             }
 
             if (results.length > 0) {
-                // Update existing family info
                 const updateFields = Object.keys(updates).map(field => `${field} = ?`).join(', ');
                 const updateValues = [...Object.values(updates), userId];
                 
@@ -167,7 +164,6 @@ function saveFamilyInfo(req, res) {
                     res.end(JSON.stringify({ success: true }));
                 });
             } else {
-                // Insert new family info
                 const insertFields = Object.keys(updates).join(', ');
                 const insertValues = Object.values(updates);
                 insertValues.push(userId);
