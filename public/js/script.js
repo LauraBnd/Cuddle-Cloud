@@ -6,6 +6,12 @@ function myFunction() {
         passwordInput.type = 'password';
     }
 }
+
+function formatDate(dateString) {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-GB', options);
+}
+
 function Open() {
   var popup = document.getElementById("myPopup");
   popup.classList.toggle("show");
@@ -21,7 +27,7 @@ function closePopup() {
   document.getElementById("password").value = '';
   document.getElementById("profile_photo").value = '';
   document.getElementById("name").value = '';
-  document.getElementById("birthday").value = '';
+  document.getElementById("birthda").value = '';
   document.getElementById("age").value = '';
   document.getElementById("description").value = '';
 
@@ -101,47 +107,46 @@ function closeFriendRequests() {
 });
 
 function loadSchedule() {
-  fetch('/getSchedule')
-      .then(response => response.json())
-      .then(data => {
-          const scheduleDisplay = document.getElementById('scheduleDisplay');
-          scheduleDisplay.innerHTML = '';
+    fetch('/getSchedule')
+        .then(response => response.json())
+        .then(data => {
+            const scheduleDisplay = document.getElementById('scheduleDisplay');
+            scheduleDisplay.innerHTML = '';
 
-          data.schedule.forEach(item => {
-              const scheduleItem = document.createElement('div');
-              scheduleItem.className = 'schedule-item';
+            data.schedule.forEach(item => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
 
-              const formattedDate = new Date(item.date).toISOString().split('T')[0];
+                const formattedDate = formatDate(item.date);
 
-              const dateDayInfo = document.createElement('div');
-              dateDayInfo.className = 'date-day-info';
-              dateDayInfo.innerHTML = `
-                  <strong>Date:</strong> ${formattedDate}<br>
-                  <strong>Day:</strong> ${item.day}`;
+                const dateDayInfo = document.createElement('div');
+                dateDayInfo.className = 'date-day-info';
+                dateDayInfo.innerHTML = `
+                    <strong>Date:</strong> ${formattedDate}<br>
+                    <strong>Day:</strong> ${item.day}`;
 
-              const hourProgram = document.createElement('div');
-              hourProgram.className = 'hour-program';
-              hourProgram.innerHTML = `
-                  <strong>Starting Time:</strong> ${item.hour}<br>
-                  <strong>End Time:</strong> ${item.end_time}<br>
-                  <strong>Program:</strong> ${item.program}<br>
-                  <strong>Details:</strong> ${item.details}`;
+                const hourProgram = document.createElement('div');
+                hourProgram.className = 'hour-program';
+                hourProgram.innerHTML = `
+                    <strong>Starting Time:</strong> ${item.hour}<br>
+                    <strong>End Time:</strong> ${item.end_time}<br>
+                    <strong>Program:</strong> ${item.program}<br>
+                    <strong>Details:</strong> ${item.details}`;
 
-              const deleteButton = document.createElement('button');
-              deleteButton.className = 'delete-button';
-              deleteButton.textContent = 'Delete';
-              deleteButton.onclick = function() {
-                  deleteSchedule(item.id);
-              };
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function() {
+                    deleteSchedule(item.id);
+                };
 
-              scheduleItem.appendChild(dateDayInfo);
-              scheduleItem.appendChild(hourProgram);
-              scheduleItem.appendChild(deleteButton);
-              scheduleDisplay.appendChild(scheduleItem);
-          });
-      });
+                scheduleItem.appendChild(dateDayInfo);
+                scheduleItem.appendChild(hourProgram);
+                scheduleItem.appendChild(deleteButton);
+                scheduleDisplay.appendChild(scheduleItem);
+            });
+        });
 }
-
 function deleteSchedule(id) {
     fetch(`/deleteSchedule/${id}`, {
         method: 'DELETE',
@@ -218,10 +223,6 @@ document.getElementById('medicalForm').addEventListener('submit', function(e) {
     .catch(error => console.error('Error:', error));
 });
 
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-}
 
 function fetchMedicalRecords() {
     fetch('/getMedicalInfo')
@@ -240,7 +241,7 @@ function fetchMedicalRecords() {
                         <li><strong>Ending Date: </strong> ${formatDate(record.end_date)}</li>
                         <li><strong>Treatment: </strong> ${record.treatment}</li>
                         <li><strong>Details: </strong> ${record.details}</li>
-                        <li><button onclick="deleteMedicalRecord(${record.id})">Delete</button></li>
+                        <li><button class="delete-button" onclick="deleteMedicalRecord(${record.id})">Delete</button></li>
                     </ul>
                 `;
                 medicalDisplay.appendChild(recordDiv);
@@ -251,6 +252,7 @@ function fetchMedicalRecords() {
     })
     .catch(error => console.error('Error:', error));
 }
+
 
 function deleteMedicalRecord(id) {
     fetch(`/deleteMedicalInfo/${id}`, {
@@ -279,17 +281,13 @@ function closeFamilyInfoPopup() {
   document.getElementById('familyInfoPopup').style.display = 'none';
 }
 
-function formatDate(dateString) {
-  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
-}
 
 document.getElementById('familyInfoForm').addEventListener('submit', function(event) {
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = {
     full_name: formData.get('full_name'),
-    birthday: formData.get('birthday'),
+    birthday: formData.get('birthda'),
     parents_name: formData.get('parents_name'),
     blood_type: formData.get('blood_type')
   };
@@ -318,33 +316,32 @@ document.getElementById('familyInfoForm').addEventListener('submit', function(ev
 });
 
 function displayFamilyInfo() {
-  fetch('/getFamilyInfo')
-    .then(response => response.json())
-    .then(result => {
-      const familyInfoDisplay = document.getElementById('familyInfoDisplay');
-      familyInfoDisplay.innerHTML = ''; // Clear previous info
-      if (result.success && result.info) {
-        const info = result.info;
-        familyInfoDisplay.innerHTML = `
-          <p><strong>Full Name:</strong> ${info.full_name}</p>
-          <p><strong>Birthday:</strong> ${formatDate(info.birthday)}</p>
-          <p><strong>Parent's Name:</strong> ${info.parents_name}</p>
-          <p><strong>Blood Type:</strong> ${info.blood_type}</p>
-        `;
-        document.getElementById('full_name').value = info.full_name;
-        document.getElementById('birthday').value = info.birthday;
-        document.getElementById('parents_name').value = info.parents_name;
-        document.getElementById('blood_type').value = info.blood_type;
-      } else {
-        familyInfoDisplay.innerHTML = '<p>No family info available.</p>';
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      document.getElementById('familyInfoDisplay').innerHTML = '<p>Error retrieving family info.</p>';
-    });
+    fetch('/getFamilyInfo')
+      .then(response => response.json())
+      .then(result => {
+        const familyInfoDisplay = document.getElementById('familyInfoDisplay');
+        familyInfoDisplay.innerHTML = ''; // Clear previous info
+        if (result.success && result.info) {
+          const info = result.info;
+          familyInfoDisplay.innerHTML = `
+            <p><strong>Full Name:</strong> ${info.full_name}</p>
+            <p><strong>Birthday:</strong> ${formatDate(info.birthday)}</p>
+            <p><strong>Parent's Name:</strong> ${info.parents_name}</p>
+            <p><strong>Blood Type:</strong> ${info.blood_type}</p>
+          `;
+          document.getElementById('full_name').value = info.full_name;
+          document.getElementById('birthda').value = info.birthday;
+          document.getElementById('parents_name').value = info.parents_name;
+          document.getElementById('blood_type').value = info.blood_type;
+        } else {
+          familyInfoDisplay.innerHTML = '<p>No family info available.</p>';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('familyInfoDisplay').innerHTML = '<p>Error retrieving family info.</p>';
+      });
 }
-
 // Fetch and display family info on page load
 displayFamilyInfo();
 

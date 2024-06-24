@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/profile.css" />
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <link rel="stylesheet" href="/css/profile.css" >
     <script src="/js/script.js" defer></script>
     <script src="/js/friendsScript.js" defer></script>
 
@@ -13,7 +13,7 @@
   <body>
     <header>
       <div class="logo-container">
-        <img src="/images/logo.png" alt="Your Image" />
+        <img src="/images/logo.png" alt="Your Image" >
       </div>
 
       <nav class="navigation">
@@ -67,8 +67,8 @@
           enctype="multipart/form-data"
         >
           <label for="myuser"><strong>Username - Required</strong></label
-          ><br />
-          <input type="text" id="myuser" name="myuser" required /><br /><br />
+          ><br >
+          <input type="text" id="myuser" name="myuser" required ><br ><br >
 
           <label for="password">Password</label>
           <input
@@ -76,28 +76,28 @@
             name="password"
             autocomplete="off"
             id="password"
-          /><br /><br />
+          ><br ><br >
 
           <label for="profile_photo">Profile Photo</label>
           <input
             type="file"
             id="profile_photo"
             name="profile_photo"
-          /><br /><br />
+          ><br ><br >
 
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" /><br /><br />
+          <input type="text" id="name" name="name" ><br ><br >
 
           <label for="birthday">Birthday</label>
-          <input type="date" id="birthday" name="birthday" /><br /><br />
+          <input type="date" id="birthday" name="birthday" ><br ><br >
 
           <label for="age">Age</label>
-          <input type="number" id="age" name="age" /><br /><br />
+          <input type="number" id="age" name="age" ><br ><br >
 
           <label for="description">Description</label>
-          <textarea id="description" name="description"></textarea><br /><br />
+          <textarea id="description" name="description"></textarea><br ><br >
 
-          <input type="submit" value="Change Info" />
+          <input type="submit" value="Change Info" >
         </form>
       </div>
 
@@ -132,10 +132,10 @@
         <div class="sch2">
           <form id="scheduleForm">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date" required />
+            <input type="date" id="date" name="date" required >
 
             <label for="day">Day:</label>
-            <input type="text" id="day" name="day" required />
+            <input type="text" id="day" name="day" required >
 
             <label for="hour">Starting Time:</label>
             <input
@@ -145,7 +145,7 @@
               min="0"
               max="23"
               required
-            />
+            >
 
             <label for="endTime">End Time:</label>
             <input
@@ -155,13 +155,13 @@
               min="0"
               max="23"
               required
-            />
+            >
 
             <label for="program">Program:</label>
-            <input type="text" id="program" name="program" required />
+            <input type="text" id="program" name="program" required >
 
             <label for="details">Details:</label>
-            <input type="text" id="details" name="details" required />
+            <input type="text" id="details" name="details" required >
 
             <button type="submit" class="btn1">Save Schedule</button>
           </form>
@@ -171,35 +171,48 @@
     </div>
     <!-- Medical tab ############################################################ -->
     <div id="Medical" class="tabcontent">
-            <button class="popup" onclick="openFamilyInfoPopup()">Family Info</button>
-          
-            <div id="familyInfoPopup" class="popup2">
-              <span class="close" onclick="closeFamilyInfoPopup()">&times;</span>
-              <!-- Family info form -->
-              <h2>Family Info</h2>
-              <form id="familyInfoForm">
-                <label for="full_name"><strong>Full Name - Required</strong></label>
-                <input type="text" id="full_name" name="full_name" required /><br /><br />
-          
-                <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" name="birthday" required /><br /><br />
-          
-                <label for="parents_name">Parent's Name</label>
-                <input type="text" id="parents_name" name="parents_name" required /><br /><br />
-          
-                <label for="blood_type">Blood Type</label>
-                <input type="text" id="blood_type" name="blood_type" /><br /><br />
-          
-                <button type="submit" class="btn">Submit</button>
-              </form>
-            </div>
-          <div class="container1">
-            <div class="box1">
+      <button class="popup" onclick="openFamilyInfoPopup()">Family Info</button>
+
+      <div id="familyInfoPopup" class="popup2">
+        <span class="close" onclick="closeFamilyInfoPopup()">&times;</span>
+        <!-- Family info form -->
+        <h2>Family Info</h2>
+        <form id="familyInfoForm">
+          <label for="full_name"><strong>Full Name - Required</strong></label>
+          <input
+            type="text"
+            id="full_name"
+            name="full_name"
+            required
+          ><br ><br >
+
+          <label for="birthday">Birthday</label>
+          <input
+            type="date"
+            id="birthda"
+            name="birthday"
+            required
+          ><br ><br >
+
+          <label for="parents_name">Parent's Name</label>
+          <input
+            type="text"
+            id="parents_name"
+            name="parents_name"
+            required
+          ><br><br >
+
+          <label for="blood_type">Blood Type</label>
+          <input type="text" id="blood_type" name="blood_type"><br ><br >
+
+          <button type="submit" class="btn">Submit</button>
+        </form>
+      </div>
+      <div class="container1">
+        <div class="box1">
           <div class="family-info-display" id="familyInfoDisplay">
             <!-- Family info will be displayed here -->
           </div>
-         
-
         </div>
       </div>
       <div class="cont2">
@@ -208,26 +221,26 @@
             <label for="start"
               ><strong>Choose the starting date:</strong></label
             >
-            <input type="date" id="start" name="start" required />
+            <input type="date" id="start" name="start" required >
             <p></p>
             <label for="end"><strong>Choose the ending date:</strong></label>
-            <input type="date" id="end" name="end" required />
+            <input type="date" id="end" name="end" required >
             <p></p>
             <label for="symptoms"><strong>Symptoms</strong></label>
-            <input type="text" name="symptoms" id="symptoms" required />
+            <input type="text" name="symptoms" id="symptoms" required >
             <p></p>
             <label for="Treatment"><strong>Treatment</strong></label>
-            <input type="text" name="Treatment" id="Treatment" required />
+            <input type="text" name="Treatment" id="Treatment" required >
             <p></p>
             <label for="detail"><strong>Details</strong></label>
-            <input type="text" name="detail" id="detail" required />
+            <input type="text" name="detail" id="detail" required >
             <p></p>
             <button type="submit" class="btn">Submit</button>
           </form>
         </div>
-        <div id="medicalDisplay" class="info">
-          <!-- Medical records will be displayed here -->
-        </div>
+      </div>
+      <div id="medicalDisplay" class="info">
+        <!-- Medical records will be displayed here -->
       </div>
     </div>
     <!-- Gallery tab ############################################################ -->
@@ -247,8 +260,8 @@
             method="POST"
             enctype="multipart/form-data"
           >
-            <input type="file" name="photo" required />
-            <input type="text" name="title" placeholder="Title" />
+            <input type="file" name="photo" required >
+            <input type="text" name="title" placeholder="Title" >
             <textarea name="description" placeholder="Description"></textarea>
             <button type="submit">Upload</button>
           </form>
@@ -276,7 +289,7 @@
         <h2>Search for a friend</h2>
         <form>
           <label for="searchInput"></label>
-          <input type="text" id="searchInput" name="searchInput" /><br /><br />
+          <input type="text" id="searchInput" name="searchInput" ><br ><br >
           <!-- <input type="submit" value="Search"> -->
         </form>
         <div id="result"></div>

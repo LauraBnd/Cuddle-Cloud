@@ -60,7 +60,7 @@
   }
   .user-info p {
     font-weight: 600;
-    font-size: 3vw;
+    font-size: 80%;
   }
   
   .container1 {
@@ -132,19 +132,6 @@
 }
   
   
-  table {
-    border-collapse: collapse;
-    width: 70vw;
-    background-color:hsl(270, 75%, 94%, 0.5) ;
-  }
-  th, td {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 1vw;
-  }
-  th {
-    background-color: #efe0ff;
-  }
   input[type="text"],input[type="number"] {
     width: 100%;
     border-radius: 5px;
@@ -157,71 +144,10 @@
   }
 
   form label {
-    font-size: 15px;
+    font-size: 2vw;
     font-weight: 600;
   }
   
-  .time-period-button {
-    background-color: hsl(284, 45%, 72%); 
-    color: black;
-    padding: 1vh 2vw; 
-    margin: 0.5vh 0;
-    border: none;
-    border-radius: 1vw;
-    outline: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 1.5vw; 
-    font-weight: bold; 
-  }
-  
-  .time-period-button:hover {
-    background-color: hsl(284, 45%, 62%); 
-  }
- 
-  .time-period-button.active {
-    background-color: hsl(284, 45%, 82%); 
-  }
-  
-  @media screen and (max-width: 600px) {
-    table {
-      width: 100%;
-    }
-    table, th, td {
-      display: block;
-    }
-    th, td {
-      border: none;
-      text-align: center;
-    }
-    th {
-      display: none;
-    }
-    tr {
-      border-bottom: 1px solid #ddd;
-      padding: 0.5vw 0;
-      margin-bottom: 1vw;
-    }
-    td {
-      display: block;
-      text-align: left;
-      padding-left: 20%;
-      margin-bottom: 0.5vw;
-    }
-    .event-input {
-      width: 90%;
-      margin: auto;
-    }
-  }
-  .insta{
-    display: flex;
-    margin-left: -15vw;
-  }
-  
-  .insta img{
-    width: 20vw;
-    height: auto;
-  }
   .postbut {
     background-color: hsl(284, 45%, 72%); 
     color: black;
@@ -258,31 +184,6 @@
     max-width: 800vw;
     font-size: 1.2vw;
     margin: 50px 0;
-  }
-  
-  h1 {
-    font-size: 2vw;
-    word-break: break-all;
-  }
-  
-  .row {
-    margin: 0.5vw 0vw;
-  }
-  
-  .row,
-  .row > .column {
-    padding: 0.5vw;
-  }
-
-  .column {
-    float: left;
-    width: 25%;
-  }
-  
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
   }
   
   .content {
@@ -636,6 +537,7 @@
     align-items: center;
     flex-direction: column;
     margin-top: 6vw;
+    margin-left: -30vw;
   }
   
   .boxy2 {
@@ -646,13 +548,25 @@
     padding: 1vw 2vw; 
     border-radius: 2vw;
     margin-top: -4vw; 
-    max-width: 70vw; 
+    width: 30vw; 
     text-align: left; 
     font-size: 1vw;
-    margin-right: 40vw;
+
   }
-  
+  .boxy2 label{
+    font-size: 1.5vw;
+  }
   .boxy2 form input[type="text"] {
+    width: 100%; 
+    height: 3vw;
+    font-size: 1vw;
+    padding: 0 1vw;
+    border-radius: 1vw;
+    border: 0.2vw solid #ccc;
+    outline: none;
+    box-sizing: border-box; 
+  }
+  .boxy2 form input[type="date"] {
     width: 100%; 
     height: 3vw;
     font-size: 1vw;
@@ -674,29 +588,32 @@
   .info {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     min-height: 5vw;
-    margin-top: -35vw;
-    margin-left: 25vw;
-    min-width: 40vw;
+    margin-top: -42vw;
+    margin-left: 35vw;
   }
   
-  .info1,
-  .info2 {
-    margin-left:2vw;
+  .info1 {
     background-color: #fdf2df;
     display: flex;
     flex-direction: column;
     border: 1px solid #ccc;
-    padding: 1vw 1vw;
     border-radius: 2vw;
     margin-top: 3vw; 
-    max-width: 62vw;
-    text-align: left; 
     font-size: 1.25vw;
+    width: 40vw;
   }
+  .info1 ul {
+    padding: 1vw;
+    margin: 0;
+    list-style-type: none;
+    width: 100%; /* Ensure the ul occupies the full width */
+}
 
+.info1 li {
+    margin-bottom: 1vw;
+}
   #start,
   #end,
   #dat,
@@ -778,9 +695,9 @@
     padding: 1vw 1vw;
     border-radius: 2vw;
     margin-top: -42vw; 
-    max-width: 120vw;
+    width: 40vw;
     text-align: left; 
-    font-size: 1.25vw;
+    font-size: 1.5vw;
   }
   .disp > * {
     margin-bottom: 1.5vh; 
@@ -799,6 +716,7 @@
     padding: 0.5vw 0.5vw;
     border-radius: 1vw;
     cursor: pointer;
+    font-size: 2vw;
 }
 
 .delete-button:hover {
@@ -815,3 +733,20 @@
       width: 50%; 
     }
   }
+
+  .weekly-schedule {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 5px;
+    margin-top: 20px;
+}
+.weekly-schedule div {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+.weekly-schedule .hour {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
